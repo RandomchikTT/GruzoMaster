@@ -1,0 +1,111 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace GruzoMaster
+{
+    public partial class MenuAddDriver : Form
+    {
+        private MenuDrivers MenuDrivers = null;
+        private Dictionary<PhoneNumber, String> PhoneNumbersDriver = new Dictionary<PhoneNumber, String>();
+        public MenuAddDriver(MenuDrivers menuDrivers)
+        {
+            this.MenuDrivers = menuDrivers;
+            InitializeComponent();
+        }
+
+        private async void buttonAddDriver_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.textBox1.Text == "" || this.textBox1.Text.Length < 3)
+                {
+                    MessageBox.Show("Введите ФИО !");
+                    return;
+                }
+                if (this.textBox1.Text.Split(' ').Count() < 3)
+                {
+                    MessageBox.Show("Надо указать ФИО через пробелы !");
+                    return;
+                }
+                if (DateTime.Now.Subtract(this.dateTimePicker1.Value).Days < 365 * 18)
+                {
+                    MessageBox.Show("Водителю не может быть младше 18 лет !");
+                    return;
+                }
+                if (this.textBox2.Text.Length != 9)
+                {
+                    MessageBox.Show("Номер пасспорта должен иметь 9 символов !");
+                    return;
+                }
+                if (this.textBox3.Text.Length != 14)
+                {
+                    MessageBox.Show("Идентификационный номер пасспорта должен быть 14 символов !");
+                    return;
+                }
+                if (this.dateTimePicker1.Value.ToString("d") == "01.01.1900")
+                {
+                    MessageBox.Show("Вы не указали дату рождения !");
+                    return;
+                }
+                if (this.dateTimePicker2.Value.ToString("d") == "01.01.1900")
+                {
+                    MessageBox.Show("Вы не указали дату окончания медицинской справки !");
+                    return;
+                }
+                if (PhoneNumbersDriver.Count <= 0)
+                {
+                    MessageBox.Show("Вы не указали контакты водителя !");
+                    return;
+                }
+                List<CheckBox> listCheckBoxes = new List<CheckBox>() 
+                { 
+                    this.checkBox1,
+                    this.checkBox2,
+                    this.checkBox3,
+                    this.checkBox4,
+                    this.checkBox5,
+                };
+                List<License> licnseHave = new List<License>();
+                foreach (CheckBox checkBox in listCheckBoxes)
+                {
+                    if (checkBox.Checked)
+                    {
+                        if (!Enum.TryParse(checkBox.Text, out License lic)) continue;
+                        licnseHave.Add(lic);
+                    }
+                }
+                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `drivers` WHERE `FullName`='{this.textBox1.Text}' OR `SerialPassport`='{this.textBox2.Text}' OR `NumberPassport`='{this.textBox3.Text}'");
+                if (dataTable != null && dataTable.Rows.Count > 0)
+                {
+                    MessageBox.Show("Водитель с похожими данными уже находится в базе данных !");
+                    return;
+                }
+                await MySQL.QueryAsync($"INSERT INTO `drivers` (`FullName`,`DateBirthday`,`MedSpravka`,`ListLicenses`,`SerialPassport`,`NumberPassport`,`PhoneNumbers`) " +
+                    $"VALUES ('{this.textBox1.Text}','{this.dateTimePicker1.Value.ToString("G")}','{this.dateTimePicker2.Value.ToString("G")}'," +
+                    $"'{JsonConvert.SerializeObject(licnseHave)}','{this.textBox2.Text}','{this.textBox3.Text}','{JsonConvert.SerializeObject(this.PhoneNumbersDriver)}')");
+                MySQL.AddUserLog(User.LoggedUser.Login, $"Добавил водителя в базу данных: {this.textBox1.Text}.");
+                MessageBox.Show("Вы успешно добавили водителя в базу данных !");
+                this.MenuDrivers.LoadMenu();
+            }
+            catch (Exception ex) { MessageBox.Show("buttonAddDriver_Click: " + ex.ToString()); }
+        }
+        public void AddContactDriver(Dictionary<PhoneNumber, String> phoneNumbers)
+        {
+            this.PhoneNumbersDriver = phoneNumbers;
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AddDriverContacts addDriverContacts = new AddDriverContacts(this);
+            addDriverContacts.Show();
+        }
+    }
+}
