@@ -29,7 +29,7 @@ namespace GruzoMaster
                     return;
                 }
                 Dictionary<PhoneNumber, String> phoneNumbers = new Dictionary<PhoneNumber, String>();
-                if (this.textBox1.Text != "" && this.textBox1.Text.Length >= 7)
+                if (this.textBox1.Text.Length >= 7)
                 {
                     if (this.textBox1.Text.Length > 12)
                     {
@@ -38,7 +38,7 @@ namespace GruzoMaster
                     }
                     phoneNumbers.Add(PhoneNumber.Russian, this.textBox1.Text);
                 }
-                if (this.textBox2.Text != "" && this.textBox2.Text.Length >= 7)
+                if (this.textBox2.Text.Length >= 7)
                 {
                     if (this.textBox2.Text.Length > 13)
                     {
@@ -47,7 +47,7 @@ namespace GruzoMaster
                     }
                     phoneNumbers.Add(PhoneNumber.Bellarusian, this.textBox2.Text);
                 }
-                if (this.textBox3.Text != "" && this.textBox3.Text.Length >= 7)
+                if (this.textBox3.Text.Length >= 7)
                 {
                     if (this.textBox3.Text.Length > 12)
                     {

@@ -61,7 +61,6 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(460, 50);
             this.textBox2.TabIndex = 20;
-            this.textBox2.Text = "Нет";
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label1

@@ -12,6 +12,7 @@ namespace GruzoMaster
 {
     public partial class MainMenu : Form
     {
+        private MenuDrivers MenuDrivers = null;
         public MainMenu(User userLogged)
         {
             User.LoggedUser = userLogged;
@@ -22,8 +23,19 @@ namespace GruzoMaster
 
         private void buttonTableDrivers_Click(object sender, EventArgs e)
         {
-            MenuDrivers menuDrivers = new MenuDrivers();
-            menuDrivers.Show();
+            if (this.MenuDrivers != null)
+            {
+                MessageBox.Show("У вас уже есть открытое меню водителей !");
+                return;
+            }
+            this.MenuDrivers = new MenuDrivers();
+            this.MenuDrivers.FormClosed += MenuDrivers_FormClosed;
+            this.MenuDrivers.Show();
+        }
+
+        private void MenuDrivers_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.MenuDrivers = null;
         }
 
         private void buttonTableOrders_Click(object sender, EventArgs e)

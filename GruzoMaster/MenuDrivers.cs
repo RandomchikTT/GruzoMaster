@@ -11,6 +11,7 @@ namespace GruzoMaster
 {
     public partial class MenuDrivers : Form
     {
+        private MenuAddDriver MenuAddDriver = null;
         public MenuDrivers()
         {
             InitializeComponent();
@@ -122,10 +123,21 @@ namespace GruzoMaster
                     MessageBox.Show("У вас нету доступа добавлять водителей !");
                     return;
                 }
-                MenuAddDriver menuAddDrive = new MenuAddDriver(this);
-                menuAddDrive.Show();
+                if (this.MenuAddDriver != null)
+                {
+                    MessageBox.Show("У вас уже есть открытое меню добавление водителя !");
+                    return;
+                }
+                this.MenuAddDriver = new MenuAddDriver(this);
+                this.MenuAddDriver.FormClosed += MenuAddDriver_FormClosed;
+                this.MenuAddDriver.Show();
             }
             catch (Exception ex) { MessageBox.Show("добавитьВодителяToolStripMenuItem_Click: " + ex.ToString()); }
+        }
+
+        private void MenuAddDriver_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.MenuAddDriver = null;
         }
 
         private async void удалитьВодителяToolStripMenuItem_Click(object sender, EventArgs e)
@@ -149,6 +161,7 @@ namespace GruzoMaster
                     if (selectDrivers != null && selectDrivers.Rows.Count > 0)
                     {
                         await MySQL.QueryAsync($"DELETE FROM `drivers` WHERE `idkey`={Convert.ToInt32(selectDrivers.Rows[this.Водители.SelectedIndex]["idkey"])}");
+                        this.Водители.SelectedIndex = -1;
                         this.LoadMenu();
                         MessageBox.Show("Вы удалили водителя с базы данных !");
                     }
