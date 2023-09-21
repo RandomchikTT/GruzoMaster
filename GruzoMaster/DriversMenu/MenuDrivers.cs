@@ -15,9 +15,28 @@ namespace GruzoMaster
         private MenuChangeDataDriver MenuChangeDataDriver = null;
         public MenuDrivers()
         {
-            InitializeComponent();
-            this.labelInfoDriver.Text = "";
-            this.LoadMenu();
+            try
+            {
+                InitializeComponent();
+                this.labelInfoDriver.Text = "";
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanAppendDrivers))
+                {
+                    this.добавитьВодителяToolStripMenuItem.Visible = false;
+                    this.добавитьВодителяToolStripMenuItem.Enabled = false;
+                }
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanEditDrivers))
+                {
+                    this.изменитьДанныеВодителяToolStripMenuItem.Visible = false;
+                    this.изменитьДанныеВодителяToolStripMenuItem.Enabled = false;
+                }
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanEditDrivers))
+                {
+                    this.изменитьДанныеВодителяToolStripMenuItem.Visible = false;
+                    this.изменитьДанныеВодителяToolStripMenuItem.Enabled = false;
+                }
+                this.LoadMenu();
+            }
+            catch (Exception ex) { MessageBox.Show("MenuDrivers: " + ex.ToString()); }
         }
         public async void LoadMenu()
         {
@@ -58,6 +77,11 @@ namespace GruzoMaster
                 DataTable selectDriver = await MySQL.QueryRead($"SELECT * FROM `drivers`");
                 if (selectDriver != null && selectDriver.Rows.Count > 0)
                 {
+                    if (this.Водители.SelectedIndex < 0 || this.Водители.SelectedIndex >= selectDriver.Rows.Count)
+                    {
+                        MessageBox.Show("Такой водитель не был найден в базе данных, обновите меню !");
+                        return null;
+                    }
                     DataRow dataRowCollection = selectDriver.Rows[this.Водители.SelectedIndex];
                     List<License> listLicense = JsonConvert.DeserializeObject<List<License>>(dataRowCollection["ListLicenses"].ToString());
                     String licText = "";
@@ -120,6 +144,11 @@ namespace GruzoMaster
         {
             try
             {
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanAppendDrivers))
+                {
+                    MessageBox.Show("У вас нету доступа к этому пункту !");
+                    return;
+                }
                 if (User.LoggedUser.UserType != UserType.Admin)
                 {
                     MessageBox.Show("У вас нету доступа добавлять водителей !");
@@ -146,9 +175,9 @@ namespace GruzoMaster
         {
             try
             {
-                if (User.LoggedUser.UserType != UserType.Admin)
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanDeleteDrivers))
                 {
-                    MessageBox.Show("У вас нету доступа удалять водителей !");
+                    MessageBox.Show("У вас нету доступа к этому пункту !");
                     return;
                 }
                 if (this.Водители.SelectedIndex == -1)
@@ -162,30 +191,70 @@ namespace GruzoMaster
                     DataTable selectDrivers = await MySQL.QueryRead($"SELECT * FROM `drivers`");
                     if (selectDrivers != null && selectDrivers.Rows.Count > 0)
                     {
-                        await MySQL.QueryAsync($"DELETE FROM `drivers` WHERE `idkey`={Convert.ToInt32(selectDrivers.Rows[this.Водители.SelectedIndex]["idkey"])}");
-                        this.Водители.SelectedIndex = -1;
+                        if (this.Водители.SelectedIndex < 0 || this.Водители.SelectedIndex >= selectDrivers.Rows.Count)
+                        {
+                            MessageBox.Show("Такой водитель не был найден в базе данных, обновите меню !");
+                            return;
+                        }
+                        await MySQL.QueryAsync($"DELETE FROM `drivers` WHERE `id`={Convert.ToInt32(selectDrivers.Rows[this.Водители.SelectedIndex]["id"])}");
                         this.LoadMenu();
-                        MessageBox.Show("Вы удалили водителя с базы данных !");
-                        MySQL.AddUserLog(User.LoggedUser.Login, $"Удалил водителя {Convert.ToString(selectDrivers.Rows[this.Водители.SelectedIndex]["FullName"])}");
+                        String fullName = Convert.ToString(selectDrivers.Rows[this.Водители.SelectedIndex]["FullName"]);
+                        Int32 idkey = Convert.ToInt32(selectDrivers.Rows[this.Водители.SelectedIndex]["id"]);
+                        MySQL.AddUserLog(User.LoggedUser.Login, $"Удалил водителя {fullName} #{idkey}.");
+                        MessageBox.Show("Вы успешно удалили водителя с базы данных !");
                     }
                 }
             }
-            catch (Exception ex) { MessageBox.Show("удалитьВодителяToolStripMenuItem_Click: " + ex.ToString()); }
+            catch (Exception ex) { MessageBox.Show("Удалить_Водителя_ToolStripMenuItem_Click: " + ex.ToString()); }
         }
 
-        private void изменитьДанныеВодителяToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void изменитьДанныеВодителяToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.MenuChangeDataDriver != null)
+            try
             {
-                MessageBox.Show("У вас уже есть открытое меню изменение данных водителя !");
-                return;
+                if (this.Водители.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Выберите водителя !");
+                    return;
+                }
+                if (this.MenuChangeDataDriver != null)
+                {
+                    MessageBox.Show("У вас уже есть открытое меню изменение данных водителя !");
+                    return;
+                }
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanEditDrivers))
+                {
+                    MessageBox.Show("У вас нету доступа к этому пункту !");
+                    return;
+                }
+                DataTable selectDriver = await MySQL.QueryRead($"SELECT * FROM `drivers`");
+                if (selectDriver != null && selectDriver.Rows.Count > 0)
+                {
+                    if (this.Водители.SelectedIndex < 0 || this.Водители.SelectedIndex >= selectDriver.Rows.Count)
+                    {
+                        MessageBox.Show("Такой водитель не был найден в базе данных, обновите меню !");
+                        return;
+                    }
+                    DataRow dataRowCollection = selectDriver.Rows[this.Водители.SelectedIndex];
+                    List<License> listLicense = JsonConvert.DeserializeObject<List<License>>(dataRowCollection["ListLicenses"].ToString());
+                    Dictionary<PhoneNumber, String> numberCalls = JsonConvert.DeserializeObject<Dictionary<PhoneNumber, String>>(dataRowCollection["PhoneNumbers"].ToString());
+                    this.MenuChangeDataDriver = new MenuChangeDataDriver(this, new DriverInfo()
+                    {
+                        FullName = Convert.ToString(dataRowCollection["FullName"]),
+                        BirthDay = Convert.ToDateTime(dataRowCollection["DateBirthday"]),
+                        MedSpavka = Convert.ToDateTime(dataRowCollection["MedSpravka"]),
+                        ListLicense = listLicense,
+                        PhoneNumbers = numberCalls,
+                        SerialPassport = Convert.ToString(dataRowCollection["SerialPassport"]),
+                        NumberPassport = Convert.ToString(dataRowCollection["NumberPassport"]),
+                        Address = Convert.ToString(dataRowCollection["Address"]),
+                        IdKey = Convert.ToInt32(dataRowCollection["id"]),
+                    });
+                    this.MenuChangeDataDriver.FormClosed += MenuChangeDataDriver_FormClosed;
+                    this.MenuChangeDataDriver.Show();
+                }
             }
-            this.MenuChangeDataDriver = new MenuChangeDataDriver(new DriverInfo()
-            {
-
-            });
-            this.MenuChangeDataDriver.FormClosed += MenuChangeDataDriver_FormClosed;
-            this.MenuChangeDataDriver.Show();
+            catch (Exception ex) { MessageBox.Show("изменитьДанныеВодителяToolStripMenuItem_Click: " + ex.ToString()); }
         }
 
         private void MenuChangeDataDriver_FormClosed(object sender, EventArgs e)

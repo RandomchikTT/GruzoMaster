@@ -46,10 +46,11 @@
             this.Водители.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.Водители.ForeColor = System.Drawing.Color.White;
             this.Водители.FormattingEnabled = true;
-            this.Водители.ItemHeight = 25;
-            this.Водители.Location = new System.Drawing.Point(12, 62);
+            this.Водители.ItemHeight = 20;
+            this.Водители.Location = new System.Drawing.Point(9, 50);
+            this.Водители.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Водители.Name = "Водители";
-            this.Водители.Size = new System.Drawing.Size(208, 275);
+            this.Водители.Size = new System.Drawing.Size(156, 220);
             this.Водители.TabIndex = 0;
             this.Водители.SelectedIndexChanged += new System.EventHandler(this.Водители_SelectedIndexChanged);
             // 
@@ -57,9 +58,10 @@
             // 
             this.labelInfoDriver.AutoSize = true;
             this.labelInfoDriver.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.labelInfoDriver.Location = new System.Drawing.Point(226, 62);
+            this.labelInfoDriver.Location = new System.Drawing.Point(170, 50);
+            this.labelInfoDriver.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelInfoDriver.Name = "labelInfoDriver";
-            this.labelInfoDriver.Size = new System.Drawing.Size(276, 25);
+            this.labelInfoDriver.Size = new System.Drawing.Size(215, 20);
             this.labelInfoDriver.TabIndex = 1;
             this.labelInfoDriver.Text = "Информация по водителю: ";
             // 
@@ -70,7 +72,8 @@
             this.настройкиToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(737, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -82,48 +85,50 @@
             this.удалитьВодителяToolStripMenuItem,
             this.изменитьДанныеВодителяToolStripMenuItem});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
-            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(98, 24);
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
             this.настройкиToolStripMenuItem.Text = "Настройки";
             // 
             // экспортДанныхВодителяToolStripMenuItem
             // 
             this.экспортДанныхВодителяToolStripMenuItem.Name = "экспортДанныхВодителяToolStripMenuItem";
-            this.экспортДанныхВодителяToolStripMenuItem.Size = new System.Drawing.Size(286, 26);
+            this.экспортДанныхВодителяToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.экспортДанныхВодителяToolStripMenuItem.Text = "Экспорт данных водителя";
             this.экспортДанныхВодителяToolStripMenuItem.Click += new System.EventHandler(this.экспортДанныхВодителяToolStripMenuItem_Click);
             // 
             // добавитьВодителяToolStripMenuItem
             // 
             this.добавитьВодителяToolStripMenuItem.Name = "добавитьВодителяToolStripMenuItem";
-            this.добавитьВодителяToolStripMenuItem.Size = new System.Drawing.Size(286, 26);
+            this.добавитьВодителяToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.добавитьВодителяToolStripMenuItem.Text = "Добавить водителя";
             this.добавитьВодителяToolStripMenuItem.Click += new System.EventHandler(this.добавитьВодителяToolStripMenuItem_Click);
             // 
             // удалитьВодителяToolStripMenuItem
             // 
             this.удалитьВодителяToolStripMenuItem.Name = "удалитьВодителяToolStripMenuItem";
-            this.удалитьВодителяToolStripMenuItem.Size = new System.Drawing.Size(286, 26);
+            this.удалитьВодителяToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.удалитьВодителяToolStripMenuItem.Text = "Удалить водителя";
             this.удалитьВодителяToolStripMenuItem.Click += new System.EventHandler(this.удалитьВодителяToolStripMenuItem_Click);
             // 
             // изменитьДанныеВодителяToolStripMenuItem
             // 
             this.изменитьДанныеВодителяToolStripMenuItem.Name = "изменитьДанныеВодителяToolStripMenuItem";
-            this.изменитьДанныеВодителяToolStripMenuItem.Size = new System.Drawing.Size(286, 26);
+            this.изменитьДанныеВодителяToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.изменитьДанныеВодителяToolStripMenuItem.Text = "Изменить данные водителя";
             this.изменитьДанныеВодителяToolStripMenuItem.Click += new System.EventHandler(this.изменитьДанныеВодителяToolStripMenuItem_Click);
             // 
             // MenuDrivers
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
-            this.ClientSize = new System.Drawing.Size(800, 482);
+            this.ClientSize = new System.Drawing.Size(737, 490);
             this.Controls.Add(this.labelInfoDriver);
             this.Controls.Add(this.Водители);
             this.Controls.Add(this.menuStrip1);
             this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "MenuDrivers";
             this.Text = "Меню водителей";
             this.menuStrip1.ResumeLayout(false);

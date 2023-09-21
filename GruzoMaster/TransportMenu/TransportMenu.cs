@@ -8,14 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GruzoMaster
+namespace GruzoMaster.TransportMenu
 {
-    public partial class MenuChangeDataDriver : Form
+    public partial class TransportMenu : Form
     {
-        private DriverInfo DriverInfo = null;
-        public MenuChangeDataDriver(DriverInfo driverInfo)
+        public TransportMenu()
         {
-            this.DriverInfo = driverInfo;
             InitializeComponent();
         }
     }

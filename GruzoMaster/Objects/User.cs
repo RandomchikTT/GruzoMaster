@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace GruzoMaster
 {
@@ -24,6 +25,7 @@ namespace GruzoMaster
     {
         User = 0,
         Admin = 1,
+        Owner = 2,
     }
     public class User
     {

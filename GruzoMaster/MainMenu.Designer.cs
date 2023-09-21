@@ -50,14 +50,15 @@ namespace GruzoMaster
             this.настройкиToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(600, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // настройкиToolStripMenuItem
             // 
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
-            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(98, 24);
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
             this.настройкиToolStripMenuItem.Text = "Настройки";
             // 
             // buttonTableDrivers
@@ -66,9 +67,10 @@ namespace GruzoMaster
             this.buttonTableDrivers.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonTableDrivers.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.buttonTableDrivers.ForeColor = System.Drawing.Color.White;
-            this.buttonTableDrivers.Location = new System.Drawing.Point(33, 73);
+            this.buttonTableDrivers.Location = new System.Drawing.Point(210, 148);
+            this.buttonTableDrivers.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonTableDrivers.Name = "buttonTableDrivers";
-            this.buttonTableDrivers.Size = new System.Drawing.Size(224, 84);
+            this.buttonTableDrivers.Size = new System.Drawing.Size(168, 68);
             this.buttonTableDrivers.TabIndex = 1;
             this.buttonTableDrivers.Text = "Таблица Водителей";
             this.buttonTableDrivers.UseVisualStyleBackColor = false;
@@ -80,9 +82,10 @@ namespace GruzoMaster
             this.buttonTableOrders.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonTableOrders.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.buttonTableOrders.ForeColor = System.Drawing.Color.White;
-            this.buttonTableOrders.Location = new System.Drawing.Point(280, 73);
+            this.buttonTableOrders.Location = new System.Drawing.Point(25, 59);
+            this.buttonTableOrders.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonTableOrders.Name = "buttonTableOrders";
-            this.buttonTableOrders.Size = new System.Drawing.Size(224, 84);
+            this.buttonTableOrders.Size = new System.Drawing.Size(168, 68);
             this.buttonTableOrders.TabIndex = 2;
             this.buttonTableOrders.Text = "Таблица Грузов";
             this.buttonTableOrders.UseVisualStyleBackColor = false;
@@ -94,9 +97,10 @@ namespace GruzoMaster
             this.buttonListOfCompany.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonListOfCompany.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.buttonListOfCompany.ForeColor = System.Drawing.Color.White;
-            this.buttonListOfCompany.Location = new System.Drawing.Point(33, 182);
+            this.buttonListOfCompany.Location = new System.Drawing.Point(25, 148);
+            this.buttonListOfCompany.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonListOfCompany.Name = "buttonListOfCompany";
-            this.buttonListOfCompany.Size = new System.Drawing.Size(224, 84);
+            this.buttonListOfCompany.Size = new System.Drawing.Size(168, 68);
             this.buttonListOfCompany.TabIndex = 3;
             this.buttonListOfCompany.Text = "Список компаний";
             this.buttonListOfCompany.UseVisualStyleBackColor = false;
@@ -108,9 +112,10 @@ namespace GruzoMaster
             this.buttonListOfAuto.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonListOfAuto.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.buttonListOfAuto.ForeColor = System.Drawing.Color.White;
-            this.buttonListOfAuto.Location = new System.Drawing.Point(280, 182);
+            this.buttonListOfAuto.Location = new System.Drawing.Point(210, 59);
+            this.buttonListOfAuto.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonListOfAuto.Name = "buttonListOfAuto";
-            this.buttonListOfAuto.Size = new System.Drawing.Size(224, 84);
+            this.buttonListOfAuto.Size = new System.Drawing.Size(168, 68);
             this.buttonListOfAuto.TabIndex = 4;
             this.buttonListOfAuto.Text = "Список транспорта";
             this.buttonListOfAuto.UseVisualStyleBackColor = false;
@@ -121,9 +126,10 @@ namespace GruzoMaster
             this.labelCurrentDate.AutoSize = true;
             this.labelCurrentDate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.labelCurrentDate.ForeColor = System.Drawing.Color.White;
-            this.labelCurrentDate.Location = new System.Drawing.Point(12, 393);
+            this.labelCurrentDate.Location = new System.Drawing.Point(9, 319);
+            this.labelCurrentDate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelCurrentDate.Name = "labelCurrentDate";
-            this.labelCurrentDate.Size = new System.Drawing.Size(178, 23);
+            this.labelCurrentDate.Size = new System.Drawing.Size(147, 19);
             this.labelCurrentDate.TabIndex = 5;
             this.labelCurrentDate.Text = "Сегодня: 20.09.2023";
             // 
@@ -133,9 +139,10 @@ namespace GruzoMaster
             this.buttonListOfExpeditors.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonListOfExpeditors.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.buttonListOfExpeditors.ForeColor = System.Drawing.Color.White;
-            this.buttonListOfExpeditors.Location = new System.Drawing.Point(33, 291);
+            this.buttonListOfExpeditors.Location = new System.Drawing.Point(25, 236);
+            this.buttonListOfExpeditors.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonListOfExpeditors.Name = "buttonListOfExpeditors";
-            this.buttonListOfExpeditors.Size = new System.Drawing.Size(224, 84);
+            this.buttonListOfExpeditors.Size = new System.Drawing.Size(168, 68);
             this.buttonListOfExpeditors.TabIndex = 6;
             this.buttonListOfExpeditors.Text = "Список экспедиторов";
             this.buttonListOfExpeditors.UseVisualStyleBackColor = false;
@@ -146,9 +153,10 @@ namespace GruzoMaster
             this.labelCurrentUser.AutoSize = true;
             this.labelCurrentUser.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.labelCurrentUser.ForeColor = System.Drawing.Color.White;
-            this.labelCurrentUser.Location = new System.Drawing.Point(12, 418);
+            this.labelCurrentUser.Location = new System.Drawing.Point(9, 340);
+            this.labelCurrentUser.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelCurrentUser.Name = "labelCurrentUser";
-            this.labelCurrentUser.Size = new System.Drawing.Size(208, 23);
+            this.labelCurrentUser.Size = new System.Drawing.Size(174, 19);
             this.labelCurrentUser.TabIndex = 7;
             this.labelCurrentUser.Text = "Пользователь: Савелий";
             // 
@@ -158,9 +166,10 @@ namespace GruzoMaster
             this.buttonLastAction.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonLastAction.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.buttonLastAction.ForeColor = System.Drawing.Color.White;
-            this.buttonLastAction.Location = new System.Drawing.Point(280, 291);
+            this.buttonLastAction.Location = new System.Drawing.Point(210, 236);
+            this.buttonLastAction.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonLastAction.Name = "buttonLastAction";
-            this.buttonLastAction.Size = new System.Drawing.Size(224, 84);
+            this.buttonLastAction.Size = new System.Drawing.Size(168, 68);
             this.buttonLastAction.TabIndex = 8;
             this.buttonLastAction.Text = "Последние действия";
             this.buttonLastAction.UseVisualStyleBackColor = false;
@@ -168,10 +177,10 @@ namespace GruzoMaster
             // 
             // MainMenu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(600, 366);
             this.Controls.Add(this.buttonLastAction);
             this.Controls.Add(this.labelCurrentUser);
             this.Controls.Add(this.buttonListOfExpeditors);
@@ -181,7 +190,9 @@ namespace GruzoMaster
             this.Controls.Add(this.buttonTableOrders);
             this.Controls.Add(this.buttonTableDrivers);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "MainMenu";
             this.Text = "Основное меню";
             this.menuStrip1.ResumeLayout(false);

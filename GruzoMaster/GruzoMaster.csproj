@@ -72,64 +72,80 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddDriverContacts.cs">
+    <Compile Include="DriversMenu\AddDriverContacts.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddDriverContacts.Designer.cs">
+    <Compile Include="DriversMenu\AddDriverContacts.Designer.cs">
       <DependentUpon>AddDriverContacts.cs</DependentUpon>
     </Compile>
-    <Compile Include="AuthorizationMenu.cs">
+    <Compile Include="Authorization\AuthorizationMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AuthorizationMenu.Designer.cs">
+    <Compile Include="Authorization\AuthorizationMenu.Designer.cs">
       <DependentUpon>AuthorizationMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="DriverInfo.cs" />
+    <Compile Include="LogMenu\LogMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogMenu\LogMenu.Designer.cs">
+      <DependentUpon>LogMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Objects\DriverInfo.cs" />
     <Compile Include="MainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="MenuAddDriver.cs">
+    <Compile Include="DriversMenu\MenuAddDriver.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MenuAddDriver.Designer.cs">
+    <Compile Include="DriversMenu\MenuAddDriver.Designer.cs">
       <DependentUpon>MenuAddDriver.cs</DependentUpon>
     </Compile>
-    <Compile Include="MenuChangeDataDriver.cs">
+    <Compile Include="DriversMenu\MenuChangeDataDriver.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MenuChangeDataDriver.Designer.cs">
+    <Compile Include="DriversMenu\MenuChangeDataDriver.Designer.cs">
       <DependentUpon>MenuChangeDataDriver.cs</DependentUpon>
     </Compile>
-    <Compile Include="MenuDrivers.cs">
+    <Compile Include="DriversMenu\MenuDrivers.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MenuDrivers.Designer.cs">
+    <Compile Include="DriversMenu\MenuDrivers.Designer.cs">
       <DependentUpon>MenuDrivers.cs</DependentUpon>
     </Compile>
-    <Compile Include="MySQL.cs" />
+    <Compile Include="MySQL\MySQL.cs" />
     <Compile Include="OtherFunctions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User.cs" />
-    <EmbeddedResource Include="AddDriverContacts.resx">
+    <Compile Include="Objects\User.cs" />
+    <Compile Include="Objects\UserSettings.cs" />
+    <Compile Include="TransportMenu\TransportMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TransportMenu\TransportMenu.Designer.cs">
+      <DependentUpon>TransportMenu.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="DriversMenu\AddDriverContacts.resx">
       <DependentUpon>AddDriverContacts.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AuthorizationMenu.resx">
+    <EmbeddedResource Include="Authorization\AuthorizationMenu.resx">
       <DependentUpon>AuthorizationMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogMenu\LogMenu.resx">
+      <DependentUpon>LogMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MenuAddDriver.resx">
+    <EmbeddedResource Include="DriversMenu\MenuAddDriver.resx">
       <DependentUpon>MenuAddDriver.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MenuChangeDataDriver.resx">
+    <EmbeddedResource Include="DriversMenu\MenuChangeDataDriver.resx">
       <DependentUpon>MenuChangeDataDriver.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MenuDrivers.resx">
+    <EmbeddedResource Include="DriversMenu\MenuDrivers.resx">
       <DependentUpon>MenuDrivers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -141,6 +157,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TransportMenu\TransportMenu.resx">
+      <DependentUpon>TransportMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

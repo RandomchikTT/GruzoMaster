@@ -106,10 +106,10 @@ namespace GruzoMaster
                 DialogResult result = MessageBox.Show("Вы уверены что хотите добавить нового водителя ?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    await MySQL.QueryAsync($"INSERT INTO `drivers` (`FullName`,`DateBirthday`,`MedSpravka`,`ListLicenses`,`SerialPassport`,`NumberPassport`,`PhoneNumbers`,`Address`) " +
+                    Int64 id = await MySQL.QueryLastInsertAsync($"INSERT INTO `drivers` (`FullName`,`DateBirthday`,`MedSpravka`,`ListLicenses`,`SerialPassport`,`NumberPassport`,`PhoneNumbers`,`Address`) " +
                     $"VALUES ('{this.textBox1.Text}','{this.dateTimePicker1.Value.ToString("G")}','{this.dateTimePicker2.Value.ToString("G")}'," +
                     $"'{JsonConvert.SerializeObject(licnseHave)}','{this.textBox2.Text}','{this.textBox3.Text}','{JsonConvert.SerializeObject(this.PhoneNumbersDriver)}','{this.textBox4.Text}')");
-                    MySQL.AddUserLog(User.LoggedUser.Login, $"Добавил водителя в базу данных: {this.textBox1.Text}.");
+                    MySQL.AddUserLog(User.LoggedUser.Login, $"Добавил водителя в базу данных: {this.textBox1.Text} #{id}.");
                     MessageBox.Show("Вы успешно добавили водителя в базу данных !");
                     this.MenuDrivers.LoadMenu();
                 }
@@ -123,14 +123,18 @@ namespace GruzoMaster
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            if (this.AddDriverContacts != null)
+            try
             {
-                MessageBox.Show("У вас уже есть открытое меню ввода контактов !");
-                return;
+                if (this.AddDriverContacts != null)
+                {
+                    MessageBox.Show("У вас уже есть открытое меню ввода контактов !");
+                    return;
+                }
+                this.AddDriverContacts = new AddDriverContacts(this);
+                this.AddDriverContacts.FormClosed += AddDriverContacts_FormClosed;
+                this.AddDriverContacts.Show();
             }
-            this.AddDriverContacts = new AddDriverContacts(this);
-            this.AddDriverContacts.FormClosed += AddDriverContacts_FormClosed;
-            this.AddDriverContacts.Show();
+            catch (Exception ex) { MessageBox.Show("buttonAddDriver_Click: " + ex.ToString()); }
         }
 
         private void AddDriverContacts_FormClosed(object sender, FormClosedEventArgs e)

@@ -14,7 +14,7 @@ namespace GruzoMaster
 {
     public static class MySQL
     {
-        const String Connection = "Host=localhost;User=root;Password=;Database=gruzomaster;SslMode=None";
+        public const String Connection = "Host=localhost;User=root;Password=;Database=gruzomaster;SslMode=None";
         public static async void AddUserLog(String login, String action)
         {
             try
@@ -56,6 +56,38 @@ namespace GruzoMaster
                 }
             }
             catch (Exception e) { MessageBox.Show("QueryRead: " + e.ToString()); }
+        }
+        public static async Task<Int64> QueryLastInsertAsync(String cmd)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(Connection))
+                {
+                    MySqlCommand command = new MySqlCommand(cmd);
+                    await connection.OpenAsync();
+                    command.Connection = connection;
+                    await command.ExecuteNonQueryAsync();
+                    await connection.CloseAsync();
+                    return command.LastInsertedId;
+                }
+            }
+            catch (Exception e) { MessageBox.Show("QueryLastInsertAsync: " + e.ToString()); return -1; }
+        }
+        public static async Task<Int32> QueryCountRowsAsync(String cmd)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(Connection))
+                {
+                    MySqlCommand command = new MySqlCommand(cmd);
+                    await connection.OpenAsync();
+                    command.Connection = connection;
+                    Int32 rowCount = Convert.ToInt32(command.ExecuteScalar());
+                    await connection.CloseAsync();
+                    return rowCount;
+                }
+            }
+            catch (Exception e) { MessageBox.Show("QueryCountRowsAsync: " + e.ToString()); return -1; }
         }
     }
 }

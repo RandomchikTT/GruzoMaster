@@ -110,5 +110,10 @@ namespace GruzoMaster
                 this.textBox2.Text = "";
             }
         }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            this.textBox2.PasswordChar = '*';
+        }
     }
 }
