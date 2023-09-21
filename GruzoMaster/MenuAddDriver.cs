@@ -14,6 +14,7 @@ namespace GruzoMaster
 {
     public partial class MenuAddDriver : Form
     {
+        private Boolean IsAwaitResult = false;
         private MenuDrivers MenuDrivers = null;
         private AddDriverContacts AddDriverContacts = null;
         private Dictionary<PhoneNumber, String> PhoneNumbersDriver = new Dictionary<PhoneNumber, String>();
@@ -27,6 +28,11 @@ namespace GruzoMaster
         {
             try
             {
+                if (this.IsAwaitResult)
+                {
+                    MessageBox.Show("Вы уже нажали на кнопку, ожидайте ответа !");
+                    return;
+                }
                 if (this.textBox1.Text == "" || this.textBox1.Text.Length < 3)
                 {
                     MessageBox.Show("Введите ФИО !");
@@ -67,6 +73,12 @@ namespace GruzoMaster
                     MessageBox.Show("Вы не указали контакты водителя !");
                     return;
                 }
+                if (this.textBox4.Text.Length < 5)
+                {
+                    MessageBox.Show("Вы не указали адрес водителя !");
+                    return;
+                }
+                this.IsAwaitResult = true;
                 List<CheckBox> listCheckBoxes = new List<CheckBox>() 
                 { 
                     this.checkBox1,
@@ -88,20 +100,22 @@ namespace GruzoMaster
                 if (dataTable != null && dataTable.Rows.Count > 0)
                 {
                     MessageBox.Show("Водитель с похожими данными уже находится в базе данных !");
+                    this.IsAwaitResult = false;
                     return;
                 }
                 DialogResult result = MessageBox.Show("Вы уверены что хотите добавить нового водителя ?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    await MySQL.QueryAsync($"INSERT INTO `drivers` (`FullName`,`DateBirthday`,`MedSpravka`,`ListLicenses`,`SerialPassport`,`NumberPassport`,`PhoneNumbers`) " +
+                    await MySQL.QueryAsync($"INSERT INTO `drivers` (`FullName`,`DateBirthday`,`MedSpravka`,`ListLicenses`,`SerialPassport`,`NumberPassport`,`PhoneNumbers`,`Address`) " +
                     $"VALUES ('{this.textBox1.Text}','{this.dateTimePicker1.Value.ToString("G")}','{this.dateTimePicker2.Value.ToString("G")}'," +
-                    $"'{JsonConvert.SerializeObject(licnseHave)}','{this.textBox2.Text}','{this.textBox3.Text}','{JsonConvert.SerializeObject(this.PhoneNumbersDriver)}')");
+                    $"'{JsonConvert.SerializeObject(licnseHave)}','{this.textBox2.Text}','{this.textBox3.Text}','{JsonConvert.SerializeObject(this.PhoneNumbersDriver)}','{this.textBox4.Text}')");
                     MySQL.AddUserLog(User.LoggedUser.Login, $"Добавил водителя в базу данных: {this.textBox1.Text}.");
                     MessageBox.Show("Вы успешно добавили водителя в базу данных !");
                     this.MenuDrivers.LoadMenu();
                 }
+                this.IsAwaitResult = false;
             }
-            catch (Exception ex) { MessageBox.Show("buttonAddDriver_Click: " + ex.ToString()); }
+            catch (Exception ex) { MessageBox.Show("buttonAddDriver_Click: " + ex.ToString()); this.IsAwaitResult = false; }
         }
         public void AddContactDriver(Dictionary<PhoneNumber, String> phoneNumbers)
         {

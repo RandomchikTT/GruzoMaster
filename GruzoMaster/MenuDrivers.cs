@@ -12,6 +12,7 @@ namespace GruzoMaster
     public partial class MenuDrivers : Form
     {
         private MenuAddDriver MenuAddDriver = null;
+        private MenuChangeDataDriver MenuChangeDataDriver = null;
         public MenuDrivers()
         {
             InitializeComponent();
@@ -83,7 +84,8 @@ namespace GruzoMaster
                             $"\nМед. Справка до: {Convert.ToDateTime(dataRowCollection["MedSpravka"]).ToString("d")}" +
                             $"\nДата рождения: {Convert.ToDateTime(dataRowCollection["DateBirthday"]).ToString("d")}" +
                             $"\nОткрытые Категории: {(licText == "" ? "Не указаны" : licText)}." +
-                            $"\nНомера телефонов: {(numberPhonesText == "" ? "Не указаны" : numberPhonesText)}.";
+                            $"\nНомера телефонов: {(numberPhonesText == "" ? "Не указаны" : numberPhonesText)}." +
+                            $"\nАдрес проживания: {Convert.ToString(dataRowCollection["Address"])}.";
                 }
                 return null;
             }
@@ -164,10 +166,31 @@ namespace GruzoMaster
                         this.Водители.SelectedIndex = -1;
                         this.LoadMenu();
                         MessageBox.Show("Вы удалили водителя с базы данных !");
+                        MySQL.AddUserLog(User.LoggedUser.Login, $"Удалил водителя {Convert.ToString(selectDrivers.Rows[this.Водители.SelectedIndex]["FullName"])}");
                     }
                 }
             }
             catch (Exception ex) { MessageBox.Show("удалитьВодителяToolStripMenuItem_Click: " + ex.ToString()); }
+        }
+
+        private void изменитьДанныеВодителяToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.MenuChangeDataDriver != null)
+            {
+                MessageBox.Show("У вас уже есть открытое меню изменение данных водителя !");
+                return;
+            }
+            this.MenuChangeDataDriver = new MenuChangeDataDriver(new DriverInfo()
+            {
+
+            });
+            this.MenuChangeDataDriver.FormClosed += MenuChangeDataDriver_FormClosed;
+            this.MenuChangeDataDriver.Show();
+        }
+
+        private void MenuChangeDataDriver_FormClosed(object sender, EventArgs e)
+        {
+            this.MenuChangeDataDriver = null;
         }
     }
 }

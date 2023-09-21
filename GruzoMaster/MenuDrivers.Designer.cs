@@ -35,6 +35,7 @@
             this.экспортДанныхВодителяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.добавитьВодителяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.удалитьВодителяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.изменитьДанныеВодителяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,7 +79,8 @@
             this.настройкиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.экспортДанныхВодителяToolStripMenuItem,
             this.добавитьВодителяToolStripMenuItem,
-            this.удалитьВодителяToolStripMenuItem});
+            this.удалитьВодителяToolStripMenuItem,
+            this.изменитьДанныеВодителяToolStripMenuItem});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
             this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(98, 24);
             this.настройкиToolStripMenuItem.Text = "Настройки";
@@ -86,23 +88,30 @@
             // экспортДанныхВодителяToolStripMenuItem
             // 
             this.экспортДанныхВодителяToolStripMenuItem.Name = "экспортДанныхВодителяToolStripMenuItem";
-            this.экспортДанныхВодителяToolStripMenuItem.Size = new System.Drawing.Size(272, 26);
+            this.экспортДанныхВодителяToolStripMenuItem.Size = new System.Drawing.Size(286, 26);
             this.экспортДанныхВодителяToolStripMenuItem.Text = "Экспорт данных водителя";
             this.экспортДанныхВодителяToolStripMenuItem.Click += new System.EventHandler(this.экспортДанныхВодителяToolStripMenuItem_Click);
             // 
             // добавитьВодителяToolStripMenuItem
             // 
             this.добавитьВодителяToolStripMenuItem.Name = "добавитьВодителяToolStripMenuItem";
-            this.добавитьВодителяToolStripMenuItem.Size = new System.Drawing.Size(272, 26);
+            this.добавитьВодителяToolStripMenuItem.Size = new System.Drawing.Size(286, 26);
             this.добавитьВодителяToolStripMenuItem.Text = "Добавить водителя";
             this.добавитьВодителяToolStripMenuItem.Click += new System.EventHandler(this.добавитьВодителяToolStripMenuItem_Click);
             // 
             // удалитьВодителяToolStripMenuItem
             // 
             this.удалитьВодителяToolStripMenuItem.Name = "удалитьВодителяToolStripMenuItem";
-            this.удалитьВодителяToolStripMenuItem.Size = new System.Drawing.Size(272, 26);
+            this.удалитьВодителяToolStripMenuItem.Size = new System.Drawing.Size(286, 26);
             this.удалитьВодителяToolStripMenuItem.Text = "Удалить водителя";
             this.удалитьВодителяToolStripMenuItem.Click += new System.EventHandler(this.удалитьВодителяToolStripMenuItem_Click);
+            // 
+            // изменитьДанныеВодителяToolStripMenuItem
+            // 
+            this.изменитьДанныеВодителяToolStripMenuItem.Name = "изменитьДанныеВодителяToolStripMenuItem";
+            this.изменитьДанныеВодителяToolStripMenuItem.Size = new System.Drawing.Size(286, 26);
+            this.изменитьДанныеВодителяToolStripMenuItem.Text = "Изменить данные водителя";
+            this.изменитьДанныеВодителяToolStripMenuItem.Click += new System.EventHandler(this.изменитьДанныеВодителяToolStripMenuItem_Click);
             // 
             // MenuDrivers
             // 
@@ -133,5 +142,6 @@
         private System.Windows.Forms.ToolStripMenuItem экспортДанныхВодителяToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem добавитьВодителяToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem удалитьВодителяToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem изменитьДанныеВодителяToolStripMenuItem;
     }
 }
