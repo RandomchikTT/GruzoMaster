@@ -80,6 +80,7 @@ namespace GruzoMaster
                     if (this.Водители.SelectedIndex < 0 || this.Водители.SelectedIndex >= selectDriver.Rows.Count)
                     {
                         MessageBox.Show("Такой водитель не был найден в базе данных, обновите меню !");
+                        this.LoadMenu();
                         return null;
                     }
                     DataRow dataRowCollection = selectDriver.Rows[this.Водители.SelectedIndex];
@@ -194,6 +195,7 @@ namespace GruzoMaster
                         if (this.Водители.SelectedIndex < 0 || this.Водители.SelectedIndex >= selectDrivers.Rows.Count)
                         {
                             MessageBox.Show("Такой водитель не был найден в базе данных, обновите меню !");
+                            this.LoadMenu();
                             return;
                         }
                         await MySQL.QueryAsync($"DELETE FROM `drivers` WHERE `id`={Convert.ToInt32(selectDrivers.Rows[this.Водители.SelectedIndex]["id"])}");
@@ -233,6 +235,7 @@ namespace GruzoMaster
                     if (this.Водители.SelectedIndex < 0 || this.Водители.SelectedIndex >= selectDriver.Rows.Count)
                     {
                         MessageBox.Show("Такой водитель не был найден в базе данных, обновите меню !");
+                        this.LoadMenu();
                         return;
                     }
                     DataRow dataRowCollection = selectDriver.Rows[this.Водители.SelectedIndex];

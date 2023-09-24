@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using GruzoMaster.Objects;
+using System;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,9 +9,165 @@ namespace GruzoMaster.TransportMenu
 {
     public partial class TransportMenu : Form
     {
+        private TransportAddInParkMenu TransportAddInParkMenu = null;
         public TransportMenu()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+                this.label1.Text = "";
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanDeleteTransport))
+                {
+                    this.удалитьТранспортToolStripMenuItem.Enabled = false;
+                    this.удалитьТранспортToolStripMenuItem.Visible = false;
+                }
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanAppendTransport))
+                {
+                    this.добавитьТранспортВАвтопаркToolStripMenuItem.Enabled = false;
+                    this.добавитьТранспортВАвтопаркToolStripMenuItem.Visible = false;
+                }
+                this.LoadTransportMenu();
+            }
+            catch (Exception e) { MessageBox.Show("TransportMenu: " + e.ToString()); }
+        }
+        public async void LoadTransportMenu()
+        {
+            try
+            {
+                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `transport`");
+                if (dataTable != null && dataTable.Rows.Count > 0)
+                {
+                    this.Транспорт.Items.Clear();
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        Transport.TransportModel transportModel = (Transport.TransportModel)Convert.ToInt32(row["Brand"]);
+                        String model = Convert.ToString(row["Model"]);
+                        this.Транспорт.Items.Add($"{transportModel.ToString()} {model}");
+                    }
+                }
+            }
+            catch (Exception e) { MessageBox.Show("LoadTransportMenu: " + e.ToString()); }
+        }
+        private async Task<String> GetTransportText()
+        {
+            try
+            {
+                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `transport`");
+                if (dataTable != null && dataTable.Rows.Count > 0)
+                {
+                    if (this.Транспорт.SelectedIndex < 0 || this.Транспорт.SelectedIndex > dataTable.Rows.Count)
+                    {
+                        MessageBox.Show("Данный транспорт не был найден в базе данных !");
+                        this.LoadTransportMenu();
+                        return null;
+                    }
+                    DataRow selectedVehicle = dataTable.Rows[this.Транспорт.SelectedIndex];
+                    return $"Инофрмация о транспорте:" +
+                        $"\nМарка: {Convert.ToString((Transport.TransportModel)Convert.ToInt32(selectedVehicle["Brand"]))}." +
+                        $"\nМодель: {Convert.ToString(selectedVehicle["Model"])}." +
+                        $"\nТип транспорта: {Convert.ToString(selectedVehicle["Type"])}." +
+                        $"\nГосударственный номер: {Convert.ToString(selectedVehicle["GovNumber"])}." +
+                        $"\nТехнический осмотр годен до: {Convert.ToDateTime(selectedVehicle["TechInspection"]).ToString("d")}.";
+                }
+                return null;
+            }
+            catch (Exception e) { MessageBox.Show("GetTransportText: " + e.ToString()); return null; }
+        }
+        private async void Транспорт_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.Транспорт.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Выберите транспорт !");
+                    return;
+                }
+                String text = await this.GetTransportText();
+                if (text == null) return;
+                this.label1.Text = text;
+            }
+            catch (Exception ex) { MessageBox.Show("Транспорт_SelectedIndexChanged: " + ex.ToString()); }
+        }
+        private async void экспортДанныхТранспортаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.Транспорт.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Выберите транспорт !");
+                    return;
+                }
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt";
+                saveFileDialog.FilterIndex = 1;
+                saveFileDialog.Title = "Выберите место для сохранения файла";
+                DialogResult result = saveFileDialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    String transportInfo = await this.GetTransportText();
+                    if (transportInfo == null) return;
+                    File.WriteAllText(saveFileDialog.FileName, transportInfo);
+                    MessageBox.Show("Вы успешно выгрузили данные по транспорту в файл.");
+                }
+            }
+            catch (Exception ex) { MessageBox.Show("экспортДанныхТранспортаToolStripMenuItem_Click: " + ex.ToString()); }
+        }
+
+        private async void удалитьТранспортToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanDeleteTransport))
+                {
+                    MessageBox.Show("У вас нету доступа к этому пункуту !");
+                    return;
+                }
+                if (this.Транспорт.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Выберите транспорт !");
+                    return;
+                }
+                DialogResult result = MessageBox.Show("Вы уверены что хотите удалить транспорт ?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `transport`");
+                    if (dataTable != null && dataTable.Rows.Count > 0)
+                    {
+                        if (this.Транспорт.SelectedIndex < 0 || this.Транспорт.SelectedIndex > dataTable.Rows.Count)
+                        {
+                            MessageBox.Show("Данный транспорт не был найден в базе данных !");
+                            this.LoadTransportMenu();
+                            return;
+                        }
+                        DataRow selectedVehicle = dataTable.Rows[this.Транспорт.SelectedIndex];
+                        await MySQL.QueryAsync($"DELETE FROM `transport` WHERE `id`={Convert.ToInt32(selectedVehicle["id"])}");
+                        this.LoadTransportMenu();
+                        MessageBox.Show("Вы успешно удалили транспорт с базы данных.");
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show("удалитьТранспортToolStripMenuItem_Click: " + ex.ToString()); }
+        }
+
+        private void добавитьТранспортВАвтопаркToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanAppendTransport))
+                {
+                    MessageBox.Show("У вас нету доступа к этому пункуту !");
+                    return;
+                }
+                this.TransportAddInParkMenu = new TransportAddInParkMenu(this);
+                this.TransportAddInParkMenu.FormClosed += TransportAddInParkMenu_FormClosed;
+                this.TransportAddInParkMenu.Show();
+            }
+            catch (Exception ex) { MessageBox.Show("добавитьТранспортВАвтопаркToolStripMenuItem_Click: " + ex.ToString()); }
+        }
+
+        private void TransportAddInParkMenu_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.TransportAddInParkMenu = null;
         }
     }
 }

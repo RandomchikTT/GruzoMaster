@@ -35,8 +35,16 @@ namespace GruzoMaster
             /// Возможность смотреть автопарк
             /// </summary>
             CanCheckTransport = 5,
+            /// <summary>
+            /// Возможность удалять транспорт
+            /// </summary>
+            CanDeleteTransport = 6,
+            /// <summary>
+            /// Возможность добавлять транспорт
+            /// </summary>
+            CanAppendTransport = 7,
         }
-        public static Dictionary<UserType, Dictionary<UserSetting, Boolean>> UserSettingDictionary = new Dictionary<UserType, Dictionary<UserSetting, Boolean>>()
+        private static Dictionary<UserType, Dictionary<UserSetting, Boolean>> UserSettingDictionary = new Dictionary<UserType, Dictionary<UserSetting, Boolean>>()
         {
             { UserType.Admin, new Dictionary<UserSetting, Boolean>()
             {
@@ -45,6 +53,8 @@ namespace GruzoMaster
                 { UserSetting.CanEditDrivers, true },
                 { UserSetting.CanAppendDrivers, true },
                 { UserSetting.CanCheckTransport, true },
+                { UserSetting.CanDeleteTransport, true },
+                { UserSetting.CanAppendTransport, true },
             }},
             { UserType.User, new Dictionary<UserSetting, Boolean>()
             {
@@ -53,6 +63,8 @@ namespace GruzoMaster
                 { UserSetting.CanEditDrivers, true },
                 { UserSetting.CanAppendDrivers, true },
                 { UserSetting.CanCheckTransport, true },
+                { UserSetting.CanDeleteTransport, true },
+                { UserSetting.CanAppendTransport, true },
             }},
             { UserType.Owner, new Dictionary<UserSetting, Boolean>()
             {
@@ -61,6 +73,8 @@ namespace GruzoMaster
                 { UserSetting.CanEditDrivers, true },
                 { UserSetting.CanAppendDrivers, true },
                 { UserSetting.CanCheckTransport, true },
+                { UserSetting.CanDeleteTransport, true },
+                { UserSetting.CanAppendTransport, true },
             }},
         };
         public static Boolean GetAccessUser(UserSetting userSetting)

@@ -48,7 +48,7 @@
             this.Водители.FormattingEnabled = true;
             this.Водители.ItemHeight = 20;
             this.Водители.Location = new System.Drawing.Point(9, 50);
-            this.Водители.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Водители.Margin = new System.Windows.Forms.Padding(2);
             this.Водители.Name = "Водители";
             this.Водители.Size = new System.Drawing.Size(156, 220);
             this.Водители.TabIndex = 0;
@@ -128,7 +128,7 @@
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MenuDrivers";
             this.Text = "Меню водителей";
             this.menuStrip1.ResumeLayout(false);
