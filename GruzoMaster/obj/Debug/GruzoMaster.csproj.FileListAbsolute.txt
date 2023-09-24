@@ -66,3 +66,4 @@ C:\Users\savel\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\Gruzo
 C:\Users\savel\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.LogMenu.LogMenu.resources
 C:\Users\savel\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.TransportMenu.TransportMenu.resources
 C:\Users\savel\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.TransportMenu.TransportAddInParkMenu.resources
+C:\Users\savel\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.TransportMenu.MenuChangeDataTransport.resources

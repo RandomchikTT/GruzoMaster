@@ -122,6 +122,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Objects\User.cs" />
     <Compile Include="Objects\UserSettings.cs" />
+    <Compile Include="TransportMenu\MenuChangeDataTransport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TransportMenu\MenuChangeDataTransport.Designer.cs">
+      <DependentUpon>MenuChangeDataTransport.cs</DependentUpon>
+    </Compile>
     <Compile Include="TransportMenu\TransportAddInParkMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,6 +170,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TransportMenu\MenuChangeDataTransport.resx">
+      <DependentUpon>MenuChangeDataTransport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TransportMenu\TransportAddInParkMenu.resx">
       <DependentUpon>TransportAddInParkMenu.cs</DependentUpon>
     </EmbeddedResource>

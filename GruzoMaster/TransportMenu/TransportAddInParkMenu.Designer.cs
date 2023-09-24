@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelInfoDriver = new System.Windows.Forms.Label();
+            this.labelInfoTransport = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButton7 = new System.Windows.Forms.RadioButton();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
@@ -42,7 +43,6 @@
             this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.radioButton6 = new System.Windows.Forms.RadioButton();
             this.radioButton8 = new System.Windows.Forms.RadioButton();
-            this.radioButton7 = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.buttonAddDriver = new System.Windows.Forms.Button();
@@ -50,17 +50,17 @@
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // labelInfoDriver
+            // labelInfoTransport
             // 
-            this.labelInfoDriver.AutoSize = true;
-            this.labelInfoDriver.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.labelInfoDriver.ForeColor = System.Drawing.Color.White;
-            this.labelInfoDriver.Location = new System.Drawing.Point(125, 9);
-            this.labelInfoDriver.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelInfoDriver.Name = "labelInfoDriver";
-            this.labelInfoDriver.Size = new System.Drawing.Size(269, 20);
-            this.labelInfoDriver.TabIndex = 3;
-            this.labelInfoDriver.Text = "Добавление транспорта в автопарк";
+            this.labelInfoTransport.AutoSize = true;
+            this.labelInfoTransport.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.labelInfoTransport.ForeColor = System.Drawing.Color.White;
+            this.labelInfoTransport.Location = new System.Drawing.Point(125, 9);
+            this.labelInfoTransport.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelInfoTransport.Name = "labelInfoTransport";
+            this.labelInfoTransport.Size = new System.Drawing.Size(269, 20);
+            this.labelInfoTransport.TabIndex = 3;
+            this.labelInfoTransport.Text = "Добавление транспорта в автопарк";
             // 
             // label6
             // 
@@ -103,6 +103,17 @@
             this.groupBox1.TabIndex = 25;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Марка";
+            // 
+            // radioButton7
+            // 
+            this.radioButton7.AutoSize = true;
+            this.radioButton7.Location = new System.Drawing.Point(34, 84);
+            this.radioButton7.Name = "radioButton7";
+            this.radioButton7.Size = new System.Drawing.Size(66, 23);
+            this.radioButton7.TabIndex = 4;
+            this.radioButton7.TabStop = true;
+            this.radioButton7.Text = "Sitrak";
+            this.radioButton7.UseVisualStyleBackColor = true;
             // 
             // radioButton4
             // 
@@ -216,17 +227,6 @@
             this.radioButton8.Text = "Сядельный тягач";
             this.radioButton8.UseVisualStyleBackColor = true;
             // 
-            // radioButton7
-            // 
-            this.radioButton7.AutoSize = true;
-            this.radioButton7.Location = new System.Drawing.Point(34, 84);
-            this.radioButton7.Name = "radioButton7";
-            this.radioButton7.Size = new System.Drawing.Size(66, 23);
-            this.radioButton7.TabIndex = 4;
-            this.radioButton7.TabStop = true;
-            this.radioButton7.Text = "Sitrak";
-            this.radioButton7.UseVisualStyleBackColor = true;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -283,7 +283,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.labelInfoDriver);
+            this.Controls.Add(this.labelInfoTransport);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "TransportAddInParkMenu";
             this.Text = "Меню добавления транспорта в автопарк";
@@ -298,7 +298,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label labelInfoDriver;
+        private System.Windows.Forms.Label labelInfoTransport;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.GroupBox groupBox1;

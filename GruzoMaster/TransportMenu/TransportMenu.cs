@@ -10,6 +10,7 @@ namespace GruzoMaster.TransportMenu
     public partial class TransportMenu : Form
     {
         private TransportAddInParkMenu TransportAddInParkMenu = null;
+        private MenuChangeDataTransport MenuChangeDataTransport = null;
         public TransportMenu()
         {
             try
@@ -25,6 +26,11 @@ namespace GruzoMaster.TransportMenu
                 {
                     this.добавитьТранспортВАвтопаркToolStripMenuItem.Enabled = false;
                     this.добавитьТранспортВАвтопаркToolStripMenuItem.Visible = false;
+                }
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanEditDataTransport))
+                {
+                    this.изменитьДанныеОТранспортеToolStripMenuItem.Enabled = false;
+                    this.изменитьДанныеОТранспортеToolStripMenuItem.Visible = false;
                 }
                 this.LoadTransportMenu();
             }
@@ -168,6 +174,55 @@ namespace GruzoMaster.TransportMenu
         private void TransportAddInParkMenu_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.TransportAddInParkMenu = null;
+        }
+
+        private async void изменитьДанныеОТранспортеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanEditDataTransport))
+                {
+                    MessageBox.Show("У вас нету доступа к этому пункуту !");
+                    return;
+                }
+                if (this.Транспорт.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Выберите транспорт !");
+                    return;
+                }
+                if (this.MenuChangeDataTransport != null)
+                {
+                    MessageBox.Show("У вас уже есть открытое меню !");
+                    return;
+                }
+                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `transport`");
+                if (dataTable != null && dataTable.Rows.Count > 0)
+                {
+                    if (this.Транспорт.SelectedIndex < 0 || this.Транспорт.SelectedIndex > dataTable.Rows.Count)
+                    {
+                        MessageBox.Show("Данный транспорт не был найден в базе данных !");
+                        this.LoadTransportMenu();
+                        return;
+                    }
+                    this.MenuChangeDataTransport = new MenuChangeDataTransport(this, new Transport()
+                    {
+                        IdKey = Convert.ToInt32(dataTable.Rows[0]["id"]),
+                        TransportModelName = (Transport.TransportModel)Convert.ToInt32(dataTable.Rows[0]["Brand"]),
+                        ModelDescriptionName = Convert.ToString(dataTable.Rows[0]["Model"]),
+                        TransportTypeName = (Transport.TransportType)Convert.ToInt32(dataTable.Rows[0]["Type"]),
+                        GovNumber = Convert.ToString(dataTable.Rows[0]["GovNumber"]),
+                        TimeTechInspection = Convert.ToDateTime(dataTable.Rows[0]["TechInspection"])
+                    });
+                    this.MenuChangeDataTransport.FormClosed += MenuChangeDataTransport_FormClosed;
+                    this.MenuChangeDataTransport.Show();
+                }
+            }
+            catch (Exception ex) { MessageBox.Show("изменитьДанныеОТранспортеToolStripMenuItem_Click: " + ex.ToString()); }
+        }
+
+        private void MenuChangeDataTransport_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.MenuChangeDataTransport = null;
         }
     }
 }

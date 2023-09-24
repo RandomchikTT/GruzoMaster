@@ -35,6 +35,7 @@
             this.экспортДанныхТранспортаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.добавитьТранспортВАвтопаркToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.удалитьТранспортToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.изменитьДанныеОТранспортеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,7 +80,8 @@
             this.настройкиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.экспортДанныхТранспортаToolStripMenuItem,
             this.добавитьТранспортВАвтопаркToolStripMenuItem,
-            this.удалитьТранспортToolStripMenuItem});
+            this.удалитьТранспортToolStripMenuItem,
+            this.изменитьДанныеОТранспортеToolStripMenuItem});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
             this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
             this.настройкиToolStripMenuItem.Text = "Настройки";
@@ -87,23 +89,30 @@
             // экспортДанныхТранспортаToolStripMenuItem
             // 
             this.экспортДанныхТранспортаToolStripMenuItem.Name = "экспортДанныхТранспортаToolStripMenuItem";
-            this.экспортДанныхТранспортаToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.экспортДанныхТранспортаToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
             this.экспортДанныхТранспортаToolStripMenuItem.Text = "Экспорт данных транспорта";
             this.экспортДанныхТранспортаToolStripMenuItem.Click += new System.EventHandler(this.экспортДанныхТранспортаToolStripMenuItem_Click);
             // 
             // добавитьТранспортВАвтопаркToolStripMenuItem
             // 
             this.добавитьТранспортВАвтопаркToolStripMenuItem.Name = "добавитьТранспортВАвтопаркToolStripMenuItem";
-            this.добавитьТранспортВАвтопаркToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.добавитьТранспортВАвтопаркToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
             this.добавитьТранспортВАвтопаркToolStripMenuItem.Text = "Добавить транспорт";
             this.добавитьТранспортВАвтопаркToolStripMenuItem.Click += new System.EventHandler(this.добавитьТранспортВАвтопаркToolStripMenuItem_Click);
             // 
             // удалитьТранспортToolStripMenuItem
             // 
             this.удалитьТранспортToolStripMenuItem.Name = "удалитьТранспортToolStripMenuItem";
-            this.удалитьТранспортToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.удалитьТранспортToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
             this.удалитьТранспортToolStripMenuItem.Text = "Удалить транспорт";
             this.удалитьТранспортToolStripMenuItem.Click += new System.EventHandler(this.удалитьТранспортToolStripMenuItem_Click);
+            // 
+            // изменитьДанныеОТранспортеToolStripMenuItem
+            // 
+            this.изменитьДанныеОТранспортеToolStripMenuItem.Name = "изменитьДанныеОТранспортеToolStripMenuItem";
+            this.изменитьДанныеОТранспортеToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+            this.изменитьДанныеОТранспортеToolStripMenuItem.Text = "Изменить данные о транспорте";
+            this.изменитьДанныеОТранспортеToolStripMenuItem.Click += new System.EventHandler(this.изменитьДанныеОТранспортеToolStripMenuItem_Click);
             // 
             // TransportMenu
             // 
@@ -134,5 +143,6 @@
         private System.Windows.Forms.ToolStripMenuItem экспортДанныхТранспортаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem добавитьТранспортВАвтопаркToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem удалитьТранспортToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem изменитьДанныеОТранспортеToolStripMenuItem;
     }
 }

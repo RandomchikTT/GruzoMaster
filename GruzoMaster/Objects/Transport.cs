@@ -39,5 +39,11 @@ namespace GruzoMaster.Objects
             /// </summary>
             LightCommercial = 3,
         }
+        public TransportModel TransportModelName { get; set; }
+        public TransportType TransportTypeName { get; set; }
+        public DateTime TimeTechInspection { get; set; }
+        public String ModelDescriptionName { get; set; }
+        public String GovNumber { get; set; }
+        public Int32 IdKey { get; set; }
     }
 }
