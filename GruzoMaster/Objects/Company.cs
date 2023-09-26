@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GruzoMaster.Objects
 {
@@ -10,9 +6,10 @@ namespace GruzoMaster.Objects
     {
         public enum CompanyCountry : Int32
         {
-            Belarus = 0,
-            Russia = 1,
-            Litva = 2,
+            None = 0,
+            Belarus = 1,
+            Russia = 2,
+            Litva = 3,
         }
         public static String GetCountryRussianName(CompanyCountry companyCountry)
         {
@@ -28,5 +25,6 @@ namespace GruzoMaster.Objects
                     return "Беларусь";
             }
         }
+        public Int32 IdKey { get; set; }
     }
 }

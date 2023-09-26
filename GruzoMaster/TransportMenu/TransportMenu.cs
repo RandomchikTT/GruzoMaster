@@ -1,5 +1,6 @@
 ﻿using GruzoMaster.Objects;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace GruzoMaster.TransportMenu
     {
         private TransportAddInParkMenu TransportAddInParkMenu = null;
         private MenuChangeDataTransport MenuChangeDataTransport = null;
+        private List<Transport> TransportList = new List<Transport>();
         public TransportMenu()
         {
             try
@@ -41,11 +43,16 @@ namespace GruzoMaster.TransportMenu
             try
             {
                 DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `transport`");
+                this.TransportList = new List<Transport>();
                 if (dataTable != null && dataTable.Rows.Count > 0)
                 {
                     this.Транспорт.Items.Clear();
                     foreach (DataRow row in dataTable.Rows)
                     {
+                        this.TransportList.Add(new Transport()
+                        {
+                            IdKey = Convert.ToInt32(row["id"]),
+                        });
                         Transport.TransportModel transportModel = (Transport.TransportModel)Convert.ToInt32(row["Brand"]);
                         String model = Convert.ToString(row["Model"]);
                         this.Транспорт.Items.Add($"{transportModel.ToString()} {model}");
@@ -58,15 +65,10 @@ namespace GruzoMaster.TransportMenu
         {
             try
             {
-                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `transport`");
+                Int32 idKey = this.TransportList[this.Транспорт.SelectedIndex].IdKey;
+                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `transport` WHERE `id`={idKey}");
                 if (dataTable != null && dataTable.Rows.Count > 0)
                 {
-                    if (this.Транспорт.SelectedIndex < 0 || this.Транспорт.SelectedIndex > dataTable.Rows.Count)
-                    {
-                        MessageBox.Show("Данный транспорт не был найден в базе данных !");
-                        this.LoadTransportMenu();
-                        return null;
-                    }
                     DataRow selectedVehicle = dataTable.Rows[this.Транспорт.SelectedIndex];
                     return $"Инофрмация о транспорте:" +
                         $"\nМарка: {Convert.ToString((Transport.TransportModel)Convert.ToInt32(selectedVehicle["Brand"]))}." +
@@ -74,6 +76,11 @@ namespace GruzoMaster.TransportMenu
                         $"\nТип транспорта: {Convert.ToString(selectedVehicle["Type"])}." +
                         $"\nГосударственный номер: {Convert.ToString(selectedVehicle["GovNumber"])}." +
                         $"\nТехнический осмотр годен до: {Convert.ToDateTime(selectedVehicle["TechInspection"]).ToString("d")}.";
+                }
+                else
+                {
+                    MessageBox.Show("Данный транспорт не был найден в базе данных !");
+                    this.LoadTransportMenu();
                 }
                 return null;
             }
@@ -136,19 +143,19 @@ namespace GruzoMaster.TransportMenu
                 DialogResult result = MessageBox.Show("Вы уверены что хотите удалить транспорт ?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `transport`");
+                    Int32 idKey = this.TransportList[this.Транспорт.SelectedIndex].IdKey;
+                    DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `transport` WHERE `id`={idKey}");
                     if (dataTable != null && dataTable.Rows.Count > 0)
                     {
-                        if (this.Транспорт.SelectedIndex < 0 || this.Транспорт.SelectedIndex > dataTable.Rows.Count)
-                        {
-                            MessageBox.Show("Данный транспорт не был найден в базе данных !");
-                            this.LoadTransportMenu();
-                            return;
-                        }
-                        DataRow selectedVehicle = dataTable.Rows[this.Транспорт.SelectedIndex];
-                        await MySQL.QueryAsync($"DELETE FROM `transport` WHERE `id`={Convert.ToInt32(selectedVehicle["id"])}");
+                        await MySQL.QueryAsync($"DELETE FROM `transport` WHERE `id`={idKey}");
+                        MySQL.AddUserLog(User.LoggedUser.Login, $"Удалил транспорт с базы данных {((Transport.TransportType)Convert.ToInt32(dataTable.Rows[0]["Brand"])).ToString()} #{idKey}.");
                         this.LoadTransportMenu();
                         MessageBox.Show("Вы успешно удалили транспорт с базы данных.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Данный транспорт не был найден в базе данных !");
+                        this.LoadTransportMenu();
                     }
                 }
             }
@@ -162,6 +169,11 @@ namespace GruzoMaster.TransportMenu
                 if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanAppendTransport))
                 {
                     MessageBox.Show("У вас нету доступа к этому пункуту !");
+                    return;
+                }
+                if (this.TransportAddInParkMenu != null)
+                {
+                    MessageBox.Show("У вас уже есть открытое меню !");
                     return;
                 }
                 this.TransportAddInParkMenu = new TransportAddInParkMenu(this);
@@ -195,15 +207,10 @@ namespace GruzoMaster.TransportMenu
                     MessageBox.Show("У вас уже есть открытое меню !");
                     return;
                 }
-                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `transport`");
+                Int32 idKey = this.TransportList[this.Транспорт.SelectedIndex].IdKey;
+                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `transport` WHERE `id`={idKey}");
                 if (dataTable != null && dataTable.Rows.Count > 0)
                 {
-                    if (this.Транспорт.SelectedIndex < 0 || this.Транспорт.SelectedIndex > dataTable.Rows.Count)
-                    {
-                        MessageBox.Show("Данный транспорт не был найден в базе данных !");
-                        this.LoadTransportMenu();
-                        return;
-                    }
                     this.MenuChangeDataTransport = new MenuChangeDataTransport(this, new Transport()
                     {
                         IdKey = Convert.ToInt32(dataTable.Rows[0]["id"]),
@@ -215,6 +222,11 @@ namespace GruzoMaster.TransportMenu
                     });
                     this.MenuChangeDataTransport.FormClosed += MenuChangeDataTransport_FormClosed;
                     this.MenuChangeDataTransport.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Данный транспорт не был найден в базе данных !");
+                    this.LoadTransportMenu();
                 }
             }
             catch (Exception ex) { MessageBox.Show("изменитьДанныеОТранспортеToolStripMenuItem_Click: " + ex.ToString()); }

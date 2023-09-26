@@ -11,6 +11,7 @@ namespace GruzoMaster
 {
     public partial class MenuDrivers : Form
     {
+        private List<DriverInfo> DriverInfoList = new List<DriverInfo>();
         private MenuAddDriver MenuAddDriver = null;
         private MenuChangeDataDriver MenuChangeDataDriver = null;
         public MenuDrivers()
@@ -42,12 +43,17 @@ namespace GruzoMaster
         {
             try
             {
-                DataTable result = await MySQL.QueryRead("SELECT `FullName` FROM `drivers`");
+                DataTable result = await MySQL.QueryRead("SELECT `FullName`,`id` FROM `drivers`");
+                this.DriverInfoList = new List<DriverInfo>();
                 if (result != null && result.Rows.Count > 0)
                 {
                     this.Водители.Items.Clear();
                     foreach (DataRow row in result.Rows)
                     {
+                        this.DriverInfoList.Add(new DriverInfo()
+                        {
+                            IdKey = Convert.ToInt32(row["id"]),                    
+                        });
                         String[] fullName = Convert.ToString(row["FullName"]).Split(' ');
                         this.Водители.Items.Add($"{fullName[0]} {fullName[1][0]}. {fullName[2][0]}.");
                     }
@@ -74,15 +80,10 @@ namespace GruzoMaster
                     MessageBox.Show("Выберите водителя !");
                     return null;
                 }
-                DataTable selectDriver = await MySQL.QueryRead($"SELECT * FROM `drivers`");
+                Int32 idKey = this.DriverInfoList[this.Водители.SelectedIndex].IdKey;
+                DataTable selectDriver = await MySQL.QueryRead($"SELECT * FROM `drivers` WHERE `id`={idKey}");
                 if (selectDriver != null && selectDriver.Rows.Count > 0)
                 {
-                    if (this.Водители.SelectedIndex < 0 || this.Водители.SelectedIndex >= selectDriver.Rows.Count)
-                    {
-                        MessageBox.Show("Такой водитель не был найден в базе данных, обновите меню !");
-                        this.LoadMenu();
-                        return null;
-                    }
                     DataRow dataRowCollection = selectDriver.Rows[this.Водители.SelectedIndex];
                     List<License> listLicense = JsonConvert.DeserializeObject<List<License>>(dataRowCollection["ListLicenses"].ToString());
                     String licText = "";
@@ -111,6 +112,11 @@ namespace GruzoMaster
                             $"\nОткрытые Категории: {(licText == "" ? "Не указаны" : licText)}." +
                             $"\nНомера телефонов: {(numberPhonesText == "" ? "Не указаны" : numberPhonesText)}." +
                             $"\nАдрес проживания: {Convert.ToString(dataRowCollection["Address"])}.";
+                }
+                else
+                {
+                    MessageBox.Show("Такой водитель не был найден в базе данных, обновите меню !");
+                    this.LoadMenu();
                 }
                 return null;
             }
@@ -189,21 +195,21 @@ namespace GruzoMaster
                 DialogResult result = MessageBox.Show("Вы уверены что хотите удалить водителя ?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    DataTable selectDrivers = await MySQL.QueryRead($"SELECT * FROM `drivers`");
+                    Int32 idKey = this.DriverInfoList[this.Водители.SelectedIndex].IdKey;
+                    DataTable selectDrivers = await MySQL.QueryRead($"SELECT * FROM `drivers` WHERE `id`={idKey}");
                     if (selectDrivers != null && selectDrivers.Rows.Count > 0)
                     {
-                        if (this.Водители.SelectedIndex < 0 || this.Водители.SelectedIndex >= selectDrivers.Rows.Count)
-                        {
-                            MessageBox.Show("Такой водитель не был найден в базе данных, обновите меню !");
-                            this.LoadMenu();
-                            return;
-                        }
-                        await MySQL.QueryAsync($"DELETE FROM `drivers` WHERE `id`={Convert.ToInt32(selectDrivers.Rows[this.Водители.SelectedIndex]["id"])}");
+                        await MySQL.QueryAsync($"DELETE FROM `drivers` WHERE `id`={idKey}");
                         this.LoadMenu();
-                        String fullName = Convert.ToString(selectDrivers.Rows[this.Водители.SelectedIndex]["FullName"]);
-                        Int32 idkey = Convert.ToInt32(selectDrivers.Rows[this.Водители.SelectedIndex]["id"]);
+                        String fullName = Convert.ToString(selectDrivers.Rows[0]["FullName"]);
+                        Int32 idkey = Convert.ToInt32(selectDrivers.Rows[0]["id"]);
                         MySQL.AddUserLog(User.LoggedUser.Login, $"Удалил водителя {fullName} #{idkey}.");
                         MessageBox.Show("Вы успешно удалили водителя с базы данных !");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Такой водитель не был найден в базе данных, обновите меню !");
+                        this.LoadMenu();
                     }
                 }
             }
@@ -229,15 +235,10 @@ namespace GruzoMaster
                     MessageBox.Show("У вас нету доступа к этому пункту !");
                     return;
                 }
-                DataTable selectDriver = await MySQL.QueryRead($"SELECT * FROM `drivers`");
+                Int32 idKey = this.DriverInfoList[this.Водители.SelectedIndex].IdKey;
+                DataTable selectDriver = await MySQL.QueryRead($"SELECT * FROM `drivers` WHERE `id`={idKey}");
                 if (selectDriver != null && selectDriver.Rows.Count > 0)
                 {
-                    if (this.Водители.SelectedIndex < 0 || this.Водители.SelectedIndex >= selectDriver.Rows.Count)
-                    {
-                        MessageBox.Show("Такой водитель не был найден в базе данных, обновите меню !");
-                        this.LoadMenu();
-                        return;
-                    }
                     DataRow dataRowCollection = selectDriver.Rows[this.Водители.SelectedIndex];
                     List<License> listLicense = JsonConvert.DeserializeObject<List<License>>(dataRowCollection["ListLicenses"].ToString());
                     Dictionary<PhoneNumber, String> numberCalls = JsonConvert.DeserializeObject<Dictionary<PhoneNumber, String>>(dataRowCollection["PhoneNumbers"].ToString());
@@ -255,6 +256,11 @@ namespace GruzoMaster
                     });
                     this.MenuChangeDataDriver.FormClosed += MenuChangeDataDriver_FormClosed;
                     this.MenuChangeDataDriver.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Такой водитель не был найден в базе данных, обновите меню !");
+                    this.LoadMenu();
                 }
             }
             catch (Exception ex) { MessageBox.Show("изменитьДанныеВодителяToolStripMenuItem_Click: " + ex.ToString()); }

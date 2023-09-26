@@ -1,5 +1,6 @@
 ﻿using GruzoMaster.Objects;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ namespace GruzoMaster.Companies
 {
     public partial class MainMenuCompany : Form
     {
+        private List<Company> CompanyActiveList = new List<Company>();
+        private MenuAddCompany MenuAddCompany = null;
         public MainMenuCompany()
         {
             InitializeComponent();
@@ -34,13 +37,18 @@ namespace GruzoMaster.Companies
         {
             try
             {
-                DataTable dataTable = await MySQL.QueryRead($"SELECT `name` FROM `transport`");
+                DataTable dataTable = await MySQL.QueryRead($"SELECT `Name`,`id` FROM `companies`");
+                this.CompanyActiveList = new List<Company>();
                 if (dataTable != null && dataTable.Rows.Count > 0)
                 {
                     this.Компании.Items.Clear();
                     foreach (DataRow row in dataTable.Rows)
                     {
-                        this.Компании.Items.Add(Convert.ToString(row["Brand"]));
+                        this.CompanyActiveList.Add(new Company()
+                        {
+                            IdKey = Convert.ToInt32(row["id"]),
+                        });
+                        this.Компании.Items.Add(Convert.ToString(row["Name"]));
                     }
                 }
             }
@@ -66,21 +74,21 @@ namespace GruzoMaster.Companies
         {
             try
             {
-                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `transport`");
+                Int32 idKey = this.CompanyActiveList[this.Компании.SelectedIndex].IdKey;
+                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `companies` WHERE `id`={idKey}");
                 if (dataTable != null && dataTable.Rows.Count > 0)
                 {
-                    if (this.Компании.SelectedIndex < 0 || this.Компании.SelectedIndex > dataTable.Rows.Count)
-                    {
-                        MessageBox.Show("Данная компания не была найдена в базе данных !");
-                        this.LoadMainMenuCompanyDataBase();
-                        return null;
-                    }
                     DataRow selectedCompany = dataTable.Rows[this.Компании.SelectedIndex];
                     return $"Инофрмация о компании:" +
                         $"\nНазвание: {Convert.ToString(selectedCompany["Name"])}." +
                         $"\nСтрана: {Company.GetCountryRussianName((Company.CompanyCountry)Convert.ToInt32(selectedCompany["Country"]))}." +
                         $"\nГород: {Convert.ToString(selectedCompany["City"])}." +
                         $"\nВремя добавления в базу данных: {Convert.ToString(selectedCompany["TimeAdded"])}.";
+                }
+                else
+                {
+                    MessageBox.Show("Данная компания не была найдена в базе данных !");
+                    this.LoadMainMenuCompanyDataBase();
                 }
                 return null;
             }
@@ -116,7 +124,6 @@ namespace GruzoMaster.Companies
             }
             catch (Exception ex) { MessageBox.Show("экспортДанныхОКомпанииToolStripMenuItem_Click: " + ex.ToString()); }
         }
-
         private void редактироватьКомпаниюToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -135,7 +142,7 @@ namespace GruzoMaster.Companies
             catch (Exception ex) { MessageBox.Show("редактироватьКомпаниюToolStripMenuItem_Click: " + ex.ToString()); }
         }
 
-        private void удалитьКомпаниюToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void удалитьКомпаниюToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -149,6 +156,24 @@ namespace GruzoMaster.Companies
                     MessageBox.Show("Выберите компанию !");
                     return;
                 }
+                DialogResult result = MessageBox.Show("Вы уверены что хотите удалить компанию ?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    Int32 idKey = this.CompanyActiveList[this.Компании.SelectedIndex].IdKey;
+                    DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `companies` WHERE `id`={idKey}");
+                    if (dataTable != null && dataTable.Rows.Count > 0)
+                    {
+                        await MySQL.QueryAsync($"DELETE FROM `companies` WHERE `id`={idKey}");
+                        MySQL.AddUserLog(User.LoggedUser.Login, $"Удалил компанию с базы данных {Convert.ToString(dataTable.Rows[0]["Name"])} #{idKey}.");
+                        this.LoadMainMenuCompanyDataBase();
+                        MessageBox.Show("Вы успешно удалили компанию с базы данных.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Данный компанию не был найден в базе данных !");
+                        this.LoadMainMenuCompanyDataBase();
+                    }
+                }
             }
             catch (Exception ex) { MessageBox.Show("удалитьКомпаниюToolStripMenuItem_Click: " + ex.ToString()); }
         }
@@ -157,13 +182,26 @@ namespace GruzoMaster.Companies
         {
             try
             {
+                if (this.MenuAddCompany != null)
+                {
+                    MessageBox.Show("У вас уже есть открытое меню !");
+                    return;
+                }
                 if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanAppendCompany))
                 {
                     MessageBox.Show("У вас нету доступа к этому меню !");
                     return;
                 }
+                this.MenuAddCompany = new MenuAddCompany(this);
+                this.MenuAddCompany.FormClosed += MenuAddCompany_FormClosed;
+                this.MenuAddCompany.Show();
             }
             catch (Exception ex) { MessageBox.Show("добавитьКомпаниюToolStripMenuItem_Click: " + ex.ToString()); }
+        }
+
+        private void MenuAddCompany_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.MenuAddCompany = null;
         }
     }
 }

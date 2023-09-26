@@ -78,6 +78,18 @@
     <Compile Include="Companies\MainMenuCompany.Designer.cs">
       <DependentUpon>MainMenuCompany.cs</DependentUpon>
     </Compile>
+    <Compile Include="Companies\MenuAddCompany.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Companies\MenuAddCompany.Designer.cs">
+      <DependentUpon>MenuAddCompany.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Companies\MenuAddContactsCompany.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Companies\MenuAddContactsCompany.Designer.cs">
+      <DependentUpon>MenuAddContactsCompany.cs</DependentUpon>
+    </Compile>
     <Compile Include="DriversMenu\AddDriverContacts.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,6 +161,12 @@
     </Compile>
     <EmbeddedResource Include="Companies\MainMenuCompany.resx">
       <DependentUpon>MainMenuCompany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Companies\MenuAddCompany.resx">
+      <DependentUpon>MenuAddCompany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Companies\MenuAddContactsCompany.resx">
+      <DependentUpon>MenuAddContactsCompany.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DriversMenu\AddDriverContacts.resx">
       <DependentUpon>AddDriverContacts.cs</DependentUpon>
