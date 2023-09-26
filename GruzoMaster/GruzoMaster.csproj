@@ -96,6 +96,7 @@
     <Compile Include="LogMenu\LogMenu.Designer.cs">
       <DependentUpon>LogMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Objects\Company.cs" />
     <Compile Include="Objects\DriverInfo.cs" />
     <Compile Include="MainMenu.cs">
       <SubType>Form</SubType>

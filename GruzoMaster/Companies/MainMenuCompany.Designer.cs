@@ -35,6 +35,7 @@
             this.удалитьКомпаниюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.редактироватьКомпаниюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
+            this.экспортДанныхОКомпанииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,6 +52,7 @@
             this.Компании.Name = "Компании";
             this.Компании.Size = new System.Drawing.Size(169, 320);
             this.Компании.TabIndex = 1;
+            this.Компании.SelectedIndexChanged += new System.EventHandler(this.Компании_SelectedIndexChanged);
             // 
             // menuStrip1
             // 
@@ -67,7 +69,8 @@
             this.настройкиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.добавитьКомпаниюToolStripMenuItem,
             this.удалитьКомпаниюToolStripMenuItem,
-            this.редактироватьКомпаниюToolStripMenuItem});
+            this.редактироватьКомпаниюToolStripMenuItem,
+            this.экспортДанныхОКомпанииToolStripMenuItem});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
             this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
             this.настройкиToolStripMenuItem.Text = "Настройки";
@@ -75,20 +78,23 @@
             // добавитьКомпаниюToolStripMenuItem
             // 
             this.добавитьКомпаниюToolStripMenuItem.Name = "добавитьКомпаниюToolStripMenuItem";
-            this.добавитьКомпаниюToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.добавитьКомпаниюToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.добавитьКомпаниюToolStripMenuItem.Text = "Добавить компанию";
+            this.добавитьКомпаниюToolStripMenuItem.Click += new System.EventHandler(this.добавитьКомпаниюToolStripMenuItem_Click);
             // 
             // удалитьКомпаниюToolStripMenuItem
             // 
             this.удалитьКомпаниюToolStripMenuItem.Name = "удалитьКомпаниюToolStripMenuItem";
-            this.удалитьКомпаниюToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.удалитьКомпаниюToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.удалитьКомпаниюToolStripMenuItem.Text = "Удалить компанию";
+            this.удалитьКомпаниюToolStripMenuItem.Click += new System.EventHandler(this.удалитьКомпаниюToolStripMenuItem_Click);
             // 
             // редактироватьКомпаниюToolStripMenuItem
             // 
             this.редактироватьКомпаниюToolStripMenuItem.Name = "редактироватьКомпаниюToolStripMenuItem";
-            this.редактироватьКомпаниюToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.редактироватьКомпаниюToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.редактироватьКомпаниюToolStripMenuItem.Text = "Редактировать компанию";
+            this.редактироватьКомпаниюToolStripMenuItem.Click += new System.EventHandler(this.редактироватьКомпаниюToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -100,6 +106,13 @@
             this.label1.Size = new System.Drawing.Size(206, 20);
             this.label1.TabIndex = 3;
             this.label1.Text = "Информация о компании: ";
+            // 
+            // экспортДанныхОКомпанииToolStripMenuItem
+            // 
+            this.экспортДанныхОКомпанииToolStripMenuItem.Name = "экспортДанныхОКомпанииToolStripMenuItem";
+            this.экспортДанныхОКомпанииToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.экспортДанныхОКомпанииToolStripMenuItem.Text = "Экспорт данных о компании";
+            this.экспортДанныхОКомпанииToolStripMenuItem.Click += new System.EventHandler(this.экспортДанныхОКомпанииToolStripMenuItem_Click);
             // 
             // MainMenuCompany
             // 
@@ -130,5 +143,6 @@
         private System.Windows.Forms.ToolStripMenuItem удалитьКомпаниюToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem редактироватьКомпаниюToolStripMenuItem;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripMenuItem экспортДанныхОКомпанииToolStripMenuItem;
     }
 }
