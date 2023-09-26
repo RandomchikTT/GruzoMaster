@@ -47,6 +47,10 @@ namespace GruzoMaster
             /// Возможность изменять данные транспорта
             /// </summary>
             CanEditDataTransport = 8,
+            /// <summary>
+            /// Открывать меню с компаниями
+            /// </summary>
+            CanCheckCompanyMenu = 9,
         }
         private static Dictionary<UserType, Dictionary<UserSetting, Boolean>> UserSettingDictionary = new Dictionary<UserType, Dictionary<UserSetting, Boolean>>()
         {
@@ -60,6 +64,7 @@ namespace GruzoMaster
                 { UserSetting.CanDeleteTransport, true },
                 { UserSetting.CanAppendTransport, true },
                 { UserSetting.CanEditDataTransport, true },
+                { UserSetting.CanCheckCompanyMenu, true },
             }},
             { UserType.User, new Dictionary<UserSetting, Boolean>()
             {
@@ -71,6 +76,7 @@ namespace GruzoMaster
                 { UserSetting.CanDeleteTransport, true },
                 { UserSetting.CanAppendTransport, true },
                 { UserSetting.CanEditDataTransport, true },
+                { UserSetting.CanCheckCompanyMenu, true },
             }},
             { UserType.Owner, new Dictionary<UserSetting, Boolean>()
             {
@@ -82,6 +88,7 @@ namespace GruzoMaster
                 { UserSetting.CanDeleteTransport, true },
                 { UserSetting.CanAppendTransport, true },
                 { UserSetting.CanEditDataTransport, true },
+                { UserSetting.CanCheckCompanyMenu, true },
             }},
         };
         public static Boolean GetAccessUser(UserSetting userSetting)

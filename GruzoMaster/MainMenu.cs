@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GruzoMaster.Companies;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,7 @@ namespace GruzoMaster
     public partial class MainMenu : Form
     {
         private MenuDrivers MenuDrivers = null;
+        private MainMenuCompany MenuCompany = null;
         private LogMenu.LogMenu LogMenu = null;
         private TransportMenu.TransportMenu TransportMenu = null;
         public MainMenu(User userLogged)
@@ -37,6 +39,11 @@ namespace GruzoMaster
                 {
                     this.buttonListOfAuto.Visible = false;
                     this.buttonListOfAuto.Enabled = false;
+                }
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckCompanyMenu))
+                {
+                    this.buttonListOfCompany.Visible = false;
+                    this.buttonListOfCompany.Enabled = false;
                 }
             }
             catch (Exception ex) { MessageBox.Show("MainMenu: " + ex.ToString()); }
@@ -75,7 +82,28 @@ namespace GruzoMaster
 
         private void buttonListOfCompany_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (this.MenuCompany != null)
+                {
+                    MessageBox.Show("У вас уже есть открытое меню компаний !");
+                    return;
+                }
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckCompanyMenu))
+                {
+                    MessageBox.Show("У вас нету доступа к этому меню !");
+                    return;
+                }
+                this.MenuCompany = new MainMenuCompany();
+                this.MenuCompany.FormClosed += MenuCompany_FormClosed;
+                this.MenuCompany.Show();
+            }
+            catch (Exception ex) { MessageBox.Show("buttonListOfCompany_Click: " + ex.ToString()); }
+        }
 
+        private void MenuCompany_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.MenuCompany = null;
         }
 
         private void buttonListOfAuto_Click(object sender, EventArgs e)

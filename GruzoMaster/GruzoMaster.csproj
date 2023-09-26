@@ -72,6 +72,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Companies\MainMenuCompany.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Companies\MainMenuCompany.Designer.cs">
+      <DependentUpon>MainMenuCompany.cs</DependentUpon>
+    </Compile>
     <Compile Include="DriversMenu\AddDriverContacts.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +146,9 @@
     <Compile Include="TransportMenu\TransportMenu.Designer.cs">
       <DependentUpon>TransportMenu.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Companies\MainMenuCompany.resx">
+      <DependentUpon>MainMenuCompany.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DriversMenu\AddDriverContacts.resx">
       <DependentUpon>AddDriverContacts.cs</DependentUpon>
     </EmbeddedResource>
