@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GruzoMaster.Objects;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,17 +14,25 @@ namespace GruzoMaster.Companies
     public partial class MenuAddContactsCompany : Form
     {
         private MenuAddCompany MenuAddCompany = null;
-        public MenuAddContactsCompany(MenuAddCompany menuAddCompany = null)
+        private MenuEditDataCompany MenuEditDataCompany = null;
+        public MenuAddContactsCompany(MenuAddCompany menuAddCompany = null, MenuEditDataCompany menuEditDataCompany = null, Dictionary<PhoneNumber, String> phoneNumbers = null)
         {
+            this.MenuEditDataCompany = menuEditDataCompany;
             this.MenuAddCompany = menuAddCompany;
             InitializeComponent();
+            if (this.MenuEditDataCompany != null && phoneNumbers != null)
+            {
+                this.textBox2.Text = phoneNumbers.ContainsKey(PhoneNumber.Bellarusian) ? phoneNumbers[PhoneNumber.Bellarusian] : "";
+                this.textBox1.Text = phoneNumbers.ContainsKey(PhoneNumber.Russian) ? phoneNumbers[PhoneNumber.Russian] : "";
+                this.textBox3.Text = phoneNumbers.ContainsKey(PhoneNumber.Litva) ? phoneNumbers[PhoneNumber.Litva] : "";
+                this.buttonAddDriver.Text = "Изменить";
+            }
         }
 
         private void buttonAddDriver_Click(object sender, EventArgs e)
         {
             try
             {
-
                 #region Если администратор добавляет компанию 
                 if (this.MenuAddCompany != null)
                 {
@@ -31,6 +40,17 @@ namespace GruzoMaster.Companies
                     if (phoneNumbers != null)
                     {
                         this.MenuAddCompany.AddContactCompany(phoneNumbers);
+                        this.Close();
+                    }
+                }
+                #endregion
+                #region Если администратор изменяет данные о компании
+                if (this.MenuEditDataCompany != null)
+                {
+                    Dictionary<PhoneNumber, String> phoneNumbers = this.GetPhoneNumberDictionary();
+                    if (phoneNumbers != null)
+                    {
+                        this.MenuEditDataCompany.AddContactCompany(phoneNumbers);
                         this.Close();
                     }
                 }

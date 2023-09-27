@@ -1,8 +1,10 @@
 ﻿using GruzoMaster.Objects;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,6 +14,7 @@ namespace GruzoMaster.Companies
     {
         private List<Company> CompanyActiveList = new List<Company>();
         private MenuAddCompany MenuAddCompany = null;
+        private MenuEditDataCompany MenuEditDataCompany = null;
         public MainMenuCompany()
         {
             InitializeComponent();
@@ -78,16 +81,28 @@ namespace GruzoMaster.Companies
                 DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `companies` WHERE `id`={idKey}");
                 if (dataTable != null && dataTable.Rows.Count > 0)
                 {
-                    DataRow selectedCompany = dataTable.Rows[this.Компании.SelectedIndex];
+                    DataRow selectedCompany = dataTable.Rows[0];
+                    Dictionary<PhoneNumber, String> numberCalls = JsonConvert.DeserializeObject<Dictionary<PhoneNumber, String>>(selectedCompany["Contacts"].ToString());
+                    String numberPhonesText = "";
+                    foreach (KeyValuePair<PhoneNumber, String> number in numberCalls)
+                    {
+                        numberPhonesText += number.Value;
+                        if (numberCalls.Last().Value != number.Value)
+                        {
+                            numberPhonesText += ", ";
+                        }
+                    }
                     return $"Инофрмация о компании:" +
                         $"\nНазвание: {Convert.ToString(selectedCompany["Name"])}." +
                         $"\nСтрана: {Company.GetCountryRussianName((Company.CompanyCountry)Convert.ToInt32(selectedCompany["Country"]))}." +
                         $"\nГород: {Convert.ToString(selectedCompany["City"])}." +
-                        $"\nВремя добавления в базу данных: {Convert.ToString(selectedCompany["TimeAdded"])}.";
+                        $"\nВремя добавления в базу: {Convert.ToString(selectedCompany["TimeAdded"])}." +
+                        $"\nКонтактные телефоны: {numberPhonesText}." +
+                        $"\nПочта: {Convert.ToString(selectedCompany["Email"])}.";
                 }
                 else
                 {
-                    MessageBox.Show("Данная компания не была найдена в базе данных !");
+                    MessageBox.Show("Данная компания не была найдена в базе !");
                     this.LoadMainMenuCompanyDataBase();
                 }
                 return null;
@@ -124,10 +139,15 @@ namespace GruzoMaster.Companies
             }
             catch (Exception ex) { MessageBox.Show("экспортДанныхОКомпанииToolStripMenuItem_Click: " + ex.ToString()); }
         }
-        private void редактироватьКомпаниюToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void редактироватьКомпаниюToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
+                if (this.MenuEditDataCompany != null)
+                {
+                    MessageBox.Show("У вас уже есть открытое меню !");
+                    return;
+                }
                 if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanEditCompany))
                 {
                     MessageBox.Show("У вас нету доступа к этому меню !");
@@ -138,8 +158,30 @@ namespace GruzoMaster.Companies
                     MessageBox.Show("Выберите компанию !");
                     return;
                 }
+                Int32 idKey = this.CompanyActiveList[this.Компании.SelectedIndex].IdKey;
+                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `companies` WHERE `id`={idKey}");
+                if (dataTable != null && dataTable.Rows.Count > 0)
+                {
+                    this.MenuEditDataCompany = new MenuEditDataCompany(this, new Company()
+                    {
+                        IdKey = idKey,
+                        Name = Convert.ToString(dataTable.Rows[0]["Name"]),
+                        City = Convert.ToString(dataTable.Rows[0]["City"]),
+                        Email = Convert.ToString(dataTable.Rows[0]["Email"]),
+                        Country = (Company.CompanyCountry)Convert.ToInt32(dataTable.Rows[0]["Country"]),
+                        PhoneNumbers = JsonConvert.DeserializeObject<Dictionary<PhoneNumber, String>>(dataTable.Rows[0]["Contacts"].ToString())
+                    });
+                    this.MenuEditDataCompany.FormClosed += MenuEditDataCompany_FormClosed;
+                    this.MenuEditDataCompany.Show();
+                }
+
             }
             catch (Exception ex) { MessageBox.Show("редактироватьКомпаниюToolStripMenuItem_Click: " + ex.ToString()); }
+        }
+
+        private void MenuEditDataCompany_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.MenuEditDataCompany = null;
         }
 
         private async void удалитьКомпаниюToolStripMenuItem_Click(object sender, EventArgs e)

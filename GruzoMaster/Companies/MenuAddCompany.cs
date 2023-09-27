@@ -64,6 +64,11 @@ namespace GruzoMaster.Companies
                     MessageBox.Show("Введите город компании !");
                     return;
                 }
+                if (this.textBox3.Text == "" || this.textBox3.Text.Length < 3)
+                {
+                    MessageBox.Show("Введите почту компании !");
+                    return;
+                }
                 if (this.PhoneNumbers.Count <= 0)
                 {
                     MessageBox.Show("Вы не указали контакты компании !");
@@ -100,11 +105,12 @@ namespace GruzoMaster.Companies
                 DialogResult result = MessageBox.Show("Вы уверены что хотите добавить новую компанию ?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    Int64 id = await MySQL.QueryLastInsertAsync($"INSERT INTO `companies` (`Name`,`Country`,`Contacts`,`City`,`TimeAdded`) " +
-                    $"VALUES ('{this.textBox1.Text}',{(Int32)companyCountry},'{JsonConvert.SerializeObject(this.PhoneNumbers)}','{this.textBox2.Text}','{DateTime.Now}')");
+                    Int64 id = await MySQL.QueryLastInsertAsync($"INSERT INTO `companies` (`Name`,`Country`,`Contacts`,`City`,`TimeAdded`,`Email`) " +
+                    $"VALUES ('{this.textBox1.Text}',{(Int32)companyCountry},'{JsonConvert.SerializeObject(this.PhoneNumbers)}','{this.textBox2.Text}','{DateTime.Now}','{this.textBox3.Text}')");
                     MySQL.AddUserLog(User.LoggedUser.Login, $"Добавил компанию в базу данных: {this.textBox1.Text} #{id}.");
                     MessageBox.Show("Вы успешно добавили компанию в базу данных !");
                     this.MainMenuCompany?.LoadMainMenuCompanyDataBase();
+                    this.Close();
                 }
                 this.IsAwaitResult = false;
             }
