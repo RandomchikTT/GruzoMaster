@@ -83,7 +83,6 @@ namespace GruzoMaster
                 { UserSetting.CanCheckCompanyMenu, true },
                 { UserSetting.CanMakeExportDataCompany, true },
                 { UserSetting.CanAppendCompany, true },
-                { UserSetting.CanDeleteCompany, true },
                 { UserSetting.CanEditCompany, true },
             }},
             { UserType.User, new Dictionary<UserSetting, Boolean>()
