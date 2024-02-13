@@ -32,7 +32,9 @@ namespace GruzoMaster
         {
             try
             {
-                MessageBox.Show("В разработке !");
+                Registration.Registration registration = new Registration.Registration();
+                registration.Show();
+                this.Hide();
             }
             catch (Exception ex) { MessageBox.Show("Ошибка: " + ex.ToString()); }
         }
@@ -105,7 +107,7 @@ namespace GruzoMaster
 
         private void textBox2Click(object sender, EventArgs e)
         {
-            if (this.textBox1.Text == "Пароль")
+            if (this.textBox2.Text == "Пароль")
             {
                 this.textBox2.Text = "";
             }

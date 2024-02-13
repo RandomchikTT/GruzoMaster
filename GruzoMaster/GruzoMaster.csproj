@@ -147,6 +147,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Objects\User.cs" />
     <Compile Include="Objects\UserSettings.cs" />
+    <Compile Include="Registration\Registration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registration\Registration.Designer.cs">
+      <DependentUpon>Registration.cs</DependentUpon>
+    </Compile>
     <Compile Include="TransportMenu\MenuChangeDataTransport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -207,6 +213,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Registration\Registration.resx">
+      <DependentUpon>Registration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TransportMenu\MenuChangeDataTransport.resx">
       <DependentUpon>MenuChangeDataTransport.cs</DependentUpon>
     </EmbeddedResource>

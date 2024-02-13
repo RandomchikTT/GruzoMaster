@@ -111,3 +111,4 @@ C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\De
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.exe
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.pdb
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.Companies.MenuEditDataCompany.resources
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.Registration.Registration.resources
