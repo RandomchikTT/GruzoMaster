@@ -50,5 +50,9 @@ namespace GruzoMaster.Objects
         /// Почта
         /// </summary>
         public String Email { get; set; }
+        /// <summary>
+        /// Банковские даннные
+        /// </summary>
+        public Dictionary<CompanyBankData, String> BankData { get; set; }
     }
 }

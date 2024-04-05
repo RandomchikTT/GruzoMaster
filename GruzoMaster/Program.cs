@@ -16,6 +16,7 @@ namespace GruzoMaster
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Storage.Storage.LoadStorageInstance();
             Application.Run(new AuthorizationMenu());
         }
     }

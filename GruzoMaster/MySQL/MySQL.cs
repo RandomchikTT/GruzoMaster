@@ -23,7 +23,7 @@ namespace GruzoMaster
                     $"VALUES ('{login}','{DateTime.Now.ToString("G")}','{action}')");
             }
             catch (Exception e) { MessageBox.Show("AddUserLog: " + e.ToString()); }
-        }
+        }   
         public static async Task<DataTable> QueryRead(String cmd)
         {
             try

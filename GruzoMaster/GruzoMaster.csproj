@@ -78,6 +78,12 @@
     <Compile Include="Companies\MainMenuCompany.Designer.cs">
       <DependentUpon>MainMenuCompany.cs</DependentUpon>
     </Compile>
+    <Compile Include="Companies\MenuAddBankDataCompany.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Companies\MenuAddBankDataCompany.Designer.cs">
+      <DependentUpon>MenuAddBankDataCompany.cs</DependentUpon>
+    </Compile>
     <Compile Include="Companies\MenuAddCompany.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,6 +159,8 @@
     <Compile Include="Registration\Registration.Designer.cs">
       <DependentUpon>Registration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Storage\Objects\AuthData.cs" />
+    <Compile Include="Storage\Storage.cs" />
     <Compile Include="TransportMenu\MenuChangeDataTransport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,6 +181,9 @@
     </Compile>
     <EmbeddedResource Include="Companies\MainMenuCompany.resx">
       <DependentUpon>MainMenuCompany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Companies\MenuAddBankDataCompany.resx">
+      <DependentUpon>MenuAddBankDataCompany.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Companies\MenuAddCompany.resx">
       <DependentUpon>MenuAddCompany.cs</DependentUpon>

@@ -13,6 +13,14 @@ namespace GruzoMaster
         Russian = 1,
         Litva = 2,
     }
+    public enum CompanyBankData
+    {
+        INN = 0,
+        YNN = 1,
+        NameOfBank = 2,
+        NumberBank = 3,
+        AddressBank = 4,
+    }
     public enum License
     {
         B = 0,

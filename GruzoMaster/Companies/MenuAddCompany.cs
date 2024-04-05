@@ -16,7 +16,9 @@ namespace GruzoMaster.Companies
     {
         private Boolean IsAwaitResult = false;
         private MenuAddContactsCompany MenuAddContactsCompany = null;
+        private MenuAddBankDataCompany MenuAddBankDataCompany = null;
         private Dictionary<PhoneNumber, String> PhoneNumbers = new Dictionary<PhoneNumber, String>();
+        private Dictionary<CompanyBankData, String> BankData = new Dictionary<CompanyBankData, String>();
         private MainMenuCompany MainMenuCompany = null;
         public MenuAddCompany(MainMenuCompany mainMenuCompany = null)
         {
@@ -27,7 +29,10 @@ namespace GruzoMaster.Companies
         {
             this.PhoneNumbers = phoneNumbers;
         }
-
+        public void SetBankCompanyData(Dictionary<CompanyBankData, String> bankData)
+        {
+            this.BankData = bankData;
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             if (this.MenuAddContactsCompany != null)
@@ -105,8 +110,8 @@ namespace GruzoMaster.Companies
                 DialogResult result = MessageBox.Show("Вы уверены что хотите добавить новую компанию ?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    Int64 id = await MySQL.QueryLastInsertAsync($"INSERT INTO `companies` (`Name`,`Country`,`Contacts`,`City`,`TimeAdded`,`Email`) " +
-                    $"VALUES ('{this.textBox1.Text}',{(Int32)companyCountry},'{JsonConvert.SerializeObject(this.PhoneNumbers)}','{this.textBox2.Text}','{DateTime.Now}','{this.textBox3.Text}')");
+                    Int64 id = await MySQL.QueryLastInsertAsync($"INSERT INTO `companies` (`Name`,`Country`,`Contacts`,`City`,`TimeAdded`,`Email`,`BankData`) " +
+                    $"VALUES ('{this.textBox1.Text}',{(Int32)companyCountry},'{JsonConvert.SerializeObject(this.PhoneNumbers)}','{this.textBox2.Text}','{DateTime.Now}','{this.textBox3.Text}','{JsonConvert.SerializeObject(this.BankData)}')");
                     MySQL.AddUserLog(User.LoggedUser.Login, $"Добавил компанию в базу данных: {this.textBox1.Text} #{id}.");
                     MessageBox.Show("Вы успешно добавили компанию в базу данных !");
                     this.MainMenuCompany?.LoadMainMenuCompanyDataBase();
@@ -115,6 +120,27 @@ namespace GruzoMaster.Companies
                 this.IsAwaitResult = false;
             }
             catch (Exception ex) { MessageBox.Show("buttonAddDriver_Click: " + ex.ToString()); this.IsAwaitResult = false; }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.MenuAddBankDataCompany != null)
+                {
+                    MessageBox.Show("У вас уже есть открытое меню добавление реквизитов компании !");
+                    return;
+                }
+                this.MenuAddBankDataCompany = new MenuAddBankDataCompany(this, this.BankData);
+                this.MenuAddBankDataCompany.FormClosed += MenuAddBankDataCompany_FormClosed;
+                this.MenuAddBankDataCompany.Show();
+            }
+            catch (Exception ex) { MessageBox.Show("button2_Click: " + ex.ToString()); }
+        }
+
+        private void MenuAddBankDataCompany_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.MenuAddBankDataCompany = null;
         }
     }
 }

@@ -1,8 +1,11 @@
-﻿using System;
+﻿using GruzoMaster.Storage.Objects;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -18,6 +21,12 @@ namespace GruzoMaster
         {
             InitializeComponent();
             this.textBox2.KeyDown += TextBox2_KeyDown;
+            if (Storage.Storage.StorageInstance.AuthorizationData != null)
+            {
+                this.textBox1.Text = Storage.Storage.StorageInstance.AuthorizationData.Username;
+                this.textBox2.Text = Storage.Storage.StorageInstance.AuthorizationData.Password;
+                this.checkBox1.Checked = true;
+            }
         }
 
         private void TextBox2_KeyDown(object sender, KeyEventArgs e)
@@ -61,6 +70,7 @@ namespace GruzoMaster
                 }
                 this.IsWaitResult = true;
                 login = login.ToLower();
+                String passwordUnSha = password;
                 password = OtherFunctions.GetSha256(password);
                 DataTable result = await MySQL.QueryRead($"SELECT * FROM `users` WHERE `Login`='{login}'");
                 if (result == null || result.Rows.Count <= 0)
@@ -81,6 +91,27 @@ namespace GruzoMaster
                     Login = Convert.ToString(result.Rows[0]["Login"]),
                     Name = Convert.ToString(result.Rows[0]["Name"]),
                 });
+                AuthData authData = Storage.Storage.StorageInstance.AuthorizationData;
+                if (this.checkBox1.Checked)
+                {
+                    if (authData == null || authData.Username != login || authData.Password != passwordUnSha)
+                    {
+                        Storage.Storage.StorageInstance.AuthorizationData = new AuthData()
+                        {
+                            Password = passwordUnSha,
+                            Username = login,
+                        };
+                        Storage.Storage.SaveStorageInstance();
+                    }
+                }
+                else
+                {
+                    if (authData != null)
+                    {
+                        Storage.Storage.StorageInstance.AuthorizationData = null;
+                        Storage.Storage.SaveStorageInstance();
+                    }
+                }
                 this.Hide();
                 mainMenu.FormClosed += MainMenu_FormClosed;
                 mainMenu.Show();

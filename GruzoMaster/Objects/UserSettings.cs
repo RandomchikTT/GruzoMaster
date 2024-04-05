@@ -84,6 +84,7 @@ namespace GruzoMaster
                 { UserSetting.CanMakeExportDataCompany, true },
                 { UserSetting.CanAppendCompany, true },
                 { UserSetting.CanEditCompany, true },
+                { UserSetting.CanDeleteCompany, true },
             }},
             { UserType.User, new Dictionary<UserSetting, Boolean>()
             {
@@ -98,8 +99,8 @@ namespace GruzoMaster
                 { UserSetting.CanCheckCompanyMenu, true },
                 { UserSetting.CanMakeExportDataCompany, true },
                 { UserSetting.CanAppendCompany, true },
-                { UserSetting.CanDeleteCompany, true },
                 { UserSetting.CanEditCompany, true },
+                { UserSetting.CanDeleteCompany, true },
             }},
             { UserType.Owner, new Dictionary<UserSetting, Boolean>()
             {
@@ -114,8 +115,8 @@ namespace GruzoMaster
                 { UserSetting.CanCheckCompanyMenu, true },
                 { UserSetting.CanMakeExportDataCompany, true },
                 { UserSetting.CanAppendCompany, true },
-                { UserSetting.CanDeleteCompany, true },
                 { UserSetting.CanEditCompany, true },
+                { UserSetting.CanDeleteCompany, true },
             }},
         };
         public static Boolean GetAccessUser(UserSetting userSetting)
@@ -124,7 +125,9 @@ namespace GruzoMaster
             {
                 if (User.LoggedUser == null) return false;
                 if (User.LoggedUser.UserType == UserType.Owner) return true;
-                return UserSettingDictionary[User.LoggedUser.UserType][userSetting];
+                if (!UserSettingDictionary.TryGetValue(User.LoggedUser.UserType, out Dictionary<UserSetting, Boolean> userPermision)) return false;
+                if (!userPermision.ContainsKey(userSetting)) return false;
+                return userPermision[userSetting];
             }
             catch (Exception e) { MessageBox.Show("GetAccessUser: " + e.ToString()); return false; }
         }

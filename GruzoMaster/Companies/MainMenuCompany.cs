@@ -64,7 +64,7 @@ namespace GruzoMaster.Companies
             {
                 if (this.Компании.SelectedIndex == -1)
                 {
-                    MessageBox.Show("Выберите транспорт !");
+                    MessageBox.Show("Выберите компанию !");
                     return;
                 }
                 String text = await this.GetCompanyText();
@@ -92,13 +92,19 @@ namespace GruzoMaster.Companies
                             numberPhonesText += ", ";
                         }
                     }
+                    Dictionary<CompanyBankData, String> bankData = JsonConvert.DeserializeObject<Dictionary<CompanyBankData, String>>(selectedCompany["BankData"].ToString());
                     return $"Инофрмация о компании:" +
                         $"\nНазвание: {Convert.ToString(selectedCompany["Name"])}." +
                         $"\nСтрана: {Company.GetCountryRussianName((Company.CompanyCountry)Convert.ToInt32(selectedCompany["Country"]))}." +
                         $"\nГород: {Convert.ToString(selectedCompany["City"])}." +
                         $"\nВремя добавления в базу: {Convert.ToString(selectedCompany["TimeAdded"])}." +
                         $"\nКонтактные телефоны: {numberPhonesText}." +
-                        $"\nПочта: {Convert.ToString(selectedCompany["Email"])}.";
+                        $"\nПочта: {Convert.ToString(selectedCompany["Email"])}." +
+                        $"\nИНН: {bankData[CompanyBankData.INN]}" +
+                        $"\nУНН: {bankData[CompanyBankData.YNN]}" +
+                        $"\nАдрес банка: {bankData[CompanyBankData.AddressBank]}" +
+                        $"\nНазвание банка: {bankData[CompanyBankData.NameOfBank]}" +
+                        $"\nНомер банка: {bankData[CompanyBankData.NumberBank]}";
                 }
                 else
                 {
@@ -169,7 +175,8 @@ namespace GruzoMaster.Companies
                         City = Convert.ToString(dataTable.Rows[0]["City"]),
                         Email = Convert.ToString(dataTable.Rows[0]["Email"]),
                         Country = (Company.CompanyCountry)Convert.ToInt32(dataTable.Rows[0]["Country"]),
-                        PhoneNumbers = JsonConvert.DeserializeObject<Dictionary<PhoneNumber, String>>(dataTable.Rows[0]["Contacts"].ToString())
+                        PhoneNumbers = JsonConvert.DeserializeObject<Dictionary<PhoneNumber, String>>(dataTable.Rows[0]["Contacts"].ToString()),
+                        BankData = JsonConvert.DeserializeObject<Dictionary<CompanyBankData, String>>(dataTable.Rows[0]["BankData"].ToString()),
                     });
                     this.MenuEditDataCompany.FormClosed += MenuEditDataCompany_FormClosed;
                     this.MenuEditDataCompany.Show();
