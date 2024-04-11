@@ -18,6 +18,7 @@ namespace GruzoMaster.Companies
         private Boolean IsAwaitResult = false;
         private MainMenuCompany MainMenuCompany = null;
         private MenuAddContactsCompany MenuAddContactsCompany = null;
+        private MenuEditBankDataCompany MenuEditBankDataCompany = null;
         public MenuEditDataCompany(MainMenuCompany mainMenu, Company company)
         {
             this.MainMenuCompany = mainMenu;
@@ -38,6 +39,10 @@ namespace GruzoMaster.Companies
             this.textBox1.Text = this.CurrentCompanyEdit.Name;
             this.textBox2.Text = this.CurrentCompanyEdit.City;
             this.textBox3.Text = this.CurrentCompanyEdit.Email;
+        }
+        public void AddBankDataCompany(Dictionary<CompanyBankData, String> bankData)
+        {
+            this.CurrentCompanyEdit.BankData = bankData;
         }
         public void AddContactCompany(Dictionary<PhoneNumber, String> phoneNumbers)
         {
@@ -126,7 +131,8 @@ namespace GruzoMaster.Companies
                             $"`Country` = {Convert.ToInt32(companyCountry)}, " +
                             $"`Contacts` = '{JsonConvert.SerializeObject(this.CurrentCompanyEdit.PhoneNumbers)}', " +
                             $"`City` = '{this.textBox2.Text}', " +
-                            $"`Email` = '{this.textBox3.Text}' " +
+                            $"`Email` = '{this.textBox3.Text}'," +
+                            $"`BankData`= '{JsonConvert.SerializeObject(this.CurrentCompanyEdit.BankData)}'" +
                             $"WHERE `id` = {this.CurrentCompanyEdit.IdKey}");
                 MySQL.AddUserLog(User.LoggedUser.Login, $"Изменил данные компании: {this.CurrentCompanyEdit.Name} #{this.CurrentCompanyEdit.IdKey}.");
                 MessageBox.Show("Вы успешно изменили данные компании !");
@@ -134,6 +140,18 @@ namespace GruzoMaster.Companies
                 this.Close();
             }
             this.IsAwaitResult = false;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.MenuEditBankDataCompany = new MenuEditBankDataCompany(this, this.CurrentCompanyEdit.BankData);
+            this.MenuEditBankDataCompany.Show();
+            this.MenuEditBankDataCompany.FormClosed += MenuEditBankDataCompany_FormClosed;
+        }
+
+        private void MenuEditBankDataCompany_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.MenuEditBankDataCompany = null;
         }
     }
 }

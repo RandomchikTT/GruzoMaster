@@ -21,9 +21,9 @@ namespace GruzoMaster.Companies
             {
                 this.textBox1.Text = dataCompanyBank[CompanyBankData.INN];
             }
-            if (dataCompanyBank.ContainsKey(CompanyBankData.YNN))
+            if (dataCompanyBank.ContainsKey(CompanyBankData.LTD))
             {
-                this.textBox2.Text = dataCompanyBank[CompanyBankData.YNN];
+                this.textBox2.Text = dataCompanyBank[CompanyBankData.LTD];
             }
             if (dataCompanyBank.ContainsKey(CompanyBankData.NameOfBank))
             {
@@ -44,14 +44,14 @@ namespace GruzoMaster.Companies
             try
             {
                 String INN = this.textBox1.Text,
-                    YNN = this.textBox2.Text,
+                    LTD = this.textBox2.Text,
                     nameBank = this.textBox3.Text,
                     numberBankAccount = this.textBox4.Text,
                     adressBank = this.textBox5.Text;
                 Dictionary<CompanyBankData, String> dataCompanyBank = new Dictionary<CompanyBankData, String>
                 {
                     { CompanyBankData.INN, INN },
-                    { CompanyBankData.YNN, YNN },
+                    { CompanyBankData.LTD, LTD },
                     { CompanyBankData.NameOfBank, nameBank },
                     { CompanyBankData.NumberBank, numberBankAccount },
                     { CompanyBankData.AddressBank, adressBank },

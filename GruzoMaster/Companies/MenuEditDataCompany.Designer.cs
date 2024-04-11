@@ -41,6 +41,7 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -138,7 +139,7 @@
             this.buttonAddDriver.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonAddDriver.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.buttonAddDriver.ForeColor = System.Drawing.Color.White;
-            this.buttonAddDriver.Location = new System.Drawing.Point(107, 563);
+            this.buttonAddDriver.Location = new System.Drawing.Point(107, 604);
             this.buttonAddDriver.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonAddDriver.Name = "buttonAddDriver";
             this.buttonAddDriver.Size = new System.Drawing.Size(461, 78);
@@ -212,12 +213,28 @@
             this.textBox3.TabIndex = 39;
             this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(129)))), ((int)(((byte)(0)))));
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(107, 541);
+            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(461, 46);
+            this.button2.TabIndex = 41;
+            this.button2.Text = "Банковские реквизиты";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // MenuEditDataCompany
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
-            this.ClientSize = new System.Drawing.Size(675, 652);
+            this.ClientSize = new System.Drawing.Size(675, 708);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.groupBox1);
@@ -253,5 +270,6 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button button2;
     }
 }

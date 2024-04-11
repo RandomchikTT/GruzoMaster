@@ -85,9 +85,9 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(259, 152);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 23);
+            this.label1.Size = new System.Drawing.Size(41, 23);
             this.label1.TabIndex = 38;
-            this.label1.Text = "УНП";
+            this.label1.Text = "LTD";
             // 
             // textBox1
             // 

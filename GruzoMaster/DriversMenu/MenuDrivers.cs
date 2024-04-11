@@ -84,7 +84,7 @@ namespace GruzoMaster
                 DataTable selectDriver = await MySQL.QueryRead($"SELECT * FROM `drivers` WHERE `id`={idKey}");
                 if (selectDriver != null && selectDriver.Rows.Count > 0)
                 {
-                    DataRow dataRowCollection = selectDriver.Rows[this.Водители.SelectedIndex];
+                    DataRow dataRowCollection = selectDriver.Rows[0];
                     List<License> listLicense = JsonConvert.DeserializeObject<List<License>>(dataRowCollection["ListLicenses"].ToString());
                     String licText = "";
                     foreach (License license in listLicense)

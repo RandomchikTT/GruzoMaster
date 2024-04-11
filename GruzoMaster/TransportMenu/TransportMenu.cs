@@ -69,7 +69,7 @@ namespace GruzoMaster.TransportMenu
                 DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `transport` WHERE `id`={idKey}");
                 if (dataTable != null && dataTable.Rows.Count > 0)
                 {
-                    DataRow selectedVehicle = dataTable.Rows[this.Транспорт.SelectedIndex];
+                    DataRow selectedVehicle = dataTable.Rows[0];
                     return $"Инофрмация о транспорте:" +
                         $"\nМарка: {Convert.ToString((Transport.TransportModel)Convert.ToInt32(selectedVehicle["Brand"]))}." +
                         $"\nМодель: {Convert.ToString(selectedVehicle["Model"])}." +

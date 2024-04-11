@@ -96,6 +96,12 @@
     <Compile Include="Companies\MenuAddContactsCompany.Designer.cs">
       <DependentUpon>MenuAddContactsCompany.cs</DependentUpon>
     </Compile>
+    <Compile Include="Companies\MenuEditBankDataCompany.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Companies\MenuEditBankDataCompany.Designer.cs">
+      <DependentUpon>MenuEditBankDataCompany.cs</DependentUpon>
+    </Compile>
     <Compile Include="Companies\MenuEditDataCompany.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -190,6 +196,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Companies\MenuAddContactsCompany.resx">
       <DependentUpon>MenuAddContactsCompany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Companies\MenuEditBankDataCompany.resx">
+      <DependentUpon>MenuEditBankDataCompany.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Companies\MenuEditDataCompany.resx">
       <DependentUpon>MenuEditDataCompany.cs</DependentUpon>

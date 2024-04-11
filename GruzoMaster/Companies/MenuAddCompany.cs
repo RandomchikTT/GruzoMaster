@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -72,6 +73,12 @@ namespace GruzoMaster.Companies
                 if (this.textBox3.Text == "" || this.textBox3.Text.Length < 3)
                 {
                     MessageBox.Show("Введите почту компании !");
+                    return;
+                }
+                String pattern = @"^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$";
+                if (!Regex.IsMatch(textBox3.Text, pattern))
+                {
+                    MessageBox.Show("Пожалуйста, введите корректный почтовый адрес!");
                     return;
                 }
                 if (this.PhoneNumbers.Count <= 0)

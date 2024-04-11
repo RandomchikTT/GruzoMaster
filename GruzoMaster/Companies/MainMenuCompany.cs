@@ -101,10 +101,10 @@ namespace GruzoMaster.Companies
                         $"\nКонтактные телефоны: {numberPhonesText}." +
                         $"\nПочта: {Convert.ToString(selectedCompany["Email"])}." +
                         $"\nИНН: {bankData[CompanyBankData.INN]}" +
-                        $"\nУНН: {bankData[CompanyBankData.YNN]}" +
+                        $"\nLTD: {bankData[CompanyBankData.LTD]}" +
                         $"\nАдрес банка: {bankData[CompanyBankData.AddressBank]}" +
                         $"\nНазвание банка: {bankData[CompanyBankData.NameOfBank]}" +
-                        $"\nНомер банка: {bankData[CompanyBankData.NumberBank]}";
+                        $"\nНомер банковского счета: {bankData[CompanyBankData.NumberBank]}";
                 }
                 else
                 {

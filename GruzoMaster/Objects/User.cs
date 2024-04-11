@@ -16,7 +16,7 @@ namespace GruzoMaster
     public enum CompanyBankData
     {
         INN = 0,
-        YNN = 1,
+        LTD = 1,
         NameOfBank = 2,
         NumberBank = 3,
         AddressBank = 4,
