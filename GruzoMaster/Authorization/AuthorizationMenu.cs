@@ -90,6 +90,7 @@ namespace GruzoMaster
                     UserType = (UserType)Convert.ToInt32(result.Rows[0]["UserType"]),
                     Login = Convert.ToString(result.Rows[0]["Login"]),
                     Name = Convert.ToString(result.Rows[0]["Name"]),
+                    ID = Convert.ToInt32(result.Rows[0]["id"])
                 });
                 AuthData authData = Storage.Storage.StorageInstance.AuthorizationData;
                 if (this.checkBox1.Checked)

@@ -20,6 +20,6 @@ namespace GruzoMaster.Objects.Cargo
         /// <summary>
         /// Время создания лога
         /// </summary>
-        public DateTime TimeCreated { get; set; }
+        public DateTime TimeCreated { get; set; } = DateTime.Now;
     }
 }

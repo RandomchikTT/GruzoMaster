@@ -73,6 +73,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CargoMenu\AddCargoMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CargoMenu\AddCargoMenu.Designer.cs">
+      <DependentUpon>AddCargoMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="CargoMenu\MainCargoMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -195,6 +201,9 @@
     <Compile Include="TransportMenu\TransportMenu.Designer.cs">
       <DependentUpon>TransportMenu.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CargoMenu\AddCargoMenu.resx">
+      <DependentUpon>AddCargoMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CargoMenu\MainCargoMenu.resx">
       <DependentUpon>MainCargoMenu.cs</DependentUpon>
     </EmbeddedResource>

@@ -47,6 +47,7 @@ namespace GruzoMaster
         public String Login { get; set; } = String.Empty;
         public String Name { get; set; } = String.Empty;
         public UserType UserType { get; set; } = UserType.User;
+        public Int32 ID { get; set; }
         public static async Task<User> GetUserById(Int32 id)
         {
             try
@@ -58,6 +59,7 @@ namespace GruzoMaster
                     DataRow row = dataTable.Rows[0];
                     user = new User()
                     {
+                        ID = Convert.ToInt32(row["id"]),
                         Name = Convert.ToString(row["Name"]),
                         Login = Convert.ToString(row["Login"]),
                         UserType = (UserType)Convert.ToInt32(row["UserType"]),

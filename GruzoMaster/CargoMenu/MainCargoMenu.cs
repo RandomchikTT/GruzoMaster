@@ -17,6 +17,7 @@ namespace GruzoMaster.CargoMenu
     public partial class MainCargoMenu : Form
     {
         public List<Cargo> CargoList { get; set; } = new List<Cargo>();
+        private AddCargoMenu AddCargoMenu { get; set; } = null;
         public MainCargoMenu()
         {
             InitializeComponent();
@@ -128,6 +129,23 @@ namespace GruzoMaster.CargoMenu
                     cargo.Forwarder?.Name
                 );
             }
+        }
+
+        private void добавитьЗаказToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.AddCargoMenu != null)
+            {
+                MessageBox.Show("У вас уже есть открытое меню добавления груза !");
+                return;
+            }
+            this.AddCargoMenu = new AddCargoMenu();
+            this.AddCargoMenu.FormClosed += AddCargoMenu_FormClosed;
+            this.AddCargoMenu.Show();
+        }
+
+        private void AddCargoMenu_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.AddCargoMenu = null;
         }
     }
 }

@@ -189,6 +189,31 @@ namespace GruzoMaster.TransportMenu
         {
             this.TransportAddInParkMenu = null;
         }
+        public static async Task<List<Transport>> GetTransports()
+        {
+            try
+            {
+                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `transport`");
+                List<Transport> transport = new List<Transport>();
+                if (dataTable != null && dataTable.Rows.Count > 0)
+                {
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        transport.Add(new Transport()
+                        {
+                            IdKey = Convert.ToInt32(row["id"]),
+                            TransportModelName = (Transport.TransportModel)Convert.ToInt32(row["Brand"]),
+                            ModelDescriptionName = Convert.ToString(row["Model"]),
+                            TransportTypeName = (Transport.TransportType)Convert.ToInt32(row["Type"]),
+                            GovNumber = Convert.ToString(row["GovNumber"]),
+                            TimeTechInspection = Convert.ToDateTime(row["TechInspection"])
+                        });
+                    }
+                }
+                return transport;
+            }
+            catch (Exception ex) { MessageBox.Show("GetTransports: " + ex.ToString()); return new List<Transport>(); }
+        }
         public static async Task<Transport> GetTransportById(Int32 id)
         {
             try

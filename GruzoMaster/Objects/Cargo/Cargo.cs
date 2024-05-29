@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MySqlConnector;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -73,6 +75,18 @@ namespace GruzoMaster.Objects.Cargo
                 default:
                     return "Неизвестный статус"; // Обработка неизвестных значений
             }
+        }
+        public async void Create()
+        {
+            try
+            {
+                await MySQL.QueryAsync($"INSERT INTO `cargo` (`ID_user_creator`,`ID_company`,`ID_Transport`,`Name`,`Description`," +
+                    $"`AddressFromCargo`,`AddressToCargo`,`DriverID`,`Price`,`DeliveryType`,`CargoLogs`,`ForwarderID`) " +
+                    $"VALUES ({this.CreateUserCargo.ID},{this.CustomerCompany.IdKey},{this.TransportCargo.IdKey}," +
+                    $"'{this.Name}','{this.Description}','{this.AddressFromCargo}','{this.AddressToCargo}',{this.Driver.IdKey},{this.Price},{(Int32)this.DeliveryType}," +
+                    $"'{JsonConvert.SerializeObject(this.CargoLogs)}',{this.Forwarder.ID})");
+            }
+            catch (Exception ex) { MessageBox.Show("Create: " + ex.ToString()); }
         }
     }
 }

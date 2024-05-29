@@ -216,6 +216,36 @@ namespace GruzoMaster
             }
             catch (Exception ex) { MessageBox.Show("Удалить_Водителя_ToolStripMenuItem_Click: " + ex.ToString()); }
         }
+        public static async Task<List<DriverInfo>> GetDrivers()
+        {
+            try
+            {
+                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `drivers`");
+                List<DriverInfo> driverInfos = new List<DriverInfo>();
+                if (dataTable != null && dataTable.Rows.Count > 0)
+                {
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        List<License> listLicense = JsonConvert.DeserializeObject<List<License>>(row["ListLicenses"].ToString());
+                        Dictionary<PhoneNumber, String> numberCalls = JsonConvert.DeserializeObject<Dictionary<PhoneNumber, String>>(row["PhoneNumbers"].ToString());
+                        driverInfos.Add(new DriverInfo()
+                        {
+                            FullName = Convert.ToString(row["FullName"]),
+                            BirthDay = Convert.ToDateTime(row["DateBirthday"]),
+                            MedSpavka = Convert.ToDateTime(row["MedSpravka"]),
+                            ListLicense = listLicense,
+                            PhoneNumbers = numberCalls,
+                            SerialPassport = Convert.ToString(row["SerialPassport"]),
+                            NumberPassport = Convert.ToString(row["NumberPassport"]),
+                            Address = Convert.ToString(row["Address"]),
+                            IdKey = Convert.ToInt32(row["id"]),
+                        });
+                    }
+                }
+                return driverInfos;
+            }
+            catch (Exception ex) { MessageBox.Show("GetDriverById: " + ex.ToString()); return new List<DriverInfo>(); }
+        }
         public static async Task<DriverInfo> GetDriverById(Int32 id)
         {
             try
