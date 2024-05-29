@@ -1,4 +1,5 @@
 ﻿using GruzoMaster.Objects;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -38,6 +39,7 @@ namespace GruzoMaster.TransportMenu
             }
             catch (Exception e) { MessageBox.Show("TransportMenu: " + e.ToString()); }
         }
+        
         public async void LoadTransportMenu()
         {
             try
@@ -187,7 +189,29 @@ namespace GruzoMaster.TransportMenu
         {
             this.TransportAddInParkMenu = null;
         }
-
+        public static async Task<Transport> GetTransportById(Int32 id)
+        {
+            try
+            {
+                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `transport` WHERE `id`={id}");
+                Transport transport = null;
+                if (dataTable != null && dataTable.Rows.Count > 0)
+                {
+                    DataRow row = dataTable.Rows[0];
+                    transport = new Transport()
+                    {
+                        IdKey = Convert.ToInt32(row["id"]),
+                        TransportModelName = (Transport.TransportModel)Convert.ToInt32(row["Brand"]),
+                        ModelDescriptionName = Convert.ToString(row["Model"]),
+                        TransportTypeName = (Transport.TransportType)Convert.ToInt32(row["Type"]),
+                        GovNumber = Convert.ToString(row["GovNumber"]),
+                        TimeTechInspection = Convert.ToDateTime(row["TechInspection"])
+                    };
+                }
+                return transport;
+            }
+            catch (Exception ex) { MessageBox.Show("GetTransportById: " + ex.ToString()); return null; }
+        }
         private async void изменитьДанныеОТранспортеToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try

@@ -1,4 +1,5 @@
-﻿using GruzoMaster.Companies;
+﻿using GruzoMaster.CargoMenu;
+using GruzoMaster.Companies;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,7 @@ namespace GruzoMaster
         private MainMenuCompany MenuCompany = null;
         private LogMenu.LogMenu LogMenu = null;
         private TransportMenu.TransportMenu TransportMenu = null;
+        private MainCargoMenu MainCargoMenu = null;
         public MainMenu(User userLogged)
         {
             try
@@ -77,7 +79,24 @@ namespace GruzoMaster
 
         private void buttonTableOrders_Click(object sender, EventArgs e)
         {
+            if (this.MainCargoMenu != null)
+            {
+                MessageBox.Show("У вас уже есть открытое меню грузов !");
+                return;
+            }
+            if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CheckCargoMenu))
+            {
+                MessageBox.Show("У вас нету доступа к этому меню !");
+                return;
+            }
+            this.MainCargoMenu = new MainCargoMenu();
+            this.MainCargoMenu.FormClosed += MainCargoMenu_FormClosed;
+            this.MainCargoMenu.Show();
+        }
 
+        private void MainCargoMenu_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.MainCargoMenu = null;
         }
 
         private void buttonListOfCompany_Click(object sender, EventArgs e)

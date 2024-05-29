@@ -90,7 +90,6 @@ C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\De
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.csproj.AssemblyReference.cache
-C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.csproj.SuggestedBindingRedirects.cache
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.Companies.MainMenuCompany.resources
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.Companies.MenuAddCompany.resources
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.Companies.MenuAddContactsCompany.resources
@@ -107,10 +106,11 @@ C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\De
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.TransportMenu.TransportMenu.resources
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.csproj.GenerateResource.cache
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.csproj.CoreCompileInputs.cache
-C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.csproj.CopyComplete
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.exe
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.pdb
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.Companies.MenuEditDataCompany.resources
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.Registration.Registration.resources
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.Companies.MenuAddBankDataCompany.resources
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.Companies.MenuEditBankDataCompany.resources
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMas.27155F27.Up2Date
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.CargoMenu.MainCargoMenu.resources

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using GruzoMaster.Objects;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -215,7 +216,34 @@ namespace GruzoMaster
             }
             catch (Exception ex) { MessageBox.Show("Удалить_Водителя_ToolStripMenuItem_Click: " + ex.ToString()); }
         }
-
+        public static async Task<DriverInfo> GetDriverById(Int32 id)
+        {
+            try
+            {
+                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `drivers` WHERE `id`={id}");
+                DriverInfo driverInfo = null;
+                if (dataTable != null && dataTable.Rows.Count > 0)
+                {
+                    DataRow row = dataTable.Rows[0];
+                    List<License> listLicense = JsonConvert.DeserializeObject<List<License>>(row["ListLicenses"].ToString());
+                    Dictionary<PhoneNumber, String> numberCalls = JsonConvert.DeserializeObject<Dictionary<PhoneNumber, String>>(row["PhoneNumbers"].ToString());
+                    driverInfo = new DriverInfo()
+                    {
+                        FullName = Convert.ToString(row["FullName"]),
+                        BirthDay = Convert.ToDateTime(row["DateBirthday"]),
+                        MedSpavka = Convert.ToDateTime(row["MedSpravka"]),
+                        ListLicense = listLicense,
+                        PhoneNumbers = numberCalls,
+                        SerialPassport = Convert.ToString(row["SerialPassport"]),
+                        NumberPassport = Convert.ToString(row["NumberPassport"]),
+                        Address = Convert.ToString(row["Address"]),
+                        IdKey = Convert.ToInt32(row["id"]),
+                    };
+                }
+                return driverInfo;
+            }
+            catch (Exception ex) { MessageBox.Show("GetDriverById: " + ex.ToString()); return null; }
+        }
         private async void изменитьДанныеВодителяToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try

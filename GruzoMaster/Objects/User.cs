@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +36,7 @@ namespace GruzoMaster
         User = 0,
         Admin = 1,
         Owner = 2,
+        Forwarder = 3,
     }
     public class User
     {
@@ -44,5 +47,25 @@ namespace GruzoMaster
         public String Login { get; set; } = String.Empty;
         public String Name { get; set; } = String.Empty;
         public UserType UserType { get; set; } = UserType.User;
+        public static async Task<User> GetUserById(Int32 id)
+        {
+            try
+            {
+                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `users` WHERE `id`={id}");
+                User user = null;
+                if (dataTable != null && dataTable.Rows.Count > 0)
+                {
+                    DataRow row = dataTable.Rows[0];
+                    user = new User()
+                    {
+                        Name = Convert.ToString(row["Name"]),
+                        Login = Convert.ToString(row["Login"]),
+                        UserType = (UserType)Convert.ToInt32(row["UserType"]),
+                    };
+                }
+                return user;
+            }
+            catch (Exception e) { MessageBox.Show("GetUserById: " + e.ToString()); return null; }
+        }
     }
 }

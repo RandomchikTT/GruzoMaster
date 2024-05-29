@@ -8,10 +8,11 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>GruzoMaster</RootNamespace>
     <AssemblyName>GruzoMaster</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -72,6 +73,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CargoMenu\MainCargoMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CargoMenu\MainCargoMenu.Designer.cs">
+      <DependentUpon>MainCargoMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Companies\MainMenuCompany.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +133,9 @@
     <Compile Include="LogMenu\LogMenu.Designer.cs">
       <DependentUpon>LogMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Objects\Cargo\Cargo.cs" />
+    <Compile Include="Objects\Cargo\CargoDeliveryType.cs" />
+    <Compile Include="Objects\Cargo\CargoLog.cs" />
     <Compile Include="Objects\Company.cs" />
     <Compile Include="Objects\DriverInfo.cs" />
     <Compile Include="MainMenu.cs">
@@ -185,6 +195,9 @@
     <Compile Include="TransportMenu\TransportMenu.Designer.cs">
       <DependentUpon>TransportMenu.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CargoMenu\MainCargoMenu.resx">
+      <DependentUpon>MainCargoMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Companies\MainMenuCompany.resx">
       <DependentUpon>MainMenuCompany.cs</DependentUpon>
     </EmbeddedResource>
@@ -232,6 +245,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Registration\Registration.resx">
       <DependentUpon>Registration.cs</DependentUpon>
