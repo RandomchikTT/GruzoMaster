@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
+using System.Globalization;
 using System.Linq;
 using System.Security.Permissions;
 using System.Text;
@@ -21,18 +23,21 @@ namespace GruzoMaster.CargoMenu
         public MainCargoMenu()
         {
             InitializeComponent();
-            LoadCargoMenu();
+            dataGridView1.UserDeletingRow += DataGridView1_UserDeletingRow;
+            LoadCargoMenu(1);
         }
-        public async void LoadCargoMenu()
+        public async void LoadCargoMenu(Int32 currentPage, Int32 pageSize = 30)
         {
             try
             {
-                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `cargo`");
+                Int32 offset = (currentPage - 1) * pageSize;
+                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `cargo` LIMIT {pageSize} OFFSET {offset}");
+                CargoList.Clear();
                 if (dataTable != null && dataTable.Rows.Count > 0)
                 {
                     foreach (DataRow row in dataTable.Rows)
                     {
-                        Int32 idCargo = Convert.ToInt32(row["ID"]);
+                        Int64 idCargo = Convert.ToInt64(row["ID"]);
                         Int32 idCreatorUser = Convert.ToInt32(row["ID_user_creator"]);
                         Int32 idCompany = Convert.ToInt32(row["ID_company"]);
                         Int32 idTrasport = Convert.ToInt32(row["ID_Transport"]);
@@ -87,6 +92,7 @@ namespace GruzoMaster.CargoMenu
                         });
                     }
                     PopulateDataGridView();
+                    this.textBox1.Text = currentPage.ToString();
                 }
             }
             catch (Exception e) { MessageBox.Show("LoadCargoMenu: " + e.ToString()); }
@@ -121,7 +127,7 @@ namespace GruzoMaster.CargoMenu
                     cargo.Driver?.FullName,
                     cargo.TransportCargo?.GovNumber,
                     cargo.TransportCargo?.ModelDescriptionName,
-                    cargo.Price,
+                    cargo.Price.ToString("N0", new CultureInfo("en-US")).Replace(",", "."),
                     cargo.Name,
                     cargo.GetDeliveryTypeDescription(),
                     cargo.AddressFromCargo,
@@ -130,7 +136,6 @@ namespace GruzoMaster.CargoMenu
                 );
             }
         }
-
         private void добавитьЗаказToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (this.AddCargoMenu != null)
@@ -142,10 +147,29 @@ namespace GruzoMaster.CargoMenu
             this.AddCargoMenu.FormClosed += AddCargoMenu_FormClosed;
             this.AddCargoMenu.Show();
         }
-
+        private void DataGridView1_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            e.Cancel = true;
+        }
         private void AddCargoMenu_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.AddCargoMenu = null;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.LoadCargoMenu(Convert.ToInt32(this.textBox1.Text) + 1);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Int32 page = Convert.ToInt32(this.textBox1.Text);
+            if (page <= 1)
+            {
+                MessageBox.Show("Это предыдущая страницы !");
+                return;
+            }
+            this.LoadCargoMenu(page - 1);
         }
     }
 }

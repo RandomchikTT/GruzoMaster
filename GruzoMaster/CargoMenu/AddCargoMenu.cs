@@ -119,6 +119,7 @@ namespace GruzoMaster.CargoMenu
                             Description = "Создал заявку на выполнение груза"
                         }
                     },
+                    TransportCargo = transport,
                     DeliveryType = CargoDeliveryType.Created,
                     Price = priceCargo,
                     Driver = driverInfo,
@@ -129,7 +130,9 @@ namespace GruzoMaster.CargoMenu
                     AddressToCargo = this.addressToCargo.Text,
                     Description = this.descriptionCargo.Text,
                 };
-                
+                newCargo.Create();
+                MessageBox.Show("Вы успешно создали заявку на груз !");
+                this.Close();
             }
             catch (Exception ex) { MessageBox.Show("buttonAddCargo_Click: " + ex.ToString()); }
         }

@@ -140,6 +140,8 @@
             // nameCargo
             // 
             this.nameCargo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
+            this.nameCargo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.nameCargo.ForeColor = System.Drawing.Color.White;
             this.nameCargo.Location = new System.Drawing.Point(209, 352);
             this.nameCargo.Multiline = true;
             this.nameCargo.Name = "nameCargo";
@@ -160,6 +162,8 @@
             // descriptionCargo
             // 
             this.descriptionCargo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
+            this.descriptionCargo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.descriptionCargo.ForeColor = System.Drawing.Color.White;
             this.descriptionCargo.Location = new System.Drawing.Point(209, 439);
             this.descriptionCargo.Multiline = true;
             this.descriptionCargo.Name = "descriptionCargo";
@@ -180,6 +184,8 @@
             // addressFromCargo
             // 
             this.addressFromCargo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
+            this.addressFromCargo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.addressFromCargo.ForeColor = System.Drawing.Color.White;
             this.addressFromCargo.Location = new System.Drawing.Point(209, 534);
             this.addressFromCargo.Multiline = true;
             this.addressFromCargo.Name = "addressFromCargo";
@@ -200,6 +206,8 @@
             // addressToCargo
             // 
             this.addressToCargo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
+            this.addressToCargo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.addressToCargo.ForeColor = System.Drawing.Color.White;
             this.addressToCargo.Location = new System.Drawing.Point(209, 622);
             this.addressToCargo.Multiline = true;
             this.addressToCargo.Name = "addressToCargo";
@@ -220,6 +228,8 @@
             // priceCargo
             // 
             this.priceCargo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
+            this.priceCargo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.priceCargo.ForeColor = System.Drawing.Color.White;
             this.priceCargo.Location = new System.Drawing.Point(209, 715);
             this.priceCargo.Multiline = true;
             this.priceCargo.Name = "priceCargo";

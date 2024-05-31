@@ -11,7 +11,7 @@ namespace GruzoMaster.Objects.Cargo
         /// <summary>
         /// Айди груза
         /// </summary>
-        public Int32 ID { get; set; }
+        public Int64 ID { get; set; }
         /// <summary>
         /// Компания заказчик
         /// </summary>
@@ -80,11 +80,13 @@ namespace GruzoMaster.Objects.Cargo
         {
             try
             {
-                await MySQL.QueryAsync($"INSERT INTO `cargo` (`ID_user_creator`,`ID_company`,`ID_Transport`,`Name`,`Description`," +
+                Int32 idForwarder = this.Forwarder != null ? this.Forwarder.ID : -1;
+                Int64 id = await MySQL.QueryLastInsertAsync($"INSERT INTO `cargo` (`ID_user_creator`,`ID_company`,`ID_Transport`,`Name`,`Description`," +
                     $"`AddressFromCargo`,`AddressToCargo`,`DriverID`,`Price`,`DeliveryType`,`CargoLogs`,`ForwarderID`) " +
                     $"VALUES ({this.CreateUserCargo.ID},{this.CustomerCompany.IdKey},{this.TransportCargo.IdKey}," +
                     $"'{this.Name}','{this.Description}','{this.AddressFromCargo}','{this.AddressToCargo}',{this.Driver.IdKey},{this.Price},{(Int32)this.DeliveryType}," +
-                    $"'{JsonConvert.SerializeObject(this.CargoLogs)}',{this.Forwarder.ID})");
+                    $"'{JsonConvert.SerializeObject(this.CargoLogs)}',{idForwarder})");
+                this.ID = id;
             }
             catch (Exception ex) { MessageBox.Show("Create: " + ex.ToString()); }
         }
