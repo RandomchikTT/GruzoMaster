@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Security.Permissions;
 using System.Windows.Forms;
 
 namespace GruzoMaster.Objects.Cargo
@@ -60,9 +61,9 @@ namespace GruzoMaster.Objects.Cargo
         /// Логирование про груз
         /// </summary>
         public List<CargoLog> CargoLogs { get; set; }
-        public string GetDeliveryTypeDescription()
+        public static string GetDeliveryTypeDescription(CargoDeliveryType DeliveryType)
         {
-            switch (this.DeliveryType)
+            switch (DeliveryType)
             {
                 case CargoDeliveryType.InProcessing:
                     return "В обработке";
@@ -75,6 +76,17 @@ namespace GruzoMaster.Objects.Cargo
                 default:
                     return "Неизвестный статус"; // Обработка неизвестных значений
             }
+        }
+        public static CargoDeliveryType GetCargoDeliveryTypeByName(String name)
+        {
+            foreach (CargoDeliveryType cargoDeliveryType in Enum.GetValues(typeof(CargoDeliveryType)))
+            {
+                if (GetDeliveryTypeDescription(cargoDeliveryType) == name)
+                {
+                    return cargoDeliveryType;
+                }
+            }
+            return CargoDeliveryType.Created;
         }
         public async void Create()
         {

@@ -133,6 +133,7 @@ namespace GruzoMaster.CargoMenu
                 newCargo.Create();
                 MessageBox.Show("Вы успешно создали заявку на груз !");
                 this.Close();
+                MySQL.AddUserLog(User.LoggedUser.Login, "Создал заявку на выполнение груза !");
             }
             catch (Exception ex) { MessageBox.Show("buttonAddCargo_Click: " + ex.ToString()); }
         }

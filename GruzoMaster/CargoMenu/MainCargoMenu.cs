@@ -24,6 +24,8 @@ namespace GruzoMaster.CargoMenu
         {
             InitializeComponent();
             dataGridView1.UserDeletingRow += DataGridView1_UserDeletingRow;
+            dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
+            dataGridView1.CurrentCellDirtyStateChanged += dataGridView1_CurrentCellDirtyStateChanged;
             LoadCargoMenu(1);
         }
         public async void LoadCargoMenu(Int32 currentPage, Int32 pageSize = 30)
@@ -111,7 +113,23 @@ namespace GruzoMaster.CargoMenu
             dataGridView1.Columns.Add("TransportCargoModelDescriptionName", "Модель транспорта");
             dataGridView1.Columns.Add("Price", "Цена");
             dataGridView1.Columns.Add("Name", "Название");
-            dataGridView1.Columns.Add("DeliveryType", "Тип доставки");
+
+            List<String> deliveryType = new List<String>();
+            foreach (CargoDeliveryType cargoDeliveryType in Enum.GetValues(typeof(CargoDeliveryType)))
+            {
+               deliveryType.Add(Cargo.GetDeliveryTypeDescription(cargoDeliveryType));
+            }
+
+            DataGridViewComboBoxColumn deliveryTypeColumn = new DataGridViewComboBoxColumn
+            {
+                Name = "DeliveryType",
+                HeaderText = "Тип доставки",
+                DataSource = deliveryType,
+                ValueType = typeof(string),
+                ReadOnly = false,
+            };
+            dataGridView1.Columns.Add(deliveryTypeColumn);
+
             dataGridView1.Columns.Add("AddressFromCargo", "Адрес отправления");
             dataGridView1.Columns.Add("AddressToCargo", "Адрес доставки");
             dataGridView1.Columns.Add("ForwarderName", "Экспедитор");
@@ -120,7 +138,8 @@ namespace GruzoMaster.CargoMenu
             // Add rows
             foreach (var cargo in CargoList)
             {
-                dataGridView1.Rows.Add(
+                var row = new DataGridViewRow();
+                row.CreateCells(dataGridView1,
                     cargo.ID,
                     cargo.CreateUserCargo?.Name,
                     cargo.CustomerCompany?.Name,
@@ -129,11 +148,34 @@ namespace GruzoMaster.CargoMenu
                     cargo.TransportCargo?.ModelDescriptionName,
                     cargo.Price.ToString("N0", new CultureInfo("en-US")).Replace(",", "."),
                     cargo.Name,
-                    cargo.GetDeliveryTypeDescription(),
+                    Cargo.GetDeliveryTypeDescription(cargo.DeliveryType),
                     cargo.AddressFromCargo,
                     cargo.AddressToCargo,
                     cargo.Forwarder?.Name
                 );
+
+                dataGridView1.Rows.Add(row);
+            }
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                column.ReadOnly = column.Name != "DeliveryType";
+            }
+
+        }
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == dataGridView1.Columns["DeliveryType"].Index && e.RowIndex >= 0)
+            {
+                String newDeliveryType = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                MessageBox.Show($"Тип доставки изменен на: {Cargo.GetCargoDeliveryTypeByName(newDeliveryType).ToString()}");
+            }
+        }
+
+        private void dataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (dataGridView1.IsCurrentCellDirty)
+            {
+                dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
         private void добавитьЗаказToolStripMenuItem_Click(object sender, EventArgs e)
