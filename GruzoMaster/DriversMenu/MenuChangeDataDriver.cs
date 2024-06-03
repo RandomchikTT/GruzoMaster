@@ -15,11 +15,11 @@ namespace GruzoMaster
     public partial class MenuChangeDataDriver : Form
     {
         private Boolean IsAwaitResult = false;
-        private DriverInfo DriverInfo = null;
+        private Driver DriverInfo = null;
         private AddDriverContacts AddDriverContacts = null;
         private Dictionary<PhoneNumber, String> PhoneNumbersDriver = new Dictionary<PhoneNumber, String>();
         private MenuDrivers MenuDrivers = null;
-        public MenuChangeDataDriver(MenuDrivers menuDrivers, DriverInfo driverInfo)
+        public MenuChangeDataDriver(MenuDrivers menuDrivers, Driver driverInfo)
         {
             this.MenuDrivers = menuDrivers;
             this.DriverInfo = driverInfo;

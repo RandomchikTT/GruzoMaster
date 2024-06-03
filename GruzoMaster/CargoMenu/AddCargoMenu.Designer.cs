@@ -30,11 +30,11 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.companyBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.driverBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.transportBox = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.nameCargo = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -71,16 +71,16 @@
             this.label6.TabIndex = 22;
             this.label6.Text = "Компания";
             // 
-            // comboBox1
+            // companyBox
             // 
-            this.comboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
-            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.comboBox1.ForeColor = System.Drawing.Color.White;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(209, 100);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(329, 31);
-            this.comboBox1.TabIndex = 23;
+            this.companyBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
+            this.companyBox.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.companyBox.ForeColor = System.Drawing.Color.White;
+            this.companyBox.FormattingEnabled = true;
+            this.companyBox.Location = new System.Drawing.Point(209, 100);
+            this.companyBox.Name = "companyBox";
+            this.companyBox.Size = new System.Drawing.Size(329, 31);
+            this.companyBox.TabIndex = 23;
             // 
             // label2
             // 
@@ -93,16 +93,16 @@
             this.label2.TabIndex = 24;
             this.label2.Text = "Водитель";
             // 
-            // comboBox2
+            // driverBox
             // 
-            this.comboBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
-            this.comboBox2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.comboBox2.ForeColor = System.Drawing.Color.White;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(209, 187);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(329, 31);
-            this.comboBox2.TabIndex = 25;
+            this.driverBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
+            this.driverBox.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.driverBox.ForeColor = System.Drawing.Color.White;
+            this.driverBox.FormattingEnabled = true;
+            this.driverBox.Location = new System.Drawing.Point(209, 187);
+            this.driverBox.Name = "driverBox";
+            this.driverBox.Size = new System.Drawing.Size(329, 31);
+            this.driverBox.TabIndex = 25;
             // 
             // label3
             // 
@@ -115,16 +115,16 @@
             this.label3.TabIndex = 26;
             this.label3.Text = "Транспорт";
             // 
-            // comboBox3
+            // transportBox
             // 
-            this.comboBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
-            this.comboBox3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.comboBox3.ForeColor = System.Drawing.Color.White;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(209, 263);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(329, 31);
-            this.comboBox3.TabIndex = 27;
+            this.transportBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
+            this.transportBox.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.transportBox.ForeColor = System.Drawing.Color.White;
+            this.transportBox.FormattingEnabled = true;
+            this.transportBox.Location = new System.Drawing.Point(209, 263);
+            this.transportBox.Name = "transportBox";
+            this.transportBox.Size = new System.Drawing.Size(329, 31);
+            this.transportBox.TabIndex = 27;
             // 
             // label4
             // 
@@ -268,11 +268,11 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.nameCargo);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.transportBox);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.driverBox);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.companyBox);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label1);
             this.Name = "AddCargoMenu";
@@ -286,11 +286,11 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox companyBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox driverBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox transportBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox nameCargo;
         private System.Windows.Forms.Label label5;

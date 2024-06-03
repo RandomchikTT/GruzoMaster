@@ -79,6 +79,12 @@
     <Compile Include="CargoMenu\AddCargoMenu.Designer.cs">
       <DependentUpon>AddCargoMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="CargoMenu\EditingCargoMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CargoMenu\EditingCargoMenu.Designer.cs">
+      <DependentUpon>EditingCargoMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="CargoMenu\MainCargoMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,6 +209,9 @@
     </Compile>
     <EmbeddedResource Include="CargoMenu\AddCargoMenu.resx">
       <DependentUpon>AddCargoMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CargoMenu\EditingCargoMenu.resx">
+      <DependentUpon>EditingCargoMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CargoMenu\MainCargoMenu.resx">
       <DependentUpon>MainCargoMenu.cs</DependentUpon>

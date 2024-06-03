@@ -15,7 +15,7 @@ namespace GruzoMaster.CargoMenu
     public partial class AddCargoMenu : Form
     {
         private List<Company> CompanieList { get; set; } = new List<Company>();
-        private List<DriverInfo> DriverInfos { get; set; } = new List<DriverInfo>();
+        private List<Driver> DriverInfos { get; set; } = new List<Driver>();
         private List<Transport> Transports { get; set; } = new List<Transport>();
         public AddCargoMenu()
         {
@@ -28,10 +28,10 @@ namespace GruzoMaster.CargoMenu
         {
             try
             {
-                this.CompanieList = await Companies.MainMenuCompany.GetCompanies();
+                this.CompanieList = await Company.GetCompanies();
                 foreach (Company company in this.CompanieList)
                 {
-                    this.comboBox1.Items.Add(company.Name);
+                    this.companyBox.Items.Add(company.Name);
                 }
             }
             catch (Exception ex) { MessageBox.Show("LoadComboBox: " + ex.ToString()); }
@@ -41,10 +41,10 @@ namespace GruzoMaster.CargoMenu
         {
             try
             {
-                this.DriverInfos = await MenuDrivers.GetDrivers();
-                foreach (DriverInfo driverInfo in this.DriverInfos)
+                this.DriverInfos = await Driver.GetDrivers();
+                foreach (Driver driverInfo in this.DriverInfos)
                 {
-                    this.comboBox2.Items.Add(driverInfo.FullName);
+                    this.driverBox.Items.Add(driverInfo.FullName);
                 }
             }
             catch (Exception ex) { MessageBox.Show("LoadDriverBox: " + ex.ToString()); }
@@ -53,10 +53,10 @@ namespace GruzoMaster.CargoMenu
         {
             try
             {
-                this.Transports = await TransportMenu.TransportMenu.GetTransports();
+                this.Transports = await Transport.GetTransports();
                 foreach (Transport transport in this.Transports)
                 {
-                    this.comboBox3.Items.Add(transport.TransportModelName.ToString() + " " + transport.ModelDescriptionName + $" [{transport.GovNumber}]");
+                    this.transportBox.Items.Add(transport.TransportModelName.ToString() + " " + transport.ModelDescriptionName + $" [{transport.GovNumber}]");
                 }
             }
             catch (Exception ex) { MessageBox.Show("LoadTransportBox: " + ex.ToString()); }
@@ -66,17 +66,17 @@ namespace GruzoMaster.CargoMenu
         {
             try
             {
-                if (this.comboBox1.SelectedIndex == -1)
+                if (this.companyBox.SelectedIndex == -1)
                 {
                     MessageBox.Show("Вы не выбрали компанию !");
                     return;
                 }
-                if (this.comboBox2.SelectedIndex == -1)
+                if (this.driverBox.SelectedIndex == -1)
                 {
                     MessageBox.Show("Вы не выбрали водителя !");
                     return;
                 }
-                if (this.comboBox3.SelectedIndex == -1)
+                if (this.transportBox.SelectedIndex == -1)
                 {
                     MessageBox.Show("Вы не выбрали транпсорт !");
                     return;
@@ -106,9 +106,9 @@ namespace GruzoMaster.CargoMenu
                     MessageBox.Show("Стоимость груза должна быть числом и больше нуля !");
                     return;
                 }
-                Transport transport = this.Transports[this.comboBox3.SelectedIndex];
-                DriverInfo driverInfo = this.DriverInfos[this.comboBox2.SelectedIndex];
-                Company company = this.CompanieList[this.comboBox1.SelectedIndex];
+                Transport transport = this.Transports[this.transportBox.SelectedIndex];
+                Driver driverInfo = this.DriverInfos[this.driverBox.SelectedIndex];
+                Company company = this.CompanieList[this.companyBox.SelectedIndex];
                 Cargo newCargo = new Cargo()
                 {
                     CargoLogs = new List<CargoLog>()

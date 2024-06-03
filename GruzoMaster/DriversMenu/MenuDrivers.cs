@@ -12,7 +12,7 @@ namespace GruzoMaster
 {
     public partial class MenuDrivers : Form
     {
-        private List<DriverInfo> DriverInfoList = new List<DriverInfo>();
+        private List<Driver> DriverInfoList = new List<Driver>();
         private MenuAddDriver MenuAddDriver = null;
         private MenuChangeDataDriver MenuChangeDataDriver = null;
         public MenuDrivers()
@@ -45,13 +45,13 @@ namespace GruzoMaster
             try
             {
                 DataTable result = await MySQL.QueryRead("SELECT `FullName`,`id` FROM `drivers`");
-                this.DriverInfoList = new List<DriverInfo>();
+                this.DriverInfoList = new List<Driver>();
                 if (result != null && result.Rows.Count > 0)
                 {
                     this.Водители.Items.Clear();
                     foreach (DataRow row in result.Rows)
                     {
-                        this.DriverInfoList.Add(new DriverInfo()
+                        this.DriverInfoList.Add(new Driver()
                         {
                             IdKey = Convert.ToInt32(row["id"]),                    
                         });
@@ -216,64 +216,6 @@ namespace GruzoMaster
             }
             catch (Exception ex) { MessageBox.Show("Удалить_Водителя_ToolStripMenuItem_Click: " + ex.ToString()); }
         }
-        public static async Task<List<DriverInfo>> GetDrivers()
-        {
-            try
-            {
-                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `drivers`");
-                List<DriverInfo> driverInfos = new List<DriverInfo>();
-                if (dataTable != null && dataTable.Rows.Count > 0)
-                {
-                    foreach (DataRow row in dataTable.Rows)
-                    {
-                        List<License> listLicense = JsonConvert.DeserializeObject<List<License>>(row["ListLicenses"].ToString());
-                        Dictionary<PhoneNumber, String> numberCalls = JsonConvert.DeserializeObject<Dictionary<PhoneNumber, String>>(row["PhoneNumbers"].ToString());
-                        driverInfos.Add(new DriverInfo()
-                        {
-                            FullName = Convert.ToString(row["FullName"]),
-                            BirthDay = Convert.ToDateTime(row["DateBirthday"]),
-                            MedSpavka = Convert.ToDateTime(row["MedSpravka"]),
-                            ListLicense = listLicense,
-                            PhoneNumbers = numberCalls,
-                            SerialPassport = Convert.ToString(row["SerialPassport"]),
-                            NumberPassport = Convert.ToString(row["NumberPassport"]),
-                            Address = Convert.ToString(row["Address"]),
-                            IdKey = Convert.ToInt32(row["id"]),
-                        });
-                    }
-                }
-                return driverInfos;
-            }
-            catch (Exception ex) { MessageBox.Show("GetDriverById: " + ex.ToString()); return new List<DriverInfo>(); }
-        }
-        public static async Task<DriverInfo> GetDriverById(Int32 id)
-        {
-            try
-            {
-                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `drivers` WHERE `id`={id}");
-                DriverInfo driverInfo = null;
-                if (dataTable != null && dataTable.Rows.Count > 0)
-                {
-                    DataRow row = dataTable.Rows[0];
-                    List<License> listLicense = JsonConvert.DeserializeObject<List<License>>(row["ListLicenses"].ToString());
-                    Dictionary<PhoneNumber, String> numberCalls = JsonConvert.DeserializeObject<Dictionary<PhoneNumber, String>>(row["PhoneNumbers"].ToString());
-                    driverInfo = new DriverInfo()
-                    {
-                        FullName = Convert.ToString(row["FullName"]),
-                        BirthDay = Convert.ToDateTime(row["DateBirthday"]),
-                        MedSpavka = Convert.ToDateTime(row["MedSpravka"]),
-                        ListLicense = listLicense,
-                        PhoneNumbers = numberCalls,
-                        SerialPassport = Convert.ToString(row["SerialPassport"]),
-                        NumberPassport = Convert.ToString(row["NumberPassport"]),
-                        Address = Convert.ToString(row["Address"]),
-                        IdKey = Convert.ToInt32(row["id"]),
-                    };
-                }
-                return driverInfo;
-            }
-            catch (Exception ex) { MessageBox.Show("GetDriverById: " + ex.ToString()); return null; }
-        }
         private async void изменитьДанныеВодителяToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -300,7 +242,7 @@ namespace GruzoMaster
                     DataRow dataRowCollection = selectDriver.Rows[this.Водители.SelectedIndex];
                     List<License> listLicense = JsonConvert.DeserializeObject<List<License>>(dataRowCollection["ListLicenses"].ToString());
                     Dictionary<PhoneNumber, String> numberCalls = JsonConvert.DeserializeObject<Dictionary<PhoneNumber, String>>(dataRowCollection["PhoneNumbers"].ToString());
-                    this.MenuChangeDataDriver = new MenuChangeDataDriver(this, new DriverInfo()
+                    this.MenuChangeDataDriver = new MenuChangeDataDriver(this, new Driver()
                     {
                         FullName = Convert.ToString(dataRowCollection["FullName"]),
                         BirthDay = Convert.ToDateTime(dataRowCollection["DateBirthday"]),

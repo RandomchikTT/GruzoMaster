@@ -44,10 +44,27 @@ namespace GruzoMaster
         /// Авторизованный пользователь
         /// </summary>
         public static User LoggedUser = null;
+        /// <summary>
+        /// Логин пользователя
+        /// </summary>
         public String Login { get; set; } = String.Empty;
+        /// <summary>
+        /// Имя пользователя
+        /// </summary>
         public String Name { get; set; } = String.Empty;
+        /// <summary>
+        /// Уровень доступа пользователя
+        /// </summary>
         public UserType UserType { get; set; } = UserType.User;
+        /// <summary>
+        /// Уникальный айди
+        /// </summary>
         public Int32 ID { get; set; }
+        /// <summary>
+        /// Получение обьекта User по его ID
+        /// </summary>
+        /// <param name="id">ID из Базы Данных</param>
+        /// <returns></returns>
         public static async Task<User> GetUserById(Int32 id)
         {
             try

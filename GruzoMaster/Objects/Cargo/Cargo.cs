@@ -48,7 +48,7 @@ namespace GruzoMaster.Objects.Cargo
         /// <summary>
         /// Водитель выполняющий перевозку
         /// </summary>
-        public DriverInfo Driver { get; set; }
+        public Driver Driver { get; set; }
         /// <summary>
         /// Сумму которую получим по окончанию выполнения заказа
         /// </summary>

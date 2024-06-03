@@ -115,3 +115,4 @@ C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\De
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMas.27155F27.Up2Date
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.CargoMenu.MainCargoMenu.resources
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.CargoMenu.AddCargoMenu.resources
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.CargoMenu.EditingCargoMenu.resources
