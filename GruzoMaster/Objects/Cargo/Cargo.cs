@@ -102,5 +102,27 @@ namespace GruzoMaster.Objects.Cargo
             }
             catch (Exception ex) { MessageBox.Show("Create: " + ex.ToString()); }
         }
+        public async void Update()
+        {
+            try
+            {
+                Int32 idForwarder = this.Forwarder != null ? this.Forwarder.ID : -1;
+                await MySQL.QueryAsync($"UPDATE `cargo` SET " +
+                        $"`ID_user_creator` = {this.CreateUserCargo.ID}, " +
+                        $"`ID_company` = {this.CustomerCompany.IdKey}, " +
+                        $"`ID_Transport` = {this.TransportCargo.IdKey}, " +
+                        $"`Name` = '{this.Name}', " +
+                        $"`Description` = '{this.Description}', " +
+                        $"`AddressFromCargo` = '{this.AddressFromCargo}', " +
+                        $"`AddressToCargo` = '{this.AddressToCargo}', " +
+                        $"`DriverID` = {this.Driver.IdKey}, " +
+                        $"`Price` = {this.Price}, " +
+                        $"`DeliveryType` = {(Int32)this.DeliveryType}, " +
+                        $"`CargoLogs` = '{JsonConvert.SerializeObject(this.CargoLogs)}', " +
+                        $"`ForwarderID` = {idForwarder} " +
+                        $"WHERE `ID` = {this.ID}");
+            }
+            catch (Exception ex) { MessageBox.Show("Update: " + ex.ToString()); }
+        }
     }
 }

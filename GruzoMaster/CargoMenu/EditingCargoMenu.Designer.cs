@@ -66,6 +66,7 @@
             this.buttonAddCargo.TabIndex = 56;
             this.buttonAddCargo.Text = "Изменить груз";
             this.buttonAddCargo.UseVisualStyleBackColor = false;
+            this.buttonAddCargo.Click += new System.EventHandler(this.buttonEditingCargo_click);
             // 
             // priceCargo
             // 
@@ -316,7 +317,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
-            this.ClientSize = new System.Drawing.Size(787, 909);
+            this.ClientSize = new System.Drawing.Size(787, 947);
             this.Controls.Add(this.driverBox);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.companyBox);

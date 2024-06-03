@@ -35,6 +35,11 @@ namespace GruzoMaster.CargoMenu
                 MessageBox.Show("У вас уже есть открытое меню для изменения данных о грузе !");
                 return;
             }
+            if (!UserSettings.GetAccessUser(UserSettings.UserSetting.EditingCargoMenu))
+            {
+                MessageBox.Show("У вас нету доступа к этому меню !");
+                return;
+            }
             if (e.RowIndex >= 0)
             {
                 Int64 cargoId = Convert.ToInt64(dataGridView1.Rows[e.RowIndex].Cells["ID"].Value);
@@ -118,6 +123,7 @@ namespace GruzoMaster.CargoMenu
                             CargoLogs = cargoLogs,
                             Name = name,
                             Forwarder = forwarderUser,
+                            Description = description,
                         });
                     }
                     PopulateDataGridView();
@@ -157,7 +163,7 @@ namespace GruzoMaster.CargoMenu
                     cargo.Driver?.FullName,
                     cargo.TransportCargo?.GovNumber,
                     cargo.TransportCargo?.ModelDescriptionName,
-                    cargo.Price.ToString("N0", new CultureInfo("en-US")).Replace(",", "."),
+                    cargo.Price.ConvertToFormatMoney() + " ₽",
                     cargo.Name,
                     Cargo.GetDeliveryTypeDescription(cargo.DeliveryType),
                     cargo.AddressFromCargo,
