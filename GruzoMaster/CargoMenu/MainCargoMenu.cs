@@ -13,6 +13,8 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Xceed.Document.NET;
+using Xceed.Words.NET;
 
 namespace GruzoMaster.CargoMenu
 {
@@ -210,6 +212,197 @@ namespace GruzoMaster.CargoMenu
                 return;
             }
             this.LoadCargoMenu(page - 1);
+        }
+
+        private void выставитьСчетФактуруToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Пожалуйста, выберите строку.");
+                    return;
+                }
+
+                var selectedRow = dataGridView1.SelectedRows[0];
+
+                Int64 cargoId = Convert.ToInt64(selectedRow.Cells["ID"].Value);
+                Cargo cargo = this.CargoList.Find(_ => _.ID == cargoId);
+                if (cargo == null)
+                {
+                    MessageBox.Show("Такой груз не найден !");
+                    return;
+                }
+
+                var companyName = cargo.CustomerCompany.Name;
+                var email = cargo.CustomerCompany.Email;
+                var city = cargo.CustomerCompany.Country.ToString()  + " " + cargo.CustomerCompany.City;
+
+                Dictionary<CompanyBankData, String> bankData = cargo.CustomerCompany.BankData;
+
+                using (var doc = DocX.Create("СчетФактура.docx"))
+                {
+                    doc.InsertParagraph("Счет-фактура")
+                        .FontSize(20)
+                        .Bold()
+                        .Alignment = Alignment.center;
+
+                    doc.InsertParagraph($"Компания: {companyName}")
+                        .FontSize(12)
+                        .SpacingAfter(10);
+
+                    doc.InsertParagraph($"Страна, Город компании: {city}")
+                        .FontSize(12)
+                        .SpacingAfter(10);
+
+                    doc.InsertParagraph($"ИНН компании: {bankData[CompanyBankData.INN]}")
+                        .FontSize(12)
+                        .SpacingAfter(10);
+
+                    doc.InsertParagraph($"LTD компании: {bankData[CompanyBankData.LTD]}")
+                        .FontSize(12)
+                        .SpacingAfter(10);
+
+                    doc.InsertParagraph($"Адрес банка компании: {bankData[CompanyBankData.AddressBank]}")
+                        .FontSize(12)
+                        .SpacingAfter(10);
+
+                    doc.InsertParagraph($"Название банка компании: {bankData[CompanyBankData.NameOfBank]}")
+                        .FontSize(12)
+                        .SpacingAfter(10);
+
+                    doc.InsertParagraph($"Номер банковского счета компании: {bankData[CompanyBankData.NumberBank]}")
+                        .FontSize(12)
+                        .SpacingAfter(10);
+
+                    doc.InsertParagraph($"Адрес почты: {email}")
+                        .FontSize(12)
+                        .SpacingAfter(10);
+
+                    doc.InsertParagraph("Информация о заказе")
+                        .FontSize(14)
+                        .Bold()
+                        .SpacingAfter(10);
+
+                    var table = doc.AddTable(2, 6);
+                    table.Design = TableDesign.LightShadingAccent2;
+                    table.Rows[0].Cells[0].Paragraphs.First().Append("Наименование").Bold();
+                    table.Rows[0].Cells[1].Paragraphs.First().Append("Сумма").Bold();
+                    table.Rows[0].Cells[2].Paragraphs.First().Append("Адрес отправления").Bold();
+                    table.Rows[0].Cells[3].Paragraphs.First().Append("Адрес прибытия").Bold();
+                    table.Rows[0].Cells[4].Paragraphs.First().Append("Транспорт").Bold();
+                    table.Rows[0].Cells[5].Paragraphs.First().Append("Водитель").Bold();
+
+                    table.Rows[1].Cells[0].Paragraphs.First().Append($"Перевозка груза: {cargo.Name}");
+                    table.Rows[1].Cells[1].Paragraphs.First().Append(cargo.Price.ConvertToFormatMoney() + " rub");
+                    table.Rows[1].Cells[2].Paragraphs.First().Append(cargo.AddressFromCargo);
+                    table.Rows[1].Cells[3].Paragraphs.First().Append(cargo.AddressToCargo);
+                    table.Rows[1].Cells[4].Paragraphs.First().Append(cargo.TransportCargo.TransportModelName.ToString() + " " + cargo.TransportCargo.ModelDescriptionName + $" [{cargo.TransportCargo.GovNumber}]");
+                    table.Rows[1].Cells[5].Paragraphs.First().Append(cargo.Driver.FullName);
+
+                    doc.InsertTable(table);
+
+                    doc.InsertParagraph($"Итого: {cargo.Price.ConvertToFormatMoney()} рублей")
+                        .FontSize(12)
+                        .SpacingBefore(20);
+
+                    doc.InsertParagraph("Подпись: _____________________")
+                        .FontSize(12)
+                        .SpacingBefore(50);
+
+                    doc.Save();
+                    MessageBox.Show("Счет-фактура создана успешно.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"выставитьСчетФактуруToolStripMenuItem_Click: {ex}");
+            }
+        }
+        private void создатьАктВыполненныхРаботToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Пожалуйста, выберите строку.");
+                    return;
+                }
+
+                var selectedRow = dataGridView1.SelectedRows[0];
+
+                Int64 cargoId = Convert.ToInt64(selectedRow.Cells["ID"].Value);
+                Cargo cargo = this.CargoList.Find(_ => _.ID == cargoId);
+                if (cargo == null)
+                {
+                    MessageBox.Show("Такой груз не найден!");
+                    return;
+                }
+
+                var companyName = cargo.CustomerCompany.Name;
+                var email = cargo.CustomerCompany.Email;
+                var city = cargo.CustomerCompany.Country.ToString() + " " + cargo.CustomerCompany.City;
+
+                using (var doc = DocX.Create("АктВыполненныхРабот.docx"))
+                {
+                    doc.InsertParagraph("Акт выполненных работ")
+                        .FontSize(20)
+                        .Bold()
+                        .Alignment = Alignment.center;
+
+                    doc.InsertParagraph($"Компания: {companyName}")
+                        .FontSize(12)
+                        .SpacingAfter(10);
+
+                    doc.InsertParagraph($"Страна, Город компании: {city}")
+                        .FontSize(12)
+                        .SpacingAfter(10);
+
+                    doc.InsertParagraph($"Адрес почты: {email}")
+                        .FontSize(12)
+                        .SpacingAfter(10);
+
+                    doc.InsertParagraph("Информация о заказе")
+                        .FontSize(14)
+                        .Bold()
+                        .SpacingAfter(10);
+
+                    var table = doc.AddTable(2, 5);
+                    table.Design = TableDesign.LightShadingAccent2;
+                    table.Rows[0].Cells[0].Paragraphs.First().Append("Наименование").Bold();
+                    table.Rows[0].Cells[1].Paragraphs.First().Append("Описание").Bold();
+                    table.Rows[0].Cells[2].Paragraphs.First().Append("Адрес отправления").Bold();
+                    table.Rows[0].Cells[3].Paragraphs.First().Append("Адрес прибытия").Bold();
+                    table.Rows[0].Cells[4].Paragraphs.First().Append("Сумма").Bold();
+
+                    table.Rows[1].Cells[0].Paragraphs.First().Append($"Перевозка груза: {cargo.Name}");
+                    table.Rows[1].Cells[1].Paragraphs.First().Append(cargo.Description);
+                    table.Rows[1].Cells[2].Paragraphs.First().Append(cargo.AddressFromCargo);
+                    table.Rows[1].Cells[3].Paragraphs.First().Append(cargo.AddressToCargo);
+                    table.Rows[1].Cells[4].Paragraphs.First().Append(cargo.Price.ConvertToFormatMoney() + " rub");
+
+                    doc.InsertTable(table);
+
+                    doc.InsertParagraph($"Итого: {cargo.Price.ConvertToFormatMoney()} рублей")
+                        .FontSize(12)
+                        .SpacingBefore(20);
+
+                    doc.InsertParagraph("Все работы выполнены в полном объеме и в срок. Претензий по выполнению работ нет.")
+                        .FontSize(12)
+                        .SpacingBefore(10);
+
+                    doc.InsertParagraph("Подпись: _____________________")
+                        .FontSize(12)
+                        .SpacingBefore(50);
+
+                    doc.Save();
+                    MessageBox.Show("Акт выполненных работ создан успешно.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"создатьАктВыполненныхРаботToolStripMenuItem_Click: {ex}");
+            }
         }
     }
 }

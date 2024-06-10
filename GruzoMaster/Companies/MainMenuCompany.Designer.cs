@@ -34,8 +34,8 @@
             this.добавитьКомпаниюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.удалитьКомпаниюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.редактироватьКомпаниюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new System.Windows.Forms.Label();
             this.экспортДанныхОКомпанииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,21 +46,22 @@
             this.Компании.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.Компании.ForeColor = System.Drawing.Color.White;
             this.Компании.FormattingEnabled = true;
-            this.Компании.ItemHeight = 20;
-            this.Компании.Location = new System.Drawing.Point(11, 34);
-            this.Компании.Margin = new System.Windows.Forms.Padding(2);
+            this.Компании.ItemHeight = 25;
+            this.Компании.Location = new System.Drawing.Point(15, 42);
+            this.Компании.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Компании.Name = "Компании";
-            this.Компании.Size = new System.Drawing.Size(169, 320);
+            this.Компании.Size = new System.Drawing.Size(225, 375);
             this.Компании.TabIndex = 1;
             this.Компании.SelectedIndexChanged += new System.EventHandler(this.Компании_SelectedIndexChanged);
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.настройкиToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(816, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1088, 28);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -72,59 +73,61 @@
             this.редактироватьКомпаниюToolStripMenuItem,
             this.экспортДанныхОКомпанииToolStripMenuItem});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
-            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(98, 24);
             this.настройкиToolStripMenuItem.Text = "Настройки";
             // 
             // добавитьКомпаниюToolStripMenuItem
             // 
             this.добавитьКомпаниюToolStripMenuItem.Name = "добавитьКомпаниюToolStripMenuItem";
-            this.добавитьКомпаниюToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.добавитьКомпаниюToolStripMenuItem.Size = new System.Drawing.Size(292, 26);
             this.добавитьКомпаниюToolStripMenuItem.Text = "Добавить компанию";
             this.добавитьКомпаниюToolStripMenuItem.Click += new System.EventHandler(this.добавитьКомпаниюToolStripMenuItem_Click);
             // 
             // удалитьКомпаниюToolStripMenuItem
             // 
             this.удалитьКомпаниюToolStripMenuItem.Name = "удалитьКомпаниюToolStripMenuItem";
-            this.удалитьКомпаниюToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.удалитьКомпаниюToolStripMenuItem.Size = new System.Drawing.Size(292, 26);
             this.удалитьКомпаниюToolStripMenuItem.Text = "Удалить компанию";
             this.удалитьКомпаниюToolStripMenuItem.Click += new System.EventHandler(this.удалитьКомпаниюToolStripMenuItem_Click);
             // 
             // редактироватьКомпаниюToolStripMenuItem
             // 
             this.редактироватьКомпаниюToolStripMenuItem.Name = "редактироватьКомпаниюToolStripMenuItem";
-            this.редактироватьКомпаниюToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.редактироватьКомпаниюToolStripMenuItem.Size = new System.Drawing.Size(292, 26);
             this.редактироватьКомпаниюToolStripMenuItem.Text = "Редактировать компанию";
             this.редактироватьКомпаниюToolStripMenuItem.Click += new System.EventHandler(this.редактироватьКомпаниюToolStripMenuItem_Click);
+            // 
+            // экспортДанныхОКомпанииToolStripMenuItem
+            // 
+            this.экспортДанныхОКомпанииToolStripMenuItem.Name = "экспортДанныхОКомпанииToolStripMenuItem";
+            this.экспортДанныхОКомпанииToolStripMenuItem.Size = new System.Drawing.Size(292, 26);
+            this.экспортДанныхОКомпанииToolStripMenuItem.Text = "Экспорт данных о компании";
+            this.экспортДанныхОКомпанииToolStripMenuItem.Click += new System.EventHandler(this.экспортДанныхОКомпанииToolStripMenuItem_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(185, 34);
+            this.label1.Location = new System.Drawing.Point(247, 42);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(206, 20);
+            this.label1.Size = new System.Drawing.Size(266, 25);
             this.label1.TabIndex = 3;
             this.label1.Text = "Информация о компании: ";
             // 
-            // экспортДанныхОКомпанииToolStripMenuItem
-            // 
-            this.экспортДанныхОКомпанииToolStripMenuItem.Name = "экспортДанныхОКомпанииToolStripMenuItem";
-            this.экспортДанныхОКомпанииToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
-            this.экспортДанныхОКомпанииToolStripMenuItem.Text = "Экспорт данных о компании";
-            this.экспортДанныхОКомпанииToolStripMenuItem.Click += new System.EventHandler(this.экспортДанныхОКомпанииToolStripMenuItem_Click);
-            // 
             // MainMenuCompany
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
-            this.ClientSize = new System.Drawing.Size(816, 496);
+            this.ClientSize = new System.Drawing.Size(1088, 610);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Компании);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainMenuCompany";
             this.Text = "Меню компаний";
             this.menuStrip1.ResumeLayout(false);

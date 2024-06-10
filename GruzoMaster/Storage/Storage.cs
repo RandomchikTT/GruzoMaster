@@ -1,11 +1,7 @@
 ﻿using GruzoMaster.Storage.Objects;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GruzoMaster.Storage
@@ -15,28 +11,36 @@ namespace GruzoMaster.Storage
         /// <summary>
         /// Путь до файла с хар-ками
         /// </summary>
-        const String PathToStorage = "./storage.json";
+        private const string PathToStorage = "./storage.json";
+
         /// <summary>
         /// Текущий конфиг пользователя
         /// </summary>
         public static Storage StorageInstance { get; private set; } = null;
+
         /// <summary>
         /// Настройки для запоминания данных при авторизации
         /// </summary>
         public AuthData AuthorizationData { get; set; } = null;
+
         /// <summary>
-        /// Функция сохранения хранилища
+        /// Сохраняет текущее состояние хранилища в файл.
         /// </summary>
         public static void SaveStorageInstance()
         {
             try
             {
-                File.WriteAllText(PathToStorage, JsonConvert.SerializeObject(StorageInstance, Formatting.None));
+                String json = JsonConvert.SerializeObject(StorageInstance, Formatting.None);
+                File.WriteAllText(PathToStorage, json);
             }
-            catch (Exception ex) { MessageBox.Show("SaveStorageInstance: " + ex.ToString()); }
+            catch (Exception ex)
+            {
+                ShowErrorMessage("SaveStorageInstance", ex);
+            }
         }
+
         /// <summary>
-        /// Функция создания хранилища
+        /// Создает новое хранилище и сохраняет его в файл.
         /// </summary>
         public static void CreateStorage()
         {
@@ -45,10 +49,14 @@ namespace GruzoMaster.Storage
                 StorageInstance = new Storage();
                 SaveStorageInstance();
             }
-            catch (Exception e) { MessageBox.Show("CreateStorage: " + e.ToString()); }
+            catch (Exception ex)
+            {
+                ShowErrorMessage("CreateStorage", ex);
+            }
         }
+
         /// <summary>
-        /// Функция загрузки Хранилища
+        /// Загружает текущее состояние хранилища из файла.
         /// </summary>
         public static void LoadStorageInstance()
         {
@@ -59,16 +67,25 @@ namespace GruzoMaster.Storage
                     CreateStorage();
                     return;
                 }
-                try
-                {
-                    StorageInstance = JsonConvert.DeserializeObject<Storage>(File.ReadAllText(PathToStorage));
-                }
-                catch
-                {
-                    CreateStorage();
-                }
+
+                var json = File.ReadAllText(PathToStorage);
+                StorageInstance = JsonConvert.DeserializeObject<Storage>(json) ?? new Storage();
+                SaveStorageInstance();
             }
-            catch (Exception ex) { MessageBox.Show("LoadStorageInstance: " + ex.ToString()); }
+            catch (Exception ex)
+            {
+                ShowErrorMessage("LoadStorageInstance", ex);
+            }
+        }
+
+        /// <summary>
+        /// Показывает сообщение об ошибке.
+        /// </summary>
+        /// <param name="methodName">Имя метода, в котором произошла ошибка.</param>
+        /// <param name="ex">Исключение.</param>
+        private static void ShowErrorMessage(string methodName, Exception ex)
+        {
+            MessageBox.Show($"{methodName}: {ex}");
         }
     }
 }

@@ -42,6 +42,8 @@ namespace GruzoMaster.CargoMenu
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.выставитьСчетФактуруToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.создатьАктВыполненныхРаботToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -73,7 +75,9 @@ namespace GruzoMaster.CargoMenu
             // 
             this.настройкиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.фильтрыToolStripMenuItem,
-            this.добавитьЗаказToolStripMenuItem});
+            this.добавитьЗаказToolStripMenuItem,
+            this.выставитьСчетФактуруToolStripMenuItem,
+            this.создатьАктВыполненныхРаботToolStripMenuItem});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
             this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(98, 24);
             this.настройкиToolStripMenuItem.Text = "Настройки";
@@ -81,13 +85,13 @@ namespace GruzoMaster.CargoMenu
             // фильтрыToolStripMenuItem
             // 
             this.фильтрыToolStripMenuItem.Name = "фильтрыToolStripMenuItem";
-            this.фильтрыToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
+            this.фильтрыToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
             this.фильтрыToolStripMenuItem.Text = "Фильтры";
             // 
             // добавитьЗаказToolStripMenuItem
             // 
             this.добавитьЗаказToolStripMenuItem.Name = "добавитьЗаказToolStripMenuItem";
-            this.добавитьЗаказToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
+            this.добавитьЗаказToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
             this.добавитьЗаказToolStripMenuItem.Text = "Добавить заказ";
             this.добавитьЗаказToolStripMenuItem.Click += new System.EventHandler(this.добавитьЗаказToolStripMenuItem_Click);
             // 
@@ -153,6 +157,20 @@ namespace GruzoMaster.CargoMenu
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // выставитьСчетФактуруToolStripMenuItem
+            // 
+            this.выставитьСчетФактуруToolStripMenuItem.Name = "выставитьСчетФактуруToolStripMenuItem";
+            this.выставитьСчетФактуруToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.выставитьСчетФактуруToolStripMenuItem.Text = "Выставить счет фактуру";
+            this.выставитьСчетФактуруToolStripMenuItem.Click += new System.EventHandler(this.выставитьСчетФактуруToolStripMenuItem_Click);
+            // 
+            // создатьАктВыполненныхРаботToolStripMenuItem
+            // 
+            this.создатьАктВыполненныхРаботToolStripMenuItem.Name = "создатьАктВыполненныхРаботToolStripMenuItem";
+            this.создатьАктВыполненныхРаботToolStripMenuItem.Size = new System.Drawing.Size(319, 26);
+            this.создатьАктВыполненныхРаботToolStripMenuItem.Text = "Создать акт выполненных работ";
+            this.создатьАктВыполненныхРаботToolStripMenuItem.Click += new System.EventHandler(this.создатьАктВыполненныхРаботToolStripMenuItem_Click_1);
+            // 
             // MainCargoMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -187,5 +205,7 @@ namespace GruzoMaster.CargoMenu
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private ToolStripMenuItem выставитьСчетФактуруToolStripMenuItem;
+        private ToolStripMenuItem создатьАктВыполненныхРаботToolStripMenuItem;
     }
 }

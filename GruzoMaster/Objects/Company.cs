@@ -62,31 +62,36 @@ namespace GruzoMaster.Objects
         /// Получение компании по его ID
         /// </summary>
         /// <param name="id">Уникальный айди из Базы Данных</param>
-        /// <returns>Обьект класса Company</returns>
-        public static async Task<Company> GetCompanyById(Int32 id)
+        /// <returns>Объект класса Company</returns>
+        public static async Task<Company> GetCompanyById(int id)
         {
             try
             {
                 DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `companies` WHERE `id`={id}");
-                Company company = null;
-                if (dataTable != null && dataTable.Rows.Count > 0)
+                if (dataTable == null || dataTable.Rows.Count == 0)
                 {
-                    DataRow row = dataTable.Rows[0];
-                    company = new Company()
-                    {
-                        IdKey = Convert.ToInt32(row["id"]),
-                        Name = Convert.ToString(row["Name"]),
-                        City = Convert.ToString(row["City"]),
-                        Email = Convert.ToString(row["Email"]),
-                        Country = (Company.CompanyCountry)Convert.ToInt32(row["Country"]),
-                        PhoneNumbers = JsonConvert.DeserializeObject<Dictionary<PhoneNumber, String>>(row["Contacts"].ToString()),
-                        BankData = JsonConvert.DeserializeObject<Dictionary<CompanyBankData, String>>(row["BankData"].ToString()),
-                    };
+                    return null;
                 }
-                return company;
+
+                DataRow row = dataTable.Rows[0];
+                return new Company
+                {
+                    IdKey = Convert.ToInt32(row["id"]),
+                    Name = Convert.ToString(row["Name"]),
+                    City = Convert.ToString(row["City"]),
+                    Email = Convert.ToString(row["Email"]),
+                    Country = (CompanyCountry)Convert.ToInt32(row["Country"]),
+                    PhoneNumbers = JsonConvert.DeserializeObject<Dictionary<PhoneNumber, string>>(row["Contacts"].ToString()),
+                    BankData = JsonConvert.DeserializeObject<Dictionary<CompanyBankData, string>>(row["BankData"].ToString()),
+                };
             }
-            catch (Exception ex) { MessageBox.Show("GetCompanyById: " + ex.ToString()); return null; }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"GetCompanyById: {ex}");
+                return null;
+            }
         }
+
         /// <summary>
         /// Возвращает список всех компаний
         /// </summary>
@@ -95,28 +100,33 @@ namespace GruzoMaster.Objects
         {
             try
             {
-                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `companies`");
+                DataTable dataTable = await MySQL.QueryRead("SELECT * FROM `companies`");
                 List<Company> companies = new List<Company>();
+
                 if (dataTable != null && dataTable.Rows.Count > 0)
                 {
                     foreach (DataRow row in dataTable.Rows)
                     {
-                        Company company = new Company()
+                        companies.Add(new Company
                         {
                             IdKey = Convert.ToInt32(row["id"]),
                             Name = Convert.ToString(row["Name"]),
                             City = Convert.ToString(row["City"]),
                             Email = Convert.ToString(row["Email"]),
-                            Country = (Company.CompanyCountry)Convert.ToInt32(row["Country"]),
+                            Country = (CompanyCountry)Convert.ToInt32(row["Country"]),
                             PhoneNumbers = JsonConvert.DeserializeObject<Dictionary<PhoneNumber, String>>(row["Contacts"].ToString()),
                             BankData = JsonConvert.DeserializeObject<Dictionary<CompanyBankData, String>>(row["BankData"].ToString()),
-                        };
-                        companies.Add(company);
+                        });
                     }
                 }
+
                 return companies;
             }
-            catch (Exception ex) { MessageBox.Show("GetCompanies: " + ex.ToString()); return new List<Company>(); }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"GetCompanies: {ex}");
+                return new List<Company>();
+            }
         }
     }
 }
