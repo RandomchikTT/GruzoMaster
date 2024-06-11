@@ -118,3 +118,10 @@ C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\De
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.CargoMenu.EditingCargoMenu.resources
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\Xceed.Document.NET.dll
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\Xceed.Words.NET.dll
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\Guna.UI2.dll
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\Microsoft.Extensions.Logging.Abstractions.xml

@@ -14,92 +14,77 @@ namespace GruzoMaster
 {
     public partial class MainMenu : Form
     {
-        private MenuDrivers MenuDrivers = null;
-        private MainMenuCompany MenuCompany = null;
-        private LogMenu.LogMenu LogMenu = null;
-        private TransportMenu.TransportMenu TransportMenu = null;
-        private MainCargoMenu MainCargoMenu = null;
-        public MainMenu(User userLogged)
+        private Boolean sideBar_Expand { get; set; } = true;
+        private MainMenuCompany MenuCompany { get; set; } = null;
+        private MainCargoMenu MainCargoMenu { get; set; } = null;
+        private LogMenu.LogMenu LogMenu { get; set; } = null;
+        private TransportMenu.TransportMenu TransportMenu { get; set; } = null;
+        private MenuDrivers MenuDrivers { get; set; } = null;
+        public MainMenu(User user)
         {
-            try
+            User.LoggedUser = user;
+            InitializeComponent();
+            if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckDrivers))
             {
-                User.LoggedUser = userLogged;
-                InitializeComponent();
-                this.labelCurrentDate.Text = $"Сегодня: {DateTime.Now.ToString("d")}";
-                this.labelCurrentUser.Text = $"Пользователь: {User.LoggedUser.Name}";
-                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckDrivers))
+                this.buttonTableDrivers.Visible = false;
+                this.buttonTableDrivers.Enabled = false;
+            }
+            if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckLogs))
+            {
+                this.buttonLastAction.Visible = false;
+                this.buttonLastAction.Enabled = false;
+            }
+            if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckTransport))
+            {
+                this.buttonListOfAuto.Visible = false;
+                this.buttonListOfAuto.Enabled = false;
+            }
+            if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckCompanyMenu))
+            {
+                this.buttonListOfCompany.Visible = false;
+                this.buttonListOfCompany.Enabled = false;
+            }
+        }
+
+        private void gunaPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        private void Close_Button_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Timer_Sidebar_Menu_Tick(object sender, EventArgs e)
+        {
+            if (sideBar_Expand)
+            {
+                SideBar.Width -= 10;
+                if (SideBar.Width == SideBar.MinimumSize.Width)
                 {
-                    this.buttonTableDrivers.Visible = false;
-                    this.buttonTableDrivers.Enabled = false;
-                }
-                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckLogs))
-                {
-                    this.buttonLastAction.Visible = false;
-                    this.buttonLastAction.Enabled = false;
-                }
-                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckTransport))
-                {
-                    this.buttonListOfAuto.Visible = false;
-                    this.buttonListOfAuto.Enabled = false;
-                }
-                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckCompanyMenu))
-                {
-                    this.buttonListOfCompany.Visible = false;
-                    this.buttonListOfCompany.Enabled = false;
+                    sideBar_Expand = false;
+                    Timer_Sidebar_Menu.Stop();
                 }
             }
-            catch (Exception ex) { MessageBox.Show("MainMenu: " + ex.ToString()); }
-        }
-
-        private void buttonTableDrivers_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckDrivers))
+            else
                 {
-                    MessageBox.Show("У вас нету доступа к этому меню !");
-                    return;
+                    SideBar.Width += 10;
+                    if (SideBar.Width == SideBar.MaximumSize.Width)
+                    {
+                        sideBar_Expand = true;
+                        Timer_Sidebar_Menu.Stop();
+                    }
                 }
-                if (this.MenuDrivers != null)
-                {
-                    MessageBox.Show("У вас уже есть открытое меню водителей !");
-                    return;
-                }
-                this.MenuDrivers = new MenuDrivers();
-                this.MenuDrivers.FormClosed += MenuDrivers_FormClosed;
-                this.MenuDrivers.Show();
-            }
-            catch (Exception ex) { MessageBox.Show("buttonTableDrivers_Click: " + ex.ToString()); }
-        }
+        }   
+        
+        
 
-        private void MenuDrivers_FormClosed(object sender, FormClosedEventArgs e)
+        private void Menu_Button_Click(object sender, EventArgs e)
         {
-            this.MenuDrivers = null;
+            Timer_Sidebar_Menu.Start();
         }
 
-        private void buttonTableOrders_Click(object sender, EventArgs e)
-        {
-            if (this.MainCargoMenu != null)
-            {
-                MessageBox.Show("У вас уже есть открытое меню грузов !");
-                return;
-            }
-            if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CheckCargoMenu))
-            {
-                MessageBox.Show("У вас нету доступа к этому меню !");
-                return;
-            }
-            this.MainCargoMenu = new MainCargoMenu();
-            this.MainCargoMenu.FormClosed += MainCargoMenu_FormClosed;
-            this.MainCargoMenu.Show();
-        }
-
-        private void MainCargoMenu_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            this.MainCargoMenu = null;
-        }
-
-        private void buttonListOfCompany_Click(object sender, EventArgs e)
+        private void Home_Button_Click(object sender, EventArgs e)
         {
             try
             {
@@ -117,7 +102,7 @@ namespace GruzoMaster
                 this.MenuCompany.FormClosed += MenuCompany_FormClosed;
                 this.MenuCompany.Show();
             }
-            catch (Exception ex) { MessageBox.Show("buttonListOfCompany_Click: " + ex.ToString()); }
+            catch (Exception ex) { MessageBox.Show("Home_Button_Click: " + ex.ToString()); }
         }
 
         private void MenuCompany_FormClosed(object sender, FormClosedEventArgs e)
@@ -125,33 +110,33 @@ namespace GruzoMaster
             this.MenuCompany = null;
         }
 
-        private void buttonListOfAuto_Click(object sender, EventArgs e)
+        private void Orders_Button_Click(object sender, EventArgs e)
         {
             try
             {
-                if (this.TransportMenu != null)
+                if (this.MainCargoMenu != null)
                 {
-                    MessageBox.Show("У вас уже есть открытое меню автопарка !");
+                    MessageBox.Show("У вас уже есть открытое меню грузов !");
                     return;
                 }
-                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckTransport))
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CheckCargoMenu))
                 {
                     MessageBox.Show("У вас нету доступа к этому меню !");
                     return;
                 }
-                this.TransportMenu = new TransportMenu.TransportMenu();
-                this.TransportMenu.FormClosed += TransportMenu_FormClosed;
-                this.TransportMenu.Show();
+                this.MainCargoMenu = new MainCargoMenu();
+                this.MainCargoMenu.FormClosed += MainCargoMenu_FormClosed; ;
+                this.MainCargoMenu.Show();
             }
-            catch (Exception ex) { MessageBox.Show("buttonListOfAuto_Click: " + ex.ToString()); }
+            catch (Exception ex) { MessageBox.Show("Orders_Button_Click: " + ex.ToString()); }
         }
 
-        private void TransportMenu_FormClosed(object sender, FormClosedEventArgs e)
+        private void MainCargoMenu_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.TransportMenu = null;
+            this.MainCargoMenu = null;
         }
 
-        private void buttonListOfExpeditors_Click(object sender, EventArgs e)
+        private void Customers_Button_Click(object sender, EventArgs e)
         {
 
         }
@@ -171,7 +156,7 @@ namespace GruzoMaster
                     return;
                 }
                 this.LogMenu = new LogMenu.LogMenu();
-                this.LogMenu.FormClosed += LogMenu_FormClosed;
+                this.LogMenu.FormClosed += LogMenu_FormClosed; ;
                 this.LogMenu.Show();
             }
             catch (Exception ex) { MessageBox.Show("buttonLastAction_Click: " + ex.ToString()); }
@@ -180,6 +165,58 @@ namespace GruzoMaster
         private void LogMenu_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.LogMenu = null;
+        }
+
+        private void buttonListOfAuto_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.TransportMenu != null)
+                {
+                    MessageBox.Show("У вас уже есть открытое меню автопарка !");
+                    return;
+                }
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckTransport))
+                {
+                    MessageBox.Show("У вас нету доступа к этому меню !");
+                    return;
+                }
+                this.TransportMenu = new TransportMenu.TransportMenu();
+                this.TransportMenu.FormClosed += TransportMenu_FormClosed; ;
+                this.TransportMenu.Show();
+            }
+            catch (Exception ex) { MessageBox.Show("buttonListOfAuto_Click: " + ex.ToString()); }
+        }
+
+        private void TransportMenu_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.TransportMenu = null;
+        }
+
+        private void buttonTableDrivers_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckDrivers))
+                {
+                    MessageBox.Show("У вас нету доступа к этому меню !");
+                    return;
+                }
+                if (this.MenuDrivers != null)
+                {
+                    MessageBox.Show("У вас уже есть открытое меню водителей !");
+                    return;
+                }
+                this.MenuDrivers = new MenuDrivers();
+                this.MenuDrivers.FormClosed += MenuDrivers_FormClosed; ;
+                this.MenuDrivers.Show();
+            }
+            catch (Exception ex) { MessageBox.Show("buttonTableDrivers_Click: " + ex.ToString()); }
+        }
+
+        private void MenuDrivers_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.MenuDrivers = null;
         }
     }
 }
