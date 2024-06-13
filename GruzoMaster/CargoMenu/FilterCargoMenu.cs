@@ -19,18 +19,30 @@ namespace GruzoMaster.CargoMenu
             InitializeComponent();
             this.MainCargoMenu = mainCargoMenu;
             LoadForwarders();
+            listBox1.MouseClick += listBox1_MouseClick;
         }
         public async void LoadForwarders()
         {
             try
             {
-                List<User> forwarders = await User.GetForwarderList();
-                foreach (User user in forwarders)
+                this.Forwarders = await User.GetForwarderList();
+                foreach (User user in this.Forwarders)
                 {
                     this.listBox1.Items.Add($"{user.Name} #{user.ID}");
                 }
             }
             catch (Exception ex) { MessageBox.Show("LoadForwarders: " + ex.ToString()); }
         }
+        private void listBox1_MouseClick(object sender, MouseEventArgs e)
+        {
+            Int32 index = listBox1.IndexFromPoint(e.Location);
+            if (index != ListBox.NoMatches)
+            {
+                User selectedUser = Forwarders[index];
+                this.MainCargoMenu.FilteredByForwarders(selectedUser);
+                this.Close();
+            }
+        }
+
     }
 }

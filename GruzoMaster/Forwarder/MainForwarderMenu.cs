@@ -23,8 +23,8 @@ namespace GruzoMaster.Forwarder
         {
             try
             {
-                List<User> users = await User.GetForwarderList();
-                foreach (User user in users)
+                this.Forwarders = await User.GetForwarderList();
+                foreach (User user in this.Forwarders)
                 {
                     this.listBoxForwarder.Items.Add($"{user.Name} #{user.ID}");
                 }

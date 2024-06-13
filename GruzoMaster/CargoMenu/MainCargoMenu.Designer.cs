@@ -40,12 +40,13 @@ namespace GruzoMaster.CargoMenu
             this.добавитьЗаказToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выставитьСчетФактуруToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.создатьАктВыполненныхРаботToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.фильтрToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.поЭкспедиторамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.фильтрToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.поЭкспедиторамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.очиститьФильтрToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -112,6 +113,22 @@ namespace GruzoMaster.CargoMenu
             this.создатьАктВыполненныхРаботToolStripMenuItem.Text = "Создать акт выполненных работ";
             this.создатьАктВыполненныхРаботToolStripMenuItem.Click += new System.EventHandler(this.создатьАктВыполненныхРаботToolStripMenuItem_Click_1);
             // 
+            // фильтрToolStripMenuItem
+            // 
+            this.фильтрToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.поЭкспедиторамToolStripMenuItem,
+            this.очиститьФильтрToolStripMenuItem});
+            this.фильтрToolStripMenuItem.Name = "фильтрToolStripMenuItem";
+            this.фильтрToolStripMenuItem.Size = new System.Drawing.Size(319, 26);
+            this.фильтрToolStripMenuItem.Text = "Фильтр";
+            // 
+            // поЭкспедиторамToolStripMenuItem
+            // 
+            this.поЭкспедиторамToolStripMenuItem.Name = "поЭкспедиторамToolStripMenuItem";
+            this.поЭкспедиторамToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.поЭкспедиторамToolStripMenuItem.Text = "По экспедиторам";
+            this.поЭкспедиторамToolStripMenuItem.Click += new System.EventHandler(this.поЭкспедиторамToolStripMenuItem_Click);
+            // 
             // dataGridView1
             // 
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(31)))), ((int)(((byte)(37)))));
@@ -174,20 +191,12 @@ namespace GruzoMaster.CargoMenu
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // фильтрToolStripMenuItem
+            // очиститьФильтрToolStripMenuItem
             // 
-            this.фильтрToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.поЭкспедиторамToolStripMenuItem});
-            this.фильтрToolStripMenuItem.Name = "фильтрToolStripMenuItem";
-            this.фильтрToolStripMenuItem.Size = new System.Drawing.Size(319, 26);
-            this.фильтрToolStripMenuItem.Text = "Фильтр";
-            // 
-            // поЭкспедиторамToolStripMenuItem
-            // 
-            this.поЭкспедиторамToolStripMenuItem.Name = "поЭкспедиторамToolStripMenuItem";
-            this.поЭкспедиторамToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.поЭкспедиторамToolStripMenuItem.Text = "По экспедиторам";
-            this.поЭкспедиторамToolStripMenuItem.Click += new System.EventHandler(this.поЭкспедиторамToolStripMenuItem_Click);
+            this.очиститьФильтрToolStripMenuItem.Name = "очиститьФильтрToolStripMenuItem";
+            this.очиститьФильтрToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.очиститьФильтрToolStripMenuItem.Text = "Очистить фильтр";
+            this.очиститьФильтрToolStripMenuItem.Click += new System.EventHandler(this.очиститьФильтрToolStripMenuItem_Click);
             // 
             // MainCargoMenu
             // 
@@ -227,5 +236,6 @@ namespace GruzoMaster.CargoMenu
         private ToolStripMenuItem создатьАктВыполненныхРаботToolStripMenuItem;
         private ToolStripMenuItem фильтрToolStripMenuItem;
         private ToolStripMenuItem поЭкспедиторамToolStripMenuItem;
+        private ToolStripMenuItem очиститьФильтрToolStripMenuItem;
     }
 }

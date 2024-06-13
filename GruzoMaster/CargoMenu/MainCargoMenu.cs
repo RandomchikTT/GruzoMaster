@@ -24,6 +24,7 @@ namespace GruzoMaster.CargoMenu
         private AddCargoMenu AddCargoMenu { get; set; } = null;
         private EditingCargoMenu EditingCargoMenu { get; set; } = null;
         private FilterCargoMenu FilterCargoMenu { get; set; } = null;
+        private User FilteredByForwarder { get; set; } = null;
         public MainCargoMenu()
         {
             InitializeComponent();
@@ -62,13 +63,30 @@ namespace GruzoMaster.CargoMenu
         {
             this.EditingCargoMenu = null;
         }
-
+        
+        public void FilteredByForwarders(User forrwarder)
+        {
+            try
+            {
+                this.FilteredByForwarder = forrwarder;
+                this.LoadCargoMenu(1);
+            }
+            catch (Exception e) { MessageBox.Show("FilteredByForwarders: " + e.ToString()); }
+        }
         public async void LoadCargoMenu(Int32 currentPage, Int32 pageSize = 30)
         {
             try
             {
                 Int32 offset = (currentPage - 1) * pageSize;
-                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `cargo` LIMIT {pageSize} OFFSET {offset}");
+                DataTable dataTable;
+                if (this.FilteredByForwarder != null)
+                {
+                    dataTable = await MySQL.QueryRead($"SELECT * FROM `cargo` WHERE `ForwarderID`={this.FilteredByForwarder.ID} LIMIT {pageSize} OFFSET {offset}");
+                }
+                else
+                {
+                    dataTable = await MySQL.QueryRead($"SELECT * FROM `cargo` LIMIT {pageSize} OFFSET {offset}");
+                }
                 CargoList.Clear();
                 if (dataTable != null && dataTable.Rows.Count > 0)
                 {
@@ -428,6 +446,21 @@ namespace GruzoMaster.CargoMenu
         private void FilterCargoMenu_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.FilterCargoMenu = null;
+        }
+
+        private void очиститьФильтрToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.FilteredByForwarder != null)
+                {
+                    this.FilteredByForwarder = null;
+                    this.LoadCargoMenu(1);
+                    MessageBox.Show("Фильтр по экспедиторам успешно очищен !");
+                    return;
+                }
+            }
+            catch (Exception ex) { MessageBox.Show("очиститьФильтрToolStripMenuItem_Click: " + ex.ToString()); }
         }
     }
 }

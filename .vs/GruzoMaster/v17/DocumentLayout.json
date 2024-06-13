@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|c:\\users\\\u0441\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\randomchiktt\\gruzomaster\\gruzomaster\\cargomenu\\filtercargomenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|solutionrelative:gruzomaster\\cargomenu\\filtercargomenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\gruzomaster\\forwarder\\mainforwardermenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|solutionrelative:gruzomaster\\forwarder\\mainforwardermenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\gruzomaster\\cargomenu\\maincargomenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -15,8 +15,12 @@
       "RelativeMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|solutionrelative:gruzomaster\\cargomenu\\maincargomenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\gruzomaster\\forwarder\\mainforwardermenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|solutionrelative:gruzomaster\\forwarder\\mainforwardermenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|c:\\users\\\u0441\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\randomchiktt\\gruzomaster\\gruzomaster\\cargomenu\\filtercargomenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|solutionrelative:gruzomaster\\cargomenu\\filtercargomenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\gruzomaster\\cargomenu\\maincargomenu.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|solutionrelative:gruzomaster\\cargomenu\\maincargomenu.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\gruzomaster\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -140,10 +144,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\gruzomaster\\cargomenu\\editingcargomenu.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|solutionrelative:gruzomaster\\cargomenu\\editingcargomenu.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\gruzomaster\\cargomenu\\maincargomenu.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{198E2754-3F8C-440A-9FBF-D020110EF80E}|GruzoMaster\\GruzoMaster.csproj|solutionrelative:gruzomaster\\cargomenu\\maincargomenu.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -153,11 +153,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "MainMenu.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\MainMenu.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\MainMenu.cs",
@@ -185,7 +185,8 @@
               "ToolTip": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\CargoMenu\\MainCargoMenu.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "RelativeToolTip": "GruzoMaster\\CargoMenu\\MainCargoMenu.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-31T07:42:10.792Z"
+              "WhenOpened": "2024-05-31T07:42:10.792Z",
+              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
             },
             {
               "$type": "Document",
@@ -195,49 +196,65 @@
               "RelativeDocumentMoniker": "GruzoMaster\\CargoMenu\\MainCargoMenu.cs",
               "ToolTip": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\CargoMenu\\MainCargoMenu.cs",
               "RelativeToolTip": "GruzoMaster\\CargoMenu\\MainCargoMenu.cs",
-              "ViewState": "AQIAAIwBAAAAAAAAAAAuwKEBAAA6AAAA",
+              "ViewState": "AQIAAEQAAAAAAAAAAAAvwEsAAAA5AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-31T07:42:13.095Z"
+              "WhenOpened": "2024-05-31T07:42:13.095Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "FilterCargoMenu.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\CargoMenu\\FilterCargoMenu.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\CargoMenu\\FilterCargoMenu.cs",
               "ToolTip": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\CargoMenu\\FilterCargoMenu.cs",
               "RelativeToolTip": "GruzoMaster\\CargoMenu\\FilterCargoMenu.cs",
-              "ViewState": "AQIAAAIAAAAAAAAAAAAcwB0AAABHAAAA",
+              "ViewState": "AQIAABQAAAAAAAAAAAAgwCoAAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-12T12:27:19.412Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "MainForwarderMenu.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Forwarder\\MainForwarderMenu.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Forwarder\\MainForwarderMenu.cs",
               "ToolTip": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Forwarder\\MainForwarderMenu.cs",
               "RelativeToolTip": "GruzoMaster\\Forwarder\\MainForwarderMenu.cs",
-              "ViewState": "AQIAABUAAAAAAAAAAAA3wBsAAAARAAAA",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAywBoAAAA1AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-12T11:30:39.972Z"
+              "WhenOpened": "2024-06-12T11:30:39.972Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
+              "Title": "MainCargoMenu.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\CargoMenu\\MainCargoMenu.Designer.cs",
+              "RelativeDocumentMoniker": "GruzoMaster\\CargoMenu\\MainCargoMenu.Designer.cs",
+              "ToolTip": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\CargoMenu\\MainCargoMenu.Designer.cs",
+              "RelativeToolTip": "GruzoMaster\\CargoMenu\\MainCargoMenu.Designer.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAASAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T07:53:48.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "MainForwarderMenu.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Forwarder\\MainForwarderMenu.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Forwarder\\MainForwarderMenu.cs",
               "ToolTip": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Forwarder\\MainForwarderMenu.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "RelativeToolTip": "GruzoMaster\\Forwarder\\MainForwarderMenu.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-12T11:22:53.763Z"
+              "WhenOpened": "2024-06-12T11:22:53.763Z",
+              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Objects\\User.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Objects\\User.cs",
@@ -249,7 +266,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "FilterCargoMenu.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\CargoMenu\\FilterCargoMenu.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\CargoMenu\\FilterCargoMenu.cs",
@@ -260,7 +277,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "TransportMenu.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\TransportMenu\\TransportMenu.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\TransportMenu\\TransportMenu.cs",
@@ -272,7 +289,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "MenuDrivers.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\DriversMenu\\MenuDrivers.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\DriversMenu\\MenuDrivers.cs",
@@ -284,7 +301,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "MainForwarderMenu.Designer.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Forwarder\\MainForwarderMenu.Designer.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Forwarder\\MainForwarderMenu.Designer.cs",
@@ -292,11 +309,12 @@
               "RelativeToolTip": "GruzoMaster\\Forwarder\\MainForwarderMenu.Designer.cs",
               "ViewState": "AQIAAA8AAAAAAAAAAIA1wCkAAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-12T11:30:41.591Z"
+              "WhenOpened": "2024-06-12T11:30:41.591Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "MenuDrivers.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\DriversMenu\\MenuDrivers.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\DriversMenu\\MenuDrivers.cs",
@@ -307,7 +325,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "MainMenu.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\MainMenu.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\MainMenu.cs",
@@ -318,7 +336,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Transport.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Objects\\Transport.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Objects\\Transport.cs",
@@ -330,7 +348,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "AuthorizationMenu.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Authorization\\AuthorizationMenu.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Authorization\\AuthorizationMenu.cs",
@@ -341,7 +359,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "UserSettings.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Objects\\UserSettings.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Objects\\UserSettings.cs",
@@ -353,7 +371,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "AuthorizationMenu.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Authorization\\AuthorizationMenu.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Authorization\\AuthorizationMenu.cs",
@@ -365,7 +383,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "GruzoMaster",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\GruzoMaster.csproj",
               "RelativeDocumentMoniker": "GruzoMaster\\GruzoMaster.csproj",
@@ -376,7 +394,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "MainMenu.Designer.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\MainMenu.Designer.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\MainMenu.Designer.cs",
@@ -388,7 +406,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "Resources.Designer.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Properties\\Resources.Designer.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Properties\\Resources.Designer.cs",
@@ -400,7 +418,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "OtherFunctions.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\OtherFunctions.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\OtherFunctions.cs",
@@ -412,7 +430,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "MainMenuCompany.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Companies\\MainMenuCompany.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Companies\\MainMenuCompany.cs",
@@ -424,7 +442,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "MainMenuCompany.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Companies\\MainMenuCompany.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Companies\\MainMenuCompany.cs",
@@ -435,7 +453,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "EditingCargoMenu.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\CargoMenu\\EditingCargoMenu.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\CargoMenu\\EditingCargoMenu.cs",
@@ -447,7 +465,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "DriverInfo.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Objects\\DriverInfo.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Objects\\DriverInfo.cs",
@@ -459,7 +477,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "Company.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Objects\\Company.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Objects\\Company.cs",
@@ -471,7 +489,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "Storage.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Storage\\Storage.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Storage\\Storage.cs",
@@ -483,7 +501,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "Cargo.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Objects\\Cargo\\Cargo.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Objects\\Cargo\\Cargo.cs",
@@ -495,7 +513,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "EditingCargoMenu.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\CargoMenu\\EditingCargoMenu.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\CargoMenu\\EditingCargoMenu.cs",
@@ -506,7 +524,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "AuthData.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Storage\\Objects\\AuthData.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Storage\\Objects\\AuthData.cs",
@@ -518,7 +536,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "CargoDeliveryType.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Objects\\Cargo\\CargoDeliveryType.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Objects\\Cargo\\CargoDeliveryType.cs",
@@ -530,7 +548,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "CargoLog.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\Objects\\Cargo\\CargoLog.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\Objects\\Cargo\\CargoLog.cs",
@@ -542,7 +560,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "AddCargoMenu.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\CargoMenu\\AddCargoMenu.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\CargoMenu\\AddCargoMenu.cs",
@@ -554,7 +572,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "AddCargoMenu.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\CargoMenu\\AddCargoMenu.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\CargoMenu\\AddCargoMenu.cs",
@@ -565,7 +583,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "EditingCargoMenu.Designer.cs",
               "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\CargoMenu\\EditingCargoMenu.Designer.cs",
               "RelativeDocumentMoniker": "GruzoMaster\\CargoMenu\\EditingCargoMenu.Designer.cs",
@@ -574,18 +592,6 @@
               "ViewState": "AQIAABkAAAAAAAAAAAAswBwAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-03T15:10:51.213Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 35,
-              "Title": "MainCargoMenu.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\CargoMenu\\MainCargoMenu.Designer.cs",
-              "RelativeDocumentMoniker": "GruzoMaster\\CargoMenu\\MainCargoMenu.Designer.cs",
-              "ToolTip": "C:\\Users\\\u0421\u0430\u0432\u0435\u043B\u0438\u0439\\source\\repos\\RandomchikTT\\GruzoMaster\\GruzoMaster\\CargoMenu\\MainCargoMenu.Designer.cs",
-              "RelativeToolTip": "GruzoMaster\\CargoMenu\\MainCargoMenu.Designer.cs",
-              "ViewState": "AQIAAFQAAAAAAAAAAAAnwGEAAAAPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-31T07:53:48.112Z"
             }
           ]
         },
