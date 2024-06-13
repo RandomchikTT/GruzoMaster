@@ -1,5 +1,6 @@
 ﻿using GruzoMaster.CargoMenu;
 using GruzoMaster.Companies;
+using GruzoMaster.Forwarder;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,7 @@ namespace GruzoMaster
         private MainCargoMenu MainCargoMenu { get; set; } = null;
         private LogMenu.LogMenu LogMenu { get; set; } = null;
         private TransportMenu.TransportMenu TransportMenu { get; set; } = null;
+        private MainForwarderMenu MainForwarderMenu { get; set; } = null;
         private MenuDrivers MenuDrivers { get; set; } = null;
         public MainMenu(User user)
         {
@@ -138,7 +140,28 @@ namespace GruzoMaster
 
         private void Customers_Button_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanOpenForwarderMenu))
+                {
+                    MessageBox.Show("У вас нету доступа к этому меню !");
+                    return;
+                }
+                if (this.MainForwarderMenu != null)
+                {
+                    MessageBox.Show("У вас уже есть открытое меню это !");
+                    return;
+                }
+                this.MainForwarderMenu = new MainForwarderMenu();
+                this.MainForwarderMenu.FormClosed += MainForwarderMenu_FormClosed;
+                this.MainForwarderMenu.Show();
+            }
+            catch (Exception ex) { MessageBox.Show("Customers_Button_Click: " + ex.ToString()); }
+        }
 
+        private void MainForwarderMenu_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.MainForwarderMenu = null;
         }
 
         private void buttonLastAction_Click(object sender, EventArgs e)

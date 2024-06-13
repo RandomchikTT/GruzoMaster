@@ -106,6 +106,12 @@
     <Compile Include="CargoMenu\EditingCargoMenu.Designer.cs">
       <DependentUpon>EditingCargoMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="CargoMenu\FilterCargoMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CargoMenu\FilterCargoMenu.Designer.cs">
+      <DependentUpon>FilterCargoMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="CargoMenu\MainCargoMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,6 +165,12 @@
     </Compile>
     <Compile Include="Authorization\AuthorizationMenu.Designer.cs">
       <DependentUpon>AuthorizationMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forwarder\MainForwarderMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forwarder\MainForwarderMenu.Designer.cs">
+      <DependentUpon>MainForwarderMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="MainMenu.cs">
       <SubType>Form</SubType>
@@ -234,6 +246,9 @@
     <EmbeddedResource Include="CargoMenu\EditingCargoMenu.resx">
       <DependentUpon>EditingCargoMenu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CargoMenu\FilterCargoMenu.resx">
+      <DependentUpon>FilterCargoMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CargoMenu\MainCargoMenu.resx">
       <DependentUpon>MainCargoMenu.cs</DependentUpon>
     </EmbeddedResource>
@@ -260,6 +275,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Authorization\AuthorizationMenu.resx">
       <DependentUpon>AuthorizationMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forwarder\MainForwarderMenu.resx">
+      <DependentUpon>MainForwarderMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>

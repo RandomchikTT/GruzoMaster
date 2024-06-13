@@ -75,6 +75,10 @@ namespace GruzoMaster
             /// Изменять данные о грузе
             /// </summary>
             EditingCargoMenu = 15,
+            /// <summary>
+            /// Открывать окно с экспедиторами
+            /// </summary>
+            CanOpenForwarderMenu = 16,
         }
         private static Dictionary<UserType, Dictionary<UserSetting, Boolean>> UserSettingDictionary = new Dictionary<UserType, Dictionary<UserSetting, Boolean>>()
         {
@@ -95,6 +99,7 @@ namespace GruzoMaster
                 { UserSetting.CanDeleteCompany, true },
                 { UserSetting.CheckCargoMenu, true },
                 { UserSetting.EditingCargoMenu, true },
+                { UserSetting.CanOpenForwarderMenu, true },
             }},
             { UserType.User, new Dictionary<UserSetting, Boolean>()
             {
@@ -113,6 +118,7 @@ namespace GruzoMaster
                 { UserSetting.CanDeleteCompany, true },
                 { UserSetting.CheckCargoMenu, true },
                 { UserSetting.EditingCargoMenu, true },
+                { UserSetting.CanOpenForwarderMenu, true },
             }},
             { UserType.Owner, new Dictionary<UserSetting, Boolean>()
             {
@@ -131,6 +137,26 @@ namespace GruzoMaster
                 { UserSetting.CanDeleteCompany, true },
                 { UserSetting.CheckCargoMenu, true },
                 { UserSetting.EditingCargoMenu, true },
+                { UserSetting.CanOpenForwarderMenu, true },
+            }},
+            { UserType.Forwarder, new Dictionary<UserSetting, Boolean>()
+            {
+                { UserSetting.CanCheckLogs, true },
+                { UserSetting.CanCheckDrivers, true },
+                { UserSetting.CanEditDrivers, true },
+                { UserSetting.CanAppendDrivers, true },
+                { UserSetting.CanCheckTransport, true },
+                { UserSetting.CanDeleteTransport, true },
+                { UserSetting.CanAppendTransport, true },
+                { UserSetting.CanEditDataTransport, true },
+                { UserSetting.CanCheckCompanyMenu, true },
+                { UserSetting.CanMakeExportDataCompany, true },
+                { UserSetting.CanAppendCompany, true },
+                { UserSetting.CanEditCompany, true },
+                { UserSetting.CanDeleteCompany, true },
+                { UserSetting.CheckCargoMenu, true },
+                { UserSetting.EditingCargoMenu, true },
+                { UserSetting.CanOpenForwarderMenu, true },
             }},
         };
         public static Boolean GetAccessUser(UserSetting userSetting)

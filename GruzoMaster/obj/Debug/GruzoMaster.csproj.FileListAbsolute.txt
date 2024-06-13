@@ -125,3 +125,5 @@ C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\De
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\Microsoft.Extensions.Logging.Abstractions.xml
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.Forwarder.MainForwarderMenu.resources
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.CargoMenu.FilterCargoMenu.resources

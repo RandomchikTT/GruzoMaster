@@ -33,9 +33,21 @@ namespace GruzoMaster
     }
     public enum UserType
     {
+        /// <summary>
+        /// Пользователь
+        /// </summary>
         User = 0,
+        /// <summary>
+        /// Администратор
+        /// </summary>
         Admin = 1,
+        /// <summary>
+        /// Владелец
+        /// </summary>
         Owner = 2,
+        /// <summary>
+        /// Экспедитор
+        /// </summary>
         Forwarder = 3,
     }
     public class User
@@ -85,6 +97,28 @@ namespace GruzoMaster
                 return user;
             }
             catch (Exception e) { MessageBox.Show("GetUserById: " + e.ToString()); return null; }
+        }
+        public static async Task<List<User>> GetForwarderList()
+        {
+            List<User> list = new List<User>();
+            try
+            {
+                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `users` WHERE `UserType`={Convert.ToInt32(UserType.Admin)}");
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    String name = row["Name"].ToString();
+                    Int32 id = Convert.ToInt32(row["id"].ToString());
+                    list.Add(new User()
+                    {
+                        ID = id,
+                        Name = name,
+                        Login = Convert.ToString(row["Login"]),
+                        UserType = (UserType)Convert.ToInt32(row["UserType"]),
+                    });
+                }
+                return list;
+            }
+            catch (Exception ex) { MessageBox.Show("LoadFordwarderList: " + ex.ToString()); return list; }
         }
     }
 }

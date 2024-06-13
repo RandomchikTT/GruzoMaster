@@ -23,6 +23,7 @@ namespace GruzoMaster.CargoMenu
         public List<Cargo> CargoList { get; set; } = new List<Cargo>();
         private AddCargoMenu AddCargoMenu { get; set; } = null;
         private EditingCargoMenu EditingCargoMenu { get; set; } = null;
+        private FilterCargoMenu FilterCargoMenu { get; set; } = null;
         public MainCargoMenu()
         {
             InitializeComponent();
@@ -403,6 +404,30 @@ namespace GruzoMaster.CargoMenu
             {
                 MessageBox.Show($"создатьАктВыполненныхРаботToolStripMenuItem_Click: {ex}");
             }
+        }
+
+        private void поЭкспедиторамToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.FilterCargoMenu != null)
+                {
+                    MessageBox.Show("У вас уже есть открытое это меню !");
+                    return;
+                }
+                this.FilterCargoMenu = new FilterCargoMenu(this);
+                this.FilterCargoMenu.FormClosed += FilterCargoMenu_FormClosed;
+                this.FilterCargoMenu.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"поЭкспедиторамToolStripMenuItem_Click: {ex}");
+            }
+        }
+
+        private void FilterCargoMenu_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.FilterCargoMenu = null;
         }
     }
 }
