@@ -59,6 +59,31 @@ namespace GruzoMaster.Objects.Cargo
                 return null;
             }
         }
+        public static async Task<CargoPart> GetCargoPartById(long id)
+        {
+            try
+            {
+                List<CargoPart> cargoParts = new List<CargoPart>();
+                var result = await MySQL.QueryRead($"SELECT * FROM cargo_parts WHERE ID = {id}");
+                if (result == null || result.Rows.Count <= 0) return null;
+                CargoPart cargoPart = new CargoPart
+                {
+                    CargoID = Convert.ToInt32(result.Rows[0]["CargoID"]),
+                    ID = Convert.ToInt32(result.Rows[0]["ID"]),
+                    Transport = Convert.ToInt32(result.Rows[0]["TransportID"]),
+                    DeliveryDate = Convert.ToDateTime(result.Rows[0]["DeliveryDate"]),
+                    Weight = Convert.ToInt32(result.Rows[0]["Weight"]),
+                    Volume = Convert.ToInt32(result.Rows[0]["Volume"]),
+                    CargoDeliveryType = (CargoDeliveryType)Convert.ToInt32(result.Rows[0]["DeliveryType"])
+                };
+                return cargoPart;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("GetCargoPartById: " + ex.ToString());
+                return null;
+            }
+        }
         public async Task UpdateInDatabase()
         {
             try

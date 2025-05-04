@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Permissions;
 using System.Text;
@@ -89,6 +90,7 @@ namespace GruzoMaster.CargoMenu
                         String name = Convert.ToString(row["Name"]);
                         String description = Convert.ToString(row["Description"]);
                         String addressFromCargo = Convert.ToString(row["addressFromCargo"]);
+                        DateTime deadLineTime = Convert.ToDateTime(row["DeadlineTime"]);
                         String addressToCargo = Convert.ToString(row["AddressToCargo"]);
                         Int32 price = Convert.ToInt32(row["Price"]);
                         Int32 idForwarder = Convert.ToInt32(row["ForwarderID"]);
@@ -113,6 +115,7 @@ namespace GruzoMaster.CargoMenu
                         cargos.Add(new Cargo()
                         {
                             ID = idCargo,
+                            DeadlineTime = deadLineTime,
                             CreateUserCargo = user,
                             CustomerCompany = company,
                             Price = price,
@@ -139,11 +142,11 @@ namespace GruzoMaster.CargoMenu
                 DataTable dataTable;
                 if (this.FilteredByForwarder != null)
                 {
-                    dataTable = await MySQL.QueryRead($"SELECT * FROM `cargo_view` WHERE `ForwarderID`={this.FilteredByForwarder.ID} LIMIT {pageSize} OFFSET {offset}");
+                    dataTable = await MySQL.QueryRead($"SELECT * FROM `cargo` WHERE `ForwarderID`={this.FilteredByForwarder.ID} LIMIT {pageSize} OFFSET {offset}");
                 }
                 else
                 {
-                    dataTable = await MySQL.QueryRead($"SELECT * FROM `cargo_view` LIMIT {pageSize} OFFSET {offset}");
+                    dataTable = await MySQL.QueryRead($"SELECT * FROM `cargo` LIMIT {pageSize} OFFSET {offset}");
                 }
                 CargoList.Clear();
                 if (dataTable != null && dataTable.Rows.Count > 0)
@@ -157,6 +160,7 @@ namespace GruzoMaster.CargoMenu
                         String description = Convert.ToString(row["Description"]);
                         String addressFromCargo = Convert.ToString(row["addressFromCargo"]);
                         String addressToCargo = Convert.ToString(row["AddressToCargo"]);
+                        DateTime deadlineTime = Convert.ToDateTime(row["DeadlineTime"]);
                         Int32 price = Convert.ToInt32(row["Price"]);
                         Int32 idForwarder = Convert.ToInt32(row["ForwarderID"]);
                         CargoDeliveryType cargoDeliveryType = (CargoDeliveryType)Convert.ToInt32(row["DeliveryType"]);
@@ -180,6 +184,7 @@ namespace GruzoMaster.CargoMenu
                         CargoList.Add(new Cargo()
                         {
                             ID = idCargo,
+                            DeadlineTime = deadlineTime,
                             CreateUserCargo = user,
                             CustomerCompany = company,
                             Price = price,
@@ -499,6 +504,136 @@ namespace GruzoMaster.CargoMenu
                 }
             }
             catch (Exception ex) { MessageBox.Show("очиститьФильтрToolStripMenuItem_Click: " + ex.ToString()); }
+        }
+
+        private async void заявкуНаПеревозкуToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Пожалуйста, выберите груз.");
+                    return;
+                }
+                var selectedRow = dataGridView1.SelectedRows[0];
+                Int64 cargoId = Convert.ToInt64(selectedRow.Cells["ID"].Value);
+                Cargo cargo = CargoList.Find(_ => _.ID == cargoId);
+                if (cargo == null)
+                {
+                    MessageBox.Show("Такой груз не найден !");
+                    return;
+                }
+                string templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Образцы", "ЗаявкаНаГруз.docx");
+                if (!File.Exists(templatePath))
+                {
+                    MessageBox.Show("Файл шаблона не найден: " + templatePath);
+                    return;
+                }
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Title = "Сохранить заявку на груз";
+                    saveFileDialog.Filter = "Word документы (*.docx)|*.docx";
+                    saveFileDialog.FileName = $"Заявка_{cargo.ID}.docx";
+
+                    if (saveFileDialog.ShowDialog() != DialogResult.OK)
+                        return;
+
+                    string savePath = saveFileDialog.FileName;
+
+                    var doc = DocX.Load(templatePath);
+                    List<Transport> transports = await Transport.GetTransports();
+                    transports = transports.FindAll(_ => cargo.CargoParts.Any(x => x.Transport == _.IdKey));
+
+                    doc.ReplaceText("{{Customer}}", cargo.CustomerCompany?.Name ?? "");
+                    doc.ReplaceText("{{Carrier}}", "ООО Малекс");
+                    doc.ReplaceText("{{cargo_id}}", cargo.ID.ToString());
+                    doc.ReplaceText("{{Route}}", $"{cargo.AddressFromCargo} - {cargo.AddressToCargo}");
+                    doc.ReplaceText("{{CarParams}}", "Тентованный, до 20 тонн, объем 90 м³");
+                    doc.ReplaceText("{{LoadDate}}", DateTime.Now.ToString("G"));
+                    doc.ReplaceText("{{LoadAddress}}", cargo.AddressFromCargo);
+                    doc.ReplaceText("{{UnloadAddress}}", cargo.AddressToCargo);
+                    doc.ReplaceText("{{CargoInfo}}", $"{cargo.Name}, {cargo.Description}");
+                    doc.ReplaceText("{{DeliveryDeadline}}", cargo.DeadlineTime.ToString("G"));
+                    doc.ReplaceText("{{PaymentTerms}}", "Оплата в течение 5 банковских дней после предоставления оригиналов закрывающих документов.");
+                    doc.ReplaceText("{{FreightCost}}", $"{cargo.Price} руб.");
+                    doc.ReplaceText("{{CarNumbers}}", string.Join(", ", transports.Select(_ => _.GovNumber)));
+
+                    doc.SaveAs(savePath);
+                    MessageBox.Show($"Заявка успешно сформирована");
+                }
+            }
+            catch (Exception ex) { MessageBox.Show("заявкуНаПеревозкуToolStripMenuItem_Click: " + ex.ToString()); }
+        }
+
+        private async void путевойЛистToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Пожалуйста, выберите груз.");
+                    return;
+                }
+                var selectedRow = dataGridView1.SelectedRows[0];
+                Int64 cargoId = Convert.ToInt64(selectedRow.Cells["ID"].Value);
+                Cargo cargo = CargoList.Find(_ => _.ID == cargoId);
+                if (cargo == null)
+                {
+                    MessageBox.Show("Такой груз не найден !");
+                    return;
+                }
+
+            }
+            catch (Exception ex) { MessageBox.Show("путевойЛистToolStripMenuItem_Click: " + ex.ToString()); }
+        }
+
+        private async void договорНаОказаниеУслугToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Пожалуйста, выберите груз.");
+                    return;
+                }
+                var selectedRow = dataGridView1.SelectedRows[0];
+                Int64 cargoId = Convert.ToInt64(selectedRow.Cells["ID"].Value);
+                Cargo cargo = CargoList.Find(_ => _.ID == cargoId);
+                if (cargo == null)
+                {
+                    MessageBox.Show("Такой груз не найден !");
+                    return;
+                }
+                string templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Образцы", "ДоговорНаОказаниеТранспортныхУслуг.docx");
+                if (!File.Exists(templatePath))
+                {
+                    MessageBox.Show("Файл шаблона не найден: " + templatePath);
+                    return;
+                }
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Title = "Сохранить договор на оказание услуг";
+                    saveFileDialog.Filter = "Word документы (*.docx)|*.docx";
+                    saveFileDialog.FileName = $"Договор На оказание услуг.docx";
+
+                    if (saveFileDialog.ShowDialog() != DialogResult.OK)
+                        return;
+
+                    string savePath = saveFileDialog.FileName;
+
+                    var doc = DocX.Load(templatePath);
+                    List<Transport> transports = await Transport.GetTransports();
+                    transports = transports.FindAll(_ => cargo.CargoParts.Any(x => x.Transport == _.IdKey));
+                    doc.ReplaceText("{{Customer}}", cargo.CustomerCompany?.Name ?? "");
+                    doc.ReplaceText("{{cargo_id}}", cargo.ID.ToString());
+                    doc.ReplaceText("{{LoadDate}}", DateTime.Now.ToString("G"));
+                    doc.ReplaceText("{{LoadAddress}}", cargo.AddressFromCargo);
+                    doc.ReplaceText("{{UnloadAddress}}", cargo.AddressToCargo);
+                    doc.SaveAs(savePath);
+                    MessageBox.Show($"Договор успешно сформирован");
+                }
+            }
+            catch (Exception ex) { MessageBox.Show("договорНаОказаниеУслугToolStripMenuItem_Click: " + ex.ToString()); }
         }
     }
 }

@@ -174,46 +174,39 @@ namespace GruzoMaster.Objects.Cargo
                     return false;
                 }
                 Int32 idForwarder = this.Forwarder != null ? this.Forwarder.ID : -1;
-                long newCargoId = 0;
 
-                var commandText = "InsertCargo"; // Название хранимой процедуры
-
-                using (var connection = new MySqlConnection(MySQL.Connection))
-                {
-                    await connection.OpenAsync();
-
-                    using (var cmd = new MySqlCommand(commandText, connection))
-                    {
-                        // Указываем, что это вызов хранимой процедуры
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
-                        // Параметры для хранимой процедуры
-                        cmd.Parameters.AddWithValue("@user_creator_id", this.CreateUserCargo.ID);
-                        cmd.Parameters.AddWithValue("@company_id", this.CustomerCompany.IdKey);
-                        cmd.Parameters.AddWithValue("@name", this.Name);
-                        cmd.Parameters.AddWithValue("@description", this.Description);
-                        cmd.Parameters.AddWithValue("@address_from", this.AddressFromCargo);
-                        cmd.Parameters.AddWithValue("@address_to", this.AddressToCargo);
-                        cmd.Parameters.AddWithValue("@price", this.Price);
-                        cmd.Parameters.AddWithValue("@delivery_type", (int)this.DeliveryType);
-                        cmd.Parameters.AddWithValue("@cargo_logs", JsonConvert.SerializeObject(this.CargoLogs));
-                        cmd.Parameters.AddWithValue("@forwarder_id", idForwarder);
-
-                        // Выходной параметр для нового ID
-                        var newCargoIdParam = new MySqlParameter("@new_cargo_id", MySqlDbType.Int64)
-                        {
-                            Direction = System.Data.ParameterDirection.Output
-                        };
-                        cmd.Parameters.Add(newCargoIdParam);
-
-                        // Выполнение команды
-                        await cmd.ExecuteNonQueryAsync();
-
-                        // Получение ID нового груза из выходного параметра
-                        newCargoId = Convert.ToInt64(newCargoIdParam.Value);
-                    }
-                }
-
+                long newCargoId = await MySQL.QueryLastInsertAsync($@"
+                    INSERT INTO `cargo`
+                    (
+                        `ID`, 
+                        `ID_user_creator`, 
+                        `ID_company`, 
+                        `Name`, 
+                        `Description`, 
+                        `AddressFromCargo`, 
+                        `AddressToCargo`, 
+                        `Price`, 
+                        `DeliveryType`, 
+                        `CargoLogs`, 
+                        `ForwarderID`,
+                        'DeadlineTime'
+                    ) 
+                    VALUES 
+                    (
+                        {this.ID}, 
+                        {this.CreateUserCargo.ID}, 
+                        {this.CustomerCompany.IdKey}, 
+                        '{this.Name}', 
+                        '{this.Description}', 
+                        '{this.AddressFromCargo}', 
+                        '{this.AddressToCargo}', 
+                        {this.Price}, 
+                        {(int)this.DeliveryType}, 
+                        '{JsonConvert.SerializeObject(this.CargoLogs)}', 
+                        {idForwarder},
+                        {this.DeadlineTime}
+                    );
+                ");
 
                 this.ID = newCargoId;
                 foreach (var part in CargoParts)
@@ -239,6 +232,7 @@ namespace GruzoMaster.Objects.Cargo
                         $"`AddressToCargo` = '{this.AddressToCargo}', " +
                         $"`Price` = {this.Price}, " +
                         $"`DeliveryType` = {(Int32)this.DeliveryType}, " +
+                        $"`DeadlineTime` = {this.DeadlineTime}, " +
                         $"`CargoLogs` = '{JsonConvert.SerializeObject(this.CargoLogs)}', " +
                         $"`ForwarderID` = {idForwarder} " +
                         $"WHERE `ID` = {this.ID}");
