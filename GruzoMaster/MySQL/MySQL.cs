@@ -40,7 +40,7 @@ namespace GruzoMaster
                     return result;
                 }
             }
-            catch (Exception e) { MessageBox.Show("QueryRead: " + e.ToString()); return null; }
+            catch (Exception e) { MessageBox.Show("QueryRead: " + e.ToString() + "\nCMD: " + cmd); return null; }
         }
         public static async Task QueryAsync(String cmd)
         {
@@ -55,7 +55,7 @@ namespace GruzoMaster
                     await connection.CloseAsync();
                 }
             }
-            catch (Exception e) { MessageBox.Show("QueryRead: " + e.ToString()); }
+            catch (Exception e) { MessageBox.Show("QueryAsync: " + e.ToString() + "\nCMD: " + cmd); }
         }
         public static async Task<Int64> QueryLastInsertAsync(String cmd)
         {

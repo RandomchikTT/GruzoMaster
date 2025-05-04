@@ -103,8 +103,8 @@ namespace GruzoMaster
             }},
             { UserType.User, new Dictionary<UserSetting, Boolean>()
             {
-                { UserSetting.CanCheckLogs, true },
-                { UserSetting.CanCheckDrivers, true },
+                { UserSetting.CanCheckLogs, false },
+                { UserSetting.CanCheckDrivers, false },
                 { UserSetting.CanEditDrivers, true },
                 { UserSetting.CanAppendDrivers, true },
                 { UserSetting.CanCheckTransport, true },

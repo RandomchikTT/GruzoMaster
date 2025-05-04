@@ -66,6 +66,18 @@ namespace GruzoMaster.Objects
         /// </summary>
         public Int32 IdKey { get; set; }
         /// <summary>
+        /// Грузоподьемонсть
+        /// </summary>
+        public int Capacity {  get; set; }
+        /// <summary>
+        /// Обьем
+        /// </summary>
+        public int Volume { get; set; }
+        /// <summary>
+        /// Текущий водитель
+        /// </summary>
+        public int CurrentDriverId { get; set; }
+        /// <summary>
         /// Получение списка всего транспорта
         /// </summary>
         /// <returns>Список обьектов транспорта</returns>
@@ -82,6 +94,9 @@ namespace GruzoMaster.Objects
                         transport.Add(new Transport()
                         {
                             IdKey = Convert.ToInt32(row["id"]),
+                            Capacity = Convert.ToInt32(row["Capacity"]),
+                            Volume = Convert.ToInt32(row["Volume"]),
+                            CurrentDriverId = Convert.ToInt32(row["CurrentDriverId"]),
                             TransportModelName = (Transport.TransportModel)Convert.ToInt32(row["Brand"]),
                             ModelDescriptionName = Convert.ToString(row["Model"]),
                             TransportTypeName = (Transport.TransportType)Convert.ToInt32(row["Type"]),
@@ -112,6 +127,9 @@ namespace GruzoMaster.Objects
                     {
                         IdKey = Convert.ToInt32(row["id"]),
                         TransportModelName = (Transport.TransportModel)Convert.ToInt32(row["Brand"]),
+                        Capacity = Convert.ToInt32(row["Capacity"]),
+                        Volume = Convert.ToInt32(row["Volume"]),
+                        CurrentDriverId = Convert.ToInt32(row["CurrentDriverId"]),
                         ModelDescriptionName = Convert.ToString(row["Model"]),
                         TransportTypeName = (Transport.TransportType)Convert.ToInt32(row["Type"]),
                         GovNumber = Convert.ToString(row["GovNumber"]),

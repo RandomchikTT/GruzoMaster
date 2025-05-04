@@ -1,6 +1,8 @@
 ﻿using GruzoMaster.CargoMenu;
 using GruzoMaster.Companies;
 using GruzoMaster.Forwarder;
+using GruzoMaster.Objects;
+using GruzoMaster.TransortOrders;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,10 +24,12 @@ namespace GruzoMaster
         private TransportMenu.TransportMenu TransportMenu { get; set; } = null;
         private MainForwarderMenu MainForwarderMenu { get; set; } = null;
         private MenuDrivers MenuDrivers { get; set; } = null;
+        private TransortOrders.TransportCargoMenu TransportCargoMenu { get; set; } = null;
         public MainMenu(User user)
         {
             User.LoggedUser = user;
             InitializeComponent();
+            this.KeyDown += MainMenu_KeyDown1;
             if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckDrivers))
             {
                 this.buttonTableDrivers.Visible = false;
@@ -47,6 +51,7 @@ namespace GruzoMaster
                 this.buttonListOfCompany.Enabled = false;
             }
         }
+
 
         private void gunaPanel1_Paint(object sender, PaintEventArgs e)
         {
@@ -231,15 +236,40 @@ namespace GruzoMaster
                     return;
                 }
                 this.MenuDrivers = new MenuDrivers();
-                this.MenuDrivers.FormClosed += MenuDrivers_FormClosed; ;
+                this.MenuDrivers.FormClosed += MenuDrivers_FormClosed;
                 this.MenuDrivers.Show();
             }
             catch (Exception ex) { MessageBox.Show("buttonTableDrivers_Click: " + ex.ToString()); }
+        }
+        private void MainMenu_KeyDown1(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F11)
+            {
+                string pathToHelpFile = @"Справочник\index.htm";
+                System.Diagnostics.Process.Start(pathToHelpFile);
+            }
         }
 
         private void MenuDrivers_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.MenuDrivers = null;
+        }
+
+        private void guna2Button1_Click(object sender, EventArgs e)
+        {
+            if (this.TransportCargoMenu != null)
+            {
+                MessageBox.Show("У вас уже есть открытое меню грузов транспорта !");
+                return;
+            }
+            this.TransportCargoMenu = new TransportCargoMenu();
+            this.TransportCargoMenu.FormClosed += MenuTranportCargoMenu_FormClosed;
+            this.TransportCargoMenu.Show();
+        }
+
+        private void MenuTranportCargoMenu_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.TransportCargoMenu = null;
         }
     }
 }

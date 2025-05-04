@@ -29,9 +29,7 @@ namespace GruzoMaster.CargoMenu
         {
             try
             {
-                LoadTransportBox();
                 LoadCompanyComboBox();
-                LoadDriverBox();
                 this.nameCargo.Text = this.SelectedCargo.Name;
                 this.descriptionCargo.Text = this.SelectedCargo.Description;
                 this.priceCargo.Text = this.SelectedCargo.Price.ToString();
@@ -58,38 +56,6 @@ namespace GruzoMaster.CargoMenu
             catch (Exception ex) { MessageBox.Show("LoadComboBox: " + ex.ToString()); }
         }
 
-        public async void LoadDriverBox()
-        {
-            try
-            {
-                this.DriverInfos = await Driver.GetDrivers();
-                foreach (Driver driverInfo in this.DriverInfos)
-                {
-                    this.driverBox.Items.Add(driverInfo.FullName);
-                    if (this.SelectedCargo.Driver.IdKey == driverInfo.IdKey)
-                    {
-                        this.driverBox.SelectedIndex = this.DriverInfos.IndexOf(driverInfo);
-                    }
-                }
-            }
-            catch (Exception ex) { MessageBox.Show("LoadDriverBox: " + ex.ToString()); }
-        }
-        public async void LoadTransportBox()
-        {
-            try
-            {
-                this.Transports = await Transport.GetTransports();
-                foreach (Transport transport in this.Transports)
-                {
-                    this.transportBox.Items.Add(transport.TransportModelName.ToString() + " " + transport.ModelDescriptionName + $" [{transport.GovNumber}]");
-                    if (this.SelectedCargo.TransportCargo.IdKey == transport.IdKey)
-                    {
-                        this.transportBox.SelectedIndex = this.Transports.IndexOf(transport);
-                    }
-                }
-            }
-            catch (Exception ex) { MessageBox.Show("LoadTransportBox: " + ex.ToString()); }
-        }
 
         private void buttonEditingCargo_click(object sender, EventArgs e)
         {
@@ -98,16 +64,6 @@ namespace GruzoMaster.CargoMenu
                 if (this.companyBox.SelectedIndex == -1)
                 {
                     MessageBox.Show("Вы не выбрали компанию !");
-                    return;
-                }
-                if (this.driverBox.SelectedIndex == -1)
-                {
-                    MessageBox.Show("Вы не выбрали водителя !");
-                    return;
-                }
-                if (this.transportBox.SelectedIndex == -1)
-                {
-                    MessageBox.Show("Вы не выбрали транпсорт !");
                     return;
                 }
                 if (this.nameCargo.Text.Length <= 3)
@@ -139,25 +95,7 @@ namespace GruzoMaster.CargoMenu
                 if (dialogResult == DialogResult.Yes)
                 {
                     StringBuilder stringBuilder = new StringBuilder();
-                    Transport transport = this.Transports[this.transportBox.SelectedIndex];
                     Boolean isUpdated = false;
-                    if (transport.IdKey != this.SelectedCargo.TransportCargo.IdKey)
-                    {
-                        stringBuilder.Append($"Изменил транспорт с " +
-                            $"{this.SelectedCargo.TransportCargo.TransportTypeName.ToString()}-{this.SelectedCargo.TransportCargo.TransportModelName} " +
-                            $"#{this.SelectedCargo.TransportCargo.IdKey} на " +
-                            $"{transport.TransportTypeName.ToString()}-{transport.TransportModelName} #{transport.IdKey}");
-                        isUpdated = true;
-                    }
-                    Driver driverInfo = this.DriverInfos[this.driverBox.SelectedIndex];
-                    if (driverInfo.IdKey != this.SelectedCargo.Driver.IdKey)
-                    {
-                        stringBuilder.Append($"Изменил водителя с " +
-                            $"{this.SelectedCargo.Driver.FullName} " +
-                            $"#{this.SelectedCargo.Driver.IdKey} на " +
-                            $"{driverInfo.FullName} #{driverInfo.IdKey}");
-                        isUpdated = true;
-                    }
                     Company company = this.CompanieList[this.companyBox.SelectedIndex];
                     if (company.IdKey != this.SelectedCargo.CustomerCompany.IdKey)
                     {
@@ -197,10 +135,8 @@ namespace GruzoMaster.CargoMenu
                         MessageBox.Show("Вы ничего не изменили !");
                         return;
                     }
-                    this.SelectedCargo.TransportCargo = transport;
                     this.SelectedCargo.DeliveryType = CargoDeliveryType.Created;
                     this.SelectedCargo.Price = priceCargo;
-                    this.SelectedCargo.Driver = driverInfo;
                     this.SelectedCargo.CreateUserCargo = User.LoggedUser;
                     this.SelectedCargo.CustomerCompany = company;
                     this.SelectedCargo.Name = this.nameCargo.Text;

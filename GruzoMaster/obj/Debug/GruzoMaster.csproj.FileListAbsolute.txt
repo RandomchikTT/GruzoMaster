@@ -127,3 +127,16 @@ C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\De
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\Microsoft.Extensions.Logging.Abstractions.xml
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.Forwarder.MainForwarderMenu.resources
 C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.CargoMenu.FilterCargoMenu.resources
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.TransortOrders.TransportCargoMenu.resources
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.TransortOrders.TransportOrderFilterByDate.resources
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\obj\Debug\GruzoMaster.TransortOrders.TransportReportForPeriod.resources
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\EPPlus.dll
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\EPPlus.Interfaces.dll
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\EPPlus.System.Drawing.dll
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\System.ComponentModel.Annotations.dll
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\System.Drawing.Common.dll
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\EPPlus.xml
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\System.Drawing.Common.pdb
+C:\Users\Савелий\source\repos\RandomchikTT\GruzoMaster\GruzoMaster\bin\Debug\System.Drawing.Common.xml

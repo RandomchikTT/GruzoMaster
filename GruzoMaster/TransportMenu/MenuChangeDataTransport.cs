@@ -17,11 +17,13 @@ namespace GruzoMaster.TransportMenu
     {
         private Transport Transport = null;
         private TransportMenu TransportMenu = null;
+        private List<Driver> Drivers { get; set; } = new List<Driver>();
         public MenuChangeDataTransport(TransportMenu transportMenu, Transport transport)
         {
             this.TransportMenu = transportMenu;
             this.Transport = transport;
             InitializeComponent();
+            LoadDrivers();
             if (this.Transport != null)
             {
                 #region Выставляем марку
@@ -59,9 +61,23 @@ namespace GruzoMaster.TransportMenu
                 this.textBox1.Text = this.Transport.ModelDescriptionName;
                 this.textBox2.Text = this.Transport.GovNumber;
                 this.dateTimePicker1.Value = this.Transport.TimeTechInspection;
+                Int32 index = this.Drivers.FindIndex(_ => _.IdKey == this.Transport.CurrentDriverId);
+                this.guna2ComboBox1.SelectedIndex = index;
             }
         }
 
+        public async void LoadDrivers()
+        {
+            try
+            {
+                this.Drivers = await Driver.GetDrivers();
+                foreach (Driver driver in this.Drivers)
+                {
+                    this.guna2ComboBox1.Items.Add(driver.FullName);
+                }
+            }
+            catch (Exception e) { MessageBox.Show("ERROR LoadDrivers: " + e.ToString()); }
+        }
         private async void buttonAddDriver_Click(object sender, EventArgs e)
         {
             try
@@ -121,9 +137,14 @@ namespace GruzoMaster.TransportMenu
                     MessageBox.Show("Вы не указали гос. номер транспорта !");
                     return;
                 }
-                if (this.dateTimePicker1.Value.ToString("d") == "01.01.1900")
+                if (!int.TryParse(this.textBox3.Text, out Int32 availableWeight) || availableWeight <= 0)
                 {
-                    MessageBox.Show("Вы не выбрали время окончания тех. осмотра !");
+                    MessageBox.Show("Укажите корректное число веса !");
+                    return;
+                }
+                if (!int.TryParse(this.textBox3.Text, out Int32 availableVolume) || availableVolume <= 0)
+                {
+                    MessageBox.Show("Укажите корректное число обьема !");
                     return;
                 }
                 DialogResult result = MessageBox.Show("Вы уверены что хотите изменить данные о транспорте ?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -134,6 +155,8 @@ namespace GruzoMaster.TransportMenu
                             $"`Model` = '{this.textBox1.Text}', " +
                             $"`Type` = {Convert.ToInt32(transportType)}, " +
                             $"`GovNumber` = '{this.textBox2.Text}', " +
+                            $"`Capacity` = '{availableWeight}', " +
+                            $"`Volume` = '{availableVolume}', " +
                             $"`TechInspection` = '{this.dateTimePicker1.Value.ToString("d")}' " +
                             $"WHERE `id` = {this.Transport.IdKey}");
                     MySQL.AddUserLog(User.LoggedUser.Login, $"Изменил данные о транспорте: {transportModel.ToString()} #{this.Transport.IdKey}.");

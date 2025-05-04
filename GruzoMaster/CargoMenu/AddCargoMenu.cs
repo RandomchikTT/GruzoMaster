@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,8 +22,6 @@ namespace GruzoMaster.CargoMenu
         {
             InitializeComponent();
             LoadComboBox();
-            LoadDriverBox();
-            LoadTransportBox();
         }
         public async void LoadComboBox()
         {
@@ -36,49 +35,13 @@ namespace GruzoMaster.CargoMenu
             }
             catch (Exception ex) { MessageBox.Show("LoadComboBox: " + ex.ToString()); }
         }
-
-        public async void LoadDriverBox()
-        {
-            try
-            {
-                this.DriverInfos = await Driver.GetDrivers();
-                foreach (Driver driverInfo in this.DriverInfos)
-                {
-                    this.driverBox.Items.Add(driverInfo.FullName);
-                }
-            }
-            catch (Exception ex) { MessageBox.Show("LoadDriverBox: " + ex.ToString()); }
-        }
-        public async void LoadTransportBox()
-        {
-            try
-            {
-                this.Transports = await Transport.GetTransports();
-                foreach (Transport transport in this.Transports)
-                {
-                    this.transportBox.Items.Add(transport.TransportModelName.ToString() + " " + transport.ModelDescriptionName + $" [{transport.GovNumber}]");
-                }
-            }
-            catch (Exception ex) { MessageBox.Show("LoadTransportBox: " + ex.ToString()); }
-        }
-
-        private void buttonAddCargo_Click(object sender, EventArgs e)
+        private async void buttonAddCargo_Click(object sender, EventArgs e)
         {
             try
             {
                 if (this.companyBox.SelectedIndex == -1)
                 {
                     MessageBox.Show("Вы не выбрали компанию !");
-                    return;
-                }
-                if (this.driverBox.SelectedIndex == -1)
-                {
-                    MessageBox.Show("Вы не выбрали водителя !");
-                    return;
-                }
-                if (this.transportBox.SelectedIndex == -1)
-                {
-                    MessageBox.Show("Вы не выбрали транпсорт !");
                     return;
                 }
                 if (this.nameCargo.Text.Length <= 3)
@@ -106,8 +69,22 @@ namespace GruzoMaster.CargoMenu
                     MessageBox.Show("Стоимость груза должна быть числом и больше нуля !");
                     return;
                 }
-                Transport transport = this.Transports[this.transportBox.SelectedIndex];
-                Driver driverInfo = this.DriverInfos[this.driverBox.SelectedIndex];
+                DateTime deadline = this.dateTimePicker1.Value;
+                if (deadline <= DateTime.Now)
+                {
+                    MessageBox.Show("Нельзя установить такую дату доставки !");
+                    return;
+                }
+                if (!Int32.TryParse(this.textBoxVolume.Text, out Int32 volumeCargo) || volumeCargo <= 0)
+                {
+                    MessageBox.Show("Обьем груза должна быть числом и больше нуля !");
+                    return;
+                }
+                if (!Int32.TryParse(this.textBoxWeight.Text, out Int32 weightCargo) || weightCargo <= 0)
+                {
+                    MessageBox.Show("Вес груза должна быть числом и больше нуля !");
+                    return;
+                }
                 Company company = this.CompanieList[this.companyBox.SelectedIndex];
                 Cargo newCargo = new Cargo()
                 {
@@ -119,10 +96,9 @@ namespace GruzoMaster.CargoMenu
                             Description = "Создал заявку на выполнение груза"
                         }
                     },
-                    TransportCargo = transport,
+                    DeadlineTime = deadline,
                     DeliveryType = CargoDeliveryType.Created,
                     Price = priceCargo,
-                    Driver = driverInfo,
                     CreateUserCargo = User.LoggedUser,
                     CustomerCompany = company,
                     Name = this.nameCargo.Text,
@@ -130,7 +106,8 @@ namespace GruzoMaster.CargoMenu
                     AddressToCargo = this.addressToCargo.Text,
                     Description = this.descriptionCargo.Text,
                 };
-                newCargo.Create();
+                Boolean isCreated = await newCargo.Create(weightCargo, volumeCargo);
+                if (!isCreated) return;
                 MessageBox.Show("Вы успешно создали заявку на груз !");
                 this.Close();
                 MySQL.AddUserLog(User.LoggedUser.Login, "Создал заявку на выполнение груза !");

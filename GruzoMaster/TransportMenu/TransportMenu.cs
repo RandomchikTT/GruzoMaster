@@ -72,12 +72,16 @@ namespace GruzoMaster.TransportMenu
                 if (dataTable != null && dataTable.Rows.Count > 0)
                 {
                     DataRow selectedVehicle = dataTable.Rows[0];
+                    Driver driver = await Driver.GetDriverById(Convert.ToInt32(selectedVehicle["CurrentDriverId"]));
                     return $"Инофрмация о транспорте:" +
                         $"\nМарка: {Convert.ToString((Transport.TransportModel)Convert.ToInt32(selectedVehicle["Brand"]))}." +
                         $"\nМодель: {Convert.ToString(selectedVehicle["Model"])}." +
                         $"\nТип транспорта: {Convert.ToString(selectedVehicle["Type"])}." +
                         $"\nГосударственный номер: {Convert.ToString(selectedVehicle["GovNumber"])}." +
-                        $"\nТехнический осмотр годен до: {Convert.ToDateTime(selectedVehicle["TechInspection"]).ToString("d")}.";
+                        $"\nТехнический осмотр годен до: {Convert.ToDateTime(selectedVehicle["TechInspection"]).ToString("d")}." +
+                        $"\nДопустимый вес: {Convert.ToInt32(selectedVehicle["Capacity"])}." +
+                        $"\nДопустимый обьем: {Convert.ToInt32(selectedVehicle["Volume"])}." +
+                        $"\nВодитель: {driver?.FullName}.";
                 }
                 else
                 {

@@ -54,6 +54,7 @@ namespace GruzoMaster
             this.gunaImageButton1 = new Guna.UI2.WinForms.Guna2ImageButton();
             this.Close_Button = new Guna.UI2.WinForms.Guna2ImageButton();
             this.label1 = new System.Windows.Forms.Label();
+            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.SideBar.SuspendLayout();
             this.gunaPanel7.SuspendLayout();
             this.gunaPanel6.SuspendLayout();
@@ -73,6 +74,7 @@ namespace GruzoMaster
             // SideBar
             // 
             this.SideBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
+            this.SideBar.Controls.Add(this.guna2Button1);
             this.SideBar.Controls.Add(this.gunaPanel7);
             this.SideBar.Controls.Add(this.gunaPanel6);
             this.SideBar.Controls.Add(this.gunaPanel5);
@@ -380,6 +382,29 @@ namespace GruzoMaster
             this.label1.TabIndex = 5;
             this.label1.Text = "RandomchikTT";
             // 
+            // guna2Button1
+            // 
+            this.guna2Button1.Animated = true;
+            this.guna2Button1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button1.FillColor = System.Drawing.Color.Transparent;
+            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2Button1.ForeColor = System.Drawing.Color.White;
+            this.guna2Button1.Image = global::GruzoMaster.Properties.Resources.icons8_shopping_cart_32;
+            this.guna2Button1.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.guna2Button1.Location = new System.Drawing.Point(9, 522);
+            this.guna2Button1.Margin = new System.Windows.Forms.Padding(4);
+            this.guna2Button1.Name = "guna2Button1";
+            this.guna2Button1.Size = new System.Drawing.Size(271, 49);
+            this.guna2Button1.TabIndex = 2;
+            this.guna2Button1.Text = "Транспорт грузы";
+            this.guna2Button1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.guna2Button1.TextOffset = new System.Drawing.Point(15, 0);
+            this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click);
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -391,6 +416,7 @@ namespace GruzoMaster
             this.Controls.Add(this.Close_Button);
             this.Controls.Add(this.SideBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainMenu";
             this.Text = "Form1";
@@ -432,5 +458,6 @@ namespace GruzoMaster
         private System.Windows.Forms.Timer Timer_Sidebar_Menu;
         private Guna.UI2.WinForms.Guna2ImageButton gunaImageButton1;
         private System.Windows.Forms.Label label1;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
     }
 }

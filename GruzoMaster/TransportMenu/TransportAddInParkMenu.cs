@@ -1,4 +1,5 @@
 ﻿using GruzoMaster.Objects;
+using GruzoMaster.Objects.Cargo;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,24 @@ namespace GruzoMaster.TransportMenu
     public partial class TransportAddInParkMenu : Form
     {
         private TransportMenu TransportMenu = null;
+        private List<Driver> Drivers { get; set; } = new List<Driver>();  
         public TransportAddInParkMenu(TransportMenu transportMenu)
         {
             this.TransportMenu = transportMenu;
             InitializeComponent();
+            LoadDrivers();
+        }
+        public async void LoadDrivers()
+        {
+            try
+            {
+                this.Drivers = await Driver.GetDrivers();
+                foreach (Driver driver in this.Drivers)
+                {
+                    this.driverBox1.Items.Add(driver.FullName);
+                }
+            }
+            catch (Exception e) { MessageBox.Show("ERROR LoadDrivers: " + e.ToString()); }
         }
         private async void buttonAddDriver_Click(object sender, EventArgs e)
         {
@@ -84,12 +99,35 @@ namespace GruzoMaster.TransportMenu
                     MessageBox.Show("Вы не выбрали время окончания тех. осмотра !");
                     return;
                 }
+                Int32 index = this.driverBox1.SelectedIndex;
+                if (!this.Drivers.Any(_ => this.Drivers.IndexOf(_) == index))
+                {
+                    MessageBox.Show("Вы не выбрали водителя !");
+                    return;
+                }
+                if (!Int32.TryParse(this.availableVolume.Text.ToString(), out Int32 volume) || volume <= 0)
+                {
+                    MessageBox.Show("Допустимый обьем должен быть числом и больше 0 !");
+                    return;
+                }
+                if (!Int32.TryParse(this.availableWeight.Text.ToString(), out Int32 weight) || weight <= 0)
+                {
+                    MessageBox.Show("Допустимый вес должен быть числом и больше 0 !");
+                    return;
+                }
+                Driver driver = this.Drivers[index];
+                List<Transport> transports = await Transport.GetTransports(); 
+                if (transports.Any(_ => _.CurrentDriverId == driver.IdKey))
+                {
+                    MessageBox.Show("Данный водитель уже привязан к другому транспорту !");
+                    return;
+                }
                 DialogResult result = MessageBox.Show("Вы уверены что хотите добавить новый транспорт ?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    Int64 id = await MySQL.QueryLastInsertAsync($"INSERT INTO `transport` (`Brand`,`Model`,`Type`,`GovNumber`,`TechInspection`) " +
+                    Int64 id = await MySQL.QueryLastInsertAsync($"INSERT INTO `transport` (`Brand`,`Model`,`Type`,`GovNumber`,`TechInspection`,`Capacity`,`Volume`,`CurrentDriverId`) " +
                     $"VALUES ({Convert.ToInt32(transportModel)},'{this.textBox1.Text}','{Convert.ToInt32(transportType)}'," +
-                    $"'{this.textBox2.Text}','{this.dateTimePicker1.Value.ToString("d")}')");
+                    $"'{this.textBox2.Text}','{this.dateTimePicker1.Value.ToString("d")}', {weight}, {volume}, {driver.IdKey})");
                     MySQL.AddUserLog(User.LoggedUser.Login, $"Добавил транспорт в базу данных: {transportModel.ToString()} #{id}.");
                     MessageBox.Show("Вы успешно добавили транспорт в базу данных !");
                     this.TransportMenu.LoadTransportMenu();

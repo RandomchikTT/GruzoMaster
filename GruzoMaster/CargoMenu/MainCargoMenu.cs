@@ -20,7 +20,7 @@ namespace GruzoMaster.CargoMenu
 {
     public partial class MainCargoMenu : Form
     {
-        public List<Cargo> CargoList { get; set; } = new List<Cargo>();
+        public static List<Cargo> CargoList { get; set; } = new List<Cargo>();
         private AddCargoMenu AddCargoMenu { get; set; } = null;
         private EditingCargoMenu EditingCargoMenu { get; set; } = null;
         private FilterCargoMenu FilterCargoMenu { get; set; } = null;
@@ -47,7 +47,7 @@ namespace GruzoMaster.CargoMenu
             if (e.RowIndex >= 0)
             {
                 Int64 cargoId = Convert.ToInt64(dataGridView1.Rows[e.RowIndex].Cells["ID"].Value);
-                Cargo cargo = this.CargoList.Find(_ => _.ID == cargoId);
+                Cargo cargo = CargoList.Find(_ => _.ID == cargoId);
                 if (cargo == null)
                 {
                     MessageBox.Show("Такой груз не найден !");
@@ -73,21 +73,12 @@ namespace GruzoMaster.CargoMenu
             }
             catch (Exception e) { MessageBox.Show("FilteredByForwarders: " + e.ToString()); }
         }
-        public async void LoadCargoMenu(Int32 currentPage, Int32 pageSize = 30)
+        public static async Task<List<Cargo>> GetCargoList()
         {
             try
             {
-                Int32 offset = (currentPage - 1) * pageSize;
-                DataTable dataTable;
-                if (this.FilteredByForwarder != null)
-                {
-                    dataTable = await MySQL.QueryRead($"SELECT * FROM `cargo` WHERE `ForwarderID`={this.FilteredByForwarder.ID} LIMIT {pageSize} OFFSET {offset}");
-                }
-                else
-                {
-                    dataTable = await MySQL.QueryRead($"SELECT * FROM `cargo` LIMIT {pageSize} OFFSET {offset}");
-                }
-                CargoList.Clear();
+                List<Cargo> cargos = new List<Cargo>();
+                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `cargo`");
                 if (dataTable != null && dataTable.Rows.Count > 0)
                 {
                     foreach (DataRow row in dataTable.Rows)
@@ -95,12 +86,10 @@ namespace GruzoMaster.CargoMenu
                         Int64 idCargo = Convert.ToInt64(row["ID"]);
                         Int32 idCreatorUser = Convert.ToInt32(row["ID_user_creator"]);
                         Int32 idCompany = Convert.ToInt32(row["ID_company"]);
-                        Int32 idTrasport = Convert.ToInt32(row["ID_Transport"]);
                         String name = Convert.ToString(row["Name"]);
                         String description = Convert.ToString(row["Description"]);
                         String addressFromCargo = Convert.ToString(row["addressFromCargo"]);
                         String addressToCargo = Convert.ToString(row["AddressToCargo"]);
-                        Int32 idDriver = Convert.ToInt32(row["DriverID"]);
                         Int32 price = Convert.ToInt32(row["Price"]);
                         Int32 idForwarder = Convert.ToInt32(row["ForwarderID"]);
                         CargoDeliveryType cargoDeliveryType = (CargoDeliveryType)Convert.ToInt32(row["DeliveryType"]);
@@ -109,16 +98,6 @@ namespace GruzoMaster.CargoMenu
                         if (idCompany != -1)
                         {
                             company = await Company.GetCompanyById(idCompany);
-                        }
-                        Transport transport = null;
-                        if (idTrasport != -1)
-                        {
-                            transport = await Transport.GetTransportById(idTrasport);
-                        }
-                        Driver driverInfo = null;
-                        if (idDriver != -1)
-                        {
-                            driverInfo = await Driver.GetDriverById(idDriver);
                         }
                         User user = null;
                         if (idCreatorUser != -1)
@@ -130,13 +109,12 @@ namespace GruzoMaster.CargoMenu
                         {
                             forwarderUser = await User.GetUserById(idForwarder);
                         }
-                        CargoList.Add(new Cargo()
+                        var cargoList = await CargoPart.GetCargoPartsByOrderId(idCargo);
+                        cargos.Add(new Cargo()
                         {
                             ID = idCargo,
                             CreateUserCargo = user,
                             CustomerCompany = company,
-                            Driver = driverInfo,
-                            TransportCargo = transport,
                             Price = price,
                             AddressFromCargo = addressFromCargo,
                             AddressToCargo = addressToCargo,
@@ -145,6 +123,74 @@ namespace GruzoMaster.CargoMenu
                             Name = name,
                             Forwarder = forwarderUser,
                             Description = description,
+                            CargoParts = cargoList,
+                        });
+                    }
+                }
+                return cargos;
+            }
+            catch (Exception e) { MessageBox.Show("GetCargoList: " + e.ToString()); return new List<Cargo>(); }
+        }
+        public async void LoadCargoMenu(Int32 currentPage, Int32 pageSize = 30)
+        {
+            try
+            {
+                Int32 offset = (currentPage - 1) * pageSize;
+                DataTable dataTable;
+                if (this.FilteredByForwarder != null)
+                {
+                    dataTable = await MySQL.QueryRead($"SELECT * FROM `cargo_view` WHERE `ForwarderID`={this.FilteredByForwarder.ID} LIMIT {pageSize} OFFSET {offset}");
+                }
+                else
+                {
+                    dataTable = await MySQL.QueryRead($"SELECT * FROM `cargo_view` LIMIT {pageSize} OFFSET {offset}");
+                }
+                CargoList.Clear();
+                if (dataTable != null && dataTable.Rows.Count > 0)
+                {
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        Int64 idCargo = Convert.ToInt64(row["ID"]);
+                        Int32 idCreatorUser = Convert.ToInt32(row["ID_user_creator"]);
+                        Int32 idCompany = Convert.ToInt32(row["ID_company"]);
+                        String name = Convert.ToString(row["Name"]);
+                        String description = Convert.ToString(row["Description"]);
+                        String addressFromCargo = Convert.ToString(row["addressFromCargo"]);
+                        String addressToCargo = Convert.ToString(row["AddressToCargo"]);
+                        Int32 price = Convert.ToInt32(row["Price"]);
+                        Int32 idForwarder = Convert.ToInt32(row["ForwarderID"]);
+                        CargoDeliveryType cargoDeliveryType = (CargoDeliveryType)Convert.ToInt32(row["DeliveryType"]);
+                        List<CargoLog> cargoLogs = JsonConvert.DeserializeObject<List<CargoLog>>(row["CargoLogs"].ToString());
+                        Company company = null;
+                        if (idCompany != -1)
+                        {
+                            company = await Company.GetCompanyById(idCompany);
+                        }
+                        User user = null;
+                        if (idCreatorUser != -1)
+                        {
+                            user = await User.GetUserById(idCreatorUser);
+                        }
+                        User forwarderUser = null;
+                        if (idForwarder != -1)
+                        {
+                            forwarderUser = await User.GetUserById(idForwarder);
+                        }
+                        var cargoList = await CargoPart.GetCargoPartsByOrderId(idCargo);
+                        CargoList.Add(new Cargo()
+                        {
+                            ID = idCargo,
+                            CreateUserCargo = user,
+                            CustomerCompany = company,
+                            Price = price,
+                            AddressFromCargo = addressFromCargo,
+                            AddressToCargo = addressToCargo,
+                            DeliveryType = cargoDeliveryType,
+                            CargoLogs = cargoLogs,
+                            Name = name,
+                            Forwarder = forwarderUser,
+                            Description = description,
+                            CargoParts = cargoList,
                         });
                     }
                     PopulateDataGridView();
@@ -153,7 +199,7 @@ namespace GruzoMaster.CargoMenu
             }
             catch (Exception e) { MessageBox.Show("LoadCargoMenu: " + e.ToString()); }
         }
-        private void PopulateDataGridView()
+        private async void PopulateDataGridView()
         {
             dataGridView1.Columns.Clear();
             dataGridView1.Rows.Clear();
@@ -162,9 +208,6 @@ namespace GruzoMaster.CargoMenu
             dataGridView1.Columns.Add("ID", "ID");
             dataGridView1.Columns.Add("CreateUserCargoName", "Имя создателя");
             dataGridView1.Columns.Add("CustomerCompanyName", "Название компании");
-            dataGridView1.Columns.Add("DriverName", "Имя водителя");
-            dataGridView1.Columns.Add("TransportCargoGovNumber", "Гос. номер транспорта");
-            dataGridView1.Columns.Add("TransportCargoModelDescriptionName", "Модель транспорта");
             dataGridView1.Columns.Add("Price", "Цена");
             dataGridView1.Columns.Add("Name", "Название");
             dataGridView1.Columns.Add("DeliveryType", "Тип доставки");
@@ -177,13 +220,11 @@ namespace GruzoMaster.CargoMenu
             foreach (var cargo in CargoList)
             {
                 var row = new DataGridViewRow();
+                
                 row.CreateCells(dataGridView1,
                     cargo.ID,
                     cargo.CreateUserCargo?.Name,
                     cargo.CustomerCompany?.Name,
-                    cargo.Driver?.FullName,
-                    cargo.TransportCargo?.GovNumber,
-                    cargo.TransportCargo?.ModelDescriptionName,
                     cargo.Price.ConvertToFormatMoney() + " ₽",
                     cargo.Name,
                     Cargo.GetDeliveryTypeDescription(cargo.DeliveryType),
@@ -233,7 +274,7 @@ namespace GruzoMaster.CargoMenu
             this.LoadCargoMenu(page - 1);
         }
 
-        private void выставитьСчетФактуруToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void выставитьСчетФактуруToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -246,7 +287,7 @@ namespace GruzoMaster.CargoMenu
                 var selectedRow = dataGridView1.SelectedRows[0];
 
                 Int64 cargoId = Convert.ToInt64(selectedRow.Cells["ID"].Value);
-                Cargo cargo = this.CargoList.Find(_ => _.ID == cargoId);
+                Cargo cargo = CargoList.Find(_ => _.ID == cargoId);
                 if (cargo == null)
                 {
                     MessageBox.Show("Такой груз не найден !");
@@ -309,15 +350,12 @@ namespace GruzoMaster.CargoMenu
                     table.Rows[0].Cells[1].Paragraphs.First().Append("Сумма").Bold();
                     table.Rows[0].Cells[2].Paragraphs.First().Append("Адрес отправления").Bold();
                     table.Rows[0].Cells[3].Paragraphs.First().Append("Адрес прибытия").Bold();
-                    table.Rows[0].Cells[4].Paragraphs.First().Append("Транспорт").Bold();
-                    table.Rows[0].Cells[5].Paragraphs.First().Append("Водитель").Bold();
 
                     table.Rows[1].Cells[0].Paragraphs.First().Append($"Перевозка груза: {cargo.Name}");
                     table.Rows[1].Cells[1].Paragraphs.First().Append(cargo.Price.ConvertToFormatMoney() + " rub");
                     table.Rows[1].Cells[2].Paragraphs.First().Append(cargo.AddressFromCargo);
                     table.Rows[1].Cells[3].Paragraphs.First().Append(cargo.AddressToCargo);
-                    table.Rows[1].Cells[4].Paragraphs.First().Append(cargo.TransportCargo.TransportModelName.ToString() + " " + cargo.TransportCargo.ModelDescriptionName + $" [{cargo.TransportCargo.GovNumber}]");
-                    table.Rows[1].Cells[5].Paragraphs.First().Append(cargo.Driver.FullName);
+
 
                     doc.InsertTable(table);
 
@@ -351,7 +389,7 @@ namespace GruzoMaster.CargoMenu
                 var selectedRow = dataGridView1.SelectedRows[0];
 
                 Int64 cargoId = Convert.ToInt64(selectedRow.Cells["ID"].Value);
-                Cargo cargo = this.CargoList.Find(_ => _.ID == cargoId);
+                Cargo cargo = CargoList.Find(_ => _.ID == cargoId);
                 if (cargo == null)
                 {
                     MessageBox.Show("Такой груз не найден!");
