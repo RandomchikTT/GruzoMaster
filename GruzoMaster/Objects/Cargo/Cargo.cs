@@ -75,6 +75,27 @@ namespace GruzoMaster.Objects.Cargo
                     return "Неизвестный статус"; // Обработка неизвестных значений
             }
         }
+        // Метод для определения цвета строки по Cargo
+        public System.Drawing.Color GetColorByCargoStatus()
+        {
+            // Проверяем все части
+            bool allCompleted = this.CargoParts.All(p => p.CargoDeliveryType == CargoDeliveryType.Сompleted);
+            bool anyInProcessing = this.CargoParts.Any(p => p.CargoDeliveryType == CargoDeliveryType.InProcessing);
+            bool isCancelled = this.DeliveryType == CargoDeliveryType.NotSuccessful; // пример, подставьте ваш enum/значение отменённого
+            bool isCreated = this.DeliveryType == CargoDeliveryType.Created;     // пример, подставьте ваш enum/значение созданного
+
+            if (allCompleted)
+                return System.Drawing.Color.LightGreen;
+            else if (anyInProcessing)
+                return System.Drawing.Color.LightBlue;
+            else if (isCancelled)
+                return System.Drawing.Color.LightCoral;  // светло-красный
+            else if (isCreated)
+                return System.Drawing.Color.LightGray;
+            else
+                return System.Drawing.Color.White; // по умолчанию
+        }
+
         public static CargoDeliveryType GetCargoDeliveryTypeByName(String name)
         {
             foreach (CargoDeliveryType cargoDeliveryType in Enum.GetValues(typeof(CargoDeliveryType)))
@@ -147,7 +168,7 @@ namespace GruzoMaster.Objects.Cargo
                 .Where(g =>
                 {
                     Transport vehicle = allVehicles.Find(x => x.IdKey == g.Key);
-                    if (vehicle == null) return false;
+                    if (vehicle == null || vehicle.CanGoToOrder) return false;
 
                     int totalWeight = g.Sum(p => p.Weight);
                     int totalVolume = g.Sum(p => p.Volume);
@@ -189,7 +210,7 @@ namespace GruzoMaster.Objects.Cargo
                         `DeliveryType`, 
                         `CargoLogs`, 
                         `ForwarderID`,
-                        'DeadlineTime'
+                        `DeadlineTime`
                     ) 
                     VALUES 
                     (
@@ -204,7 +225,7 @@ namespace GruzoMaster.Objects.Cargo
                         {(int)this.DeliveryType}, 
                         '{JsonConvert.SerializeObject(this.CargoLogs)}', 
                         {idForwarder},
-                        {this.DeadlineTime}
+                        '{this.DeadlineTime.ToString()}'
                     );
                 ");
 
@@ -232,7 +253,7 @@ namespace GruzoMaster.Objects.Cargo
                         $"`AddressToCargo` = '{this.AddressToCargo}', " +
                         $"`Price` = {this.Price}, " +
                         $"`DeliveryType` = {(Int32)this.DeliveryType}, " +
-                        $"`DeadlineTime` = {this.DeadlineTime}, " +
+                        $"`DeadlineTime` = '{this.DeadlineTime.ToString()}', " +
                         $"`CargoLogs` = '{JsonConvert.SerializeObject(this.CargoLogs)}', " +
                         $"`ForwarderID` = {idForwarder} " +
                         $"WHERE `ID` = {this.ID}");

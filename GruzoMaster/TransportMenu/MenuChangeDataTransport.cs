@@ -61,6 +61,9 @@ namespace GruzoMaster.TransportMenu
                 this.textBox1.Text = this.Transport.ModelDescriptionName;
                 this.textBox2.Text = this.Transport.GovNumber;
                 this.dateTimePicker1.Value = this.Transport.TimeTechInspection;
+                this.textBox3.Text = this.Transport.Capacity.ToString();
+                this.textBox4.Text = this.Transport.Volume.ToString();
+                this.guna2CheckBox1.Checked = this.Transport.CanGoToOrder;
                 Int32 index = this.Drivers.FindIndex(_ => _.IdKey == this.Transport.CurrentDriverId);
                 this.guna2ComboBox1.SelectedIndex = index;
             }
@@ -142,11 +145,12 @@ namespace GruzoMaster.TransportMenu
                     MessageBox.Show("Укажите корректное число веса !");
                     return;
                 }
-                if (!int.TryParse(this.textBox3.Text, out Int32 availableVolume) || availableVolume <= 0)
+                if (!int.TryParse(this.textBox4.Text, out Int32 availableVolume) || availableVolume <= 0)
                 {
                     MessageBox.Show("Укажите корректное число обьема !");
                     return;
                 }
+                bool isCanGoToOrder = Convert.ToBoolean(this.guna2CheckBox1.Checked);
                 DialogResult result = MessageBox.Show("Вы уверены что хотите изменить данные о транспорте ?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
@@ -157,6 +161,7 @@ namespace GruzoMaster.TransportMenu
                             $"`GovNumber` = '{this.textBox2.Text}', " +
                             $"`Capacity` = '{availableWeight}', " +
                             $"`Volume` = '{availableVolume}', " +
+                            $"`CanGoToOrder` = {isCanGoToOrder}, " +
                             $"`TechInspection` = '{this.dateTimePicker1.Value.ToString("d")}' " +
                             $"WHERE `id` = {this.Transport.IdKey}");
                     MySQL.AddUserLog(User.LoggedUser.Login, $"Изменил данные о транспорте: {transportModel.ToString()} #{this.Transport.IdKey}.");

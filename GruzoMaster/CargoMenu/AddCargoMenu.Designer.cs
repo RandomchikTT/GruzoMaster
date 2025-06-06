@@ -177,11 +177,11 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(486, 431);
+            this.label9.Location = new System.Drawing.Point(465, 431);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(99, 23);
+            this.label9.Size = new System.Drawing.Size(151, 23);
             this.label9.TabIndex = 36;
-            this.label9.Text = "Стоимость";
+            this.label9.Text = "Стоимость (руб.)";
             // 
             // priceCargo
             // 
@@ -227,9 +227,9 @@
             this.label10.ForeColor = System.Drawing.Color.White;
             this.label10.Location = new System.Drawing.Point(330, 154);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(87, 23);
+            this.label10.Size = new System.Drawing.Size(116, 23);
             this.label10.TabIndex = 39;
-            this.label10.Text = "Вес груза";
+            this.label10.Text = "Вес груза (т.)";
             // 
             // textBoxVolume
             // 
@@ -247,11 +247,11 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(478, 241);
+            this.label11.Location = new System.Drawing.Point(457, 245);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(114, 23);
+            this.label11.Size = new System.Drawing.Size(159, 23);
             this.label11.TabIndex = 41;
-            this.label11.Text = "Обьем груза";
+            this.label11.Text = "Обьем груза (см³)";
             // 
             // label2
             // 

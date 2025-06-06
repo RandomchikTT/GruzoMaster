@@ -49,6 +49,10 @@ namespace GruzoMaster
         /// Экспедитор
         /// </summary>
         Forwarder = 3,
+        /// <summary>
+        /// Слесарь
+        /// </summary>
+        Loksmith = 4,
     }
     public class User
     {

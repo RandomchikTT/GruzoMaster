@@ -36,7 +36,7 @@ namespace GruzoMaster.TransortOrders
                 worksheet.Cells[1, 2].Value = "Груз";
                 worksheet.Cells[1, 3].Value = "Дата доставки";
                 worksheet.Cells[1, 4].Value = "Машина";
-                worksheet.Cells[1, 5].Value = "Вес (кг)";
+                worksheet.Cells[1, 5].Value = "Вес (т.)";
                 worksheet.Cells[1, 6].Value = "Обьем (см.3)";
                 worksheet.Cells[1, 7].Value = "Стоимость (Byn)";
                 worksheet.Cells[1, 1, 1, 7].Style.Font.Bold = true;
@@ -126,7 +126,7 @@ namespace GruzoMaster.TransortOrders
                     chart.SetPosition(1, 0, 7, 0);
                     chart.SetSize(600, 300);
                     chart.Series.Add(worksheet.Cells[$"E2:E{row - 1}"], worksheet.Cells[$"C2:C{row - 1}"]);
-                    chart.YAxis.Title.Text = "Вес (кг)";
+                    chart.YAxis.Title.Text = "Вес (т.)";
                     chart.XAxis.Title.Text = "Дата доставки";
                 }
 
@@ -134,7 +134,7 @@ namespace GruzoMaster.TransortOrders
                 {
                     var carChartSheet = package.Workbook.Worksheets.Add("График по машинам");
                     carChartSheet.Cells[1, 1].Value = "Машина";
-                    carChartSheet.Cells[1, 2].Value = "Общий вес (кг)";
+                    carChartSheet.Cells[1, 2].Value = "Общий вес (т.)";
                     carChartSheet.Cells[1, 3].Value = "Общий обьем (см.3)";
                     carChartSheet.Cells[1, 1, 1, 3].Style.Font.Bold = true;
 
@@ -153,7 +153,7 @@ namespace GruzoMaster.TransortOrders
                     barChart.SetPosition(1, 0, 4, 0);
                     barChart.SetSize(600, 300);
                     barChart.Series.Add(carChartSheet.Cells[$"B2:B{chartRow - 1}"], carChartSheet.Cells[$"A2:A{chartRow - 1}"]);
-                    barChart.YAxis.Title.Text = "Вес (кг)";
+                    barChart.YAxis.Title.Text = "Вес (т)";
                     barChart.XAxis.Title.Text = "Машины";
                 }
 
@@ -161,8 +161,8 @@ namespace GruzoMaster.TransortOrders
                 {
                     var monthChartSheet = package.Workbook.Worksheets.Add("График по месяцам");
                     monthChartSheet.Cells[1, 1].Value = "Месяц";
-                    monthChartSheet.Cells[1, 2].Value = "Вес (кг)";
-                    monthChartSheet.Cells[1, 3].Value = "Объем (м³)";
+                    monthChartSheet.Cells[1, 2].Value = "Вес (т)";
+                    monthChartSheet.Cells[1, 3].Value = "Объем (см³)";
                     monthChartSheet.Cells[1, 1, 1, 3].Style.Font.Bold = true;
 
                     int monthChartRow = 2;
@@ -179,7 +179,7 @@ namespace GruzoMaster.TransortOrders
                     monthChart.SetPosition(1, 0, 4, 0);
                     monthChart.SetSize(600, 300);
                     monthChart.Series.Add(monthChartSheet.Cells[$"B2:B{monthChartRow - 1}"], monthChartSheet.Cells[$"A2:A{monthChartRow - 1}"]);
-                    monthChart.YAxis.Title.Text = "Вес (кг) и Объем (м³)";
+                    monthChart.YAxis.Title.Text = "Вес (т) и Объем (см³)";
                     monthChart.XAxis.Title.Text = "Месяц";
                 }
 

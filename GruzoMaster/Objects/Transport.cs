@@ -78,6 +78,10 @@ namespace GruzoMaster.Objects
         /// </summary>
         public int CurrentDriverId { get; set; }
         /// <summary>
+        /// Допущен ли к выезду
+        /// </summary>
+        public bool CanGoToOrder { get; set; }
+        /// <summary>
         /// Получение списка всего транспорта
         /// </summary>
         /// <returns>Список обьектов транспорта</returns>
@@ -97,11 +101,12 @@ namespace GruzoMaster.Objects
                             Capacity = Convert.ToInt32(row["Capacity"]),
                             Volume = Convert.ToInt32(row["Volume"]),
                             CurrentDriverId = Convert.ToInt32(row["CurrentDriverId"]),
-                            TransportModelName = (Transport.TransportModel)Convert.ToInt32(row["Brand"]),
+                            TransportModelName = (TransportModel)Convert.ToInt32(row["Brand"]),
                             ModelDescriptionName = Convert.ToString(row["Model"]),
-                            TransportTypeName = (Transport.TransportType)Convert.ToInt32(row["Type"]),
+                            TransportTypeName = (TransportType)Convert.ToInt32(row["Type"]),
                             GovNumber = Convert.ToString(row["GovNumber"]),
-                            TimeTechInspection = Convert.ToDateTime(row["TechInspection"])
+                            TimeTechInspection = Convert.ToDateTime(row["TechInspection"]),
+                            CanGoToOrder = Convert.ToBoolean(row["CanGoToOrder"]),
                         });
                     }
                 }
@@ -133,7 +138,8 @@ namespace GruzoMaster.Objects
                         ModelDescriptionName = Convert.ToString(row["Model"]),
                         TransportTypeName = (Transport.TransportType)Convert.ToInt32(row["Type"]),
                         GovNumber = Convert.ToString(row["GovNumber"]),
-                        TimeTechInspection = Convert.ToDateTime(row["TechInspection"])
+                        TimeTechInspection = Convert.ToDateTime(row["TechInspection"]),
+                        CanGoToOrder = Convert.ToBoolean(row["CanGoToOrder"]),
                     };
                 }
                 return transport;

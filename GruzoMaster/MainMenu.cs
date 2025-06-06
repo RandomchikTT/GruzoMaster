@@ -50,6 +50,21 @@ namespace GruzoMaster
                 this.buttonListOfCompany.Visible = false;
                 this.buttonListOfCompany.Enabled = false;
             }
+            if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckOrderMenu))
+            {
+                this.guna2Button1.Visible = false;
+                this.guna2Button1.Enabled = false;
+            }
+            if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckOrderMenu))
+            {
+                this.Orders_Button.Visible = false;
+                this.Orders_Button.Enabled = false;
+            }
+            if (!UserSettings.GetAccessUser(UserSettings.UserSetting.CanCheckLogisticUsers))
+            {
+                this.Customers_Button.Visible = false;
+                this.Customers_Button.Enabled = false;
+            }
         }
 
 
@@ -132,7 +147,7 @@ namespace GruzoMaster
                     return;
                 }
                 this.MainCargoMenu = new MainCargoMenu();
-                this.MainCargoMenu.FormClosed += MainCargoMenu_FormClosed; ;
+                this.MainCargoMenu.FormClosed += MainCargoMenu_FormClosed;
                 this.MainCargoMenu.Show();
             }
             catch (Exception ex) { MessageBox.Show("Orders_Button_Click: " + ex.ToString()); }

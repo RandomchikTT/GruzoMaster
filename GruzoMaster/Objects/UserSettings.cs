@@ -79,6 +79,14 @@ namespace GruzoMaster
             /// Открывать окно с экспедиторами
             /// </summary>
             CanOpenForwarderMenu = 16,
+            /// <summary>
+            /// Смотреть меню заказов
+            /// </summary>
+            CanCheckOrderMenu = 17,
+            /// <summary>
+            /// Смотреть логистов
+            /// </summary>
+            CanCheckLogisticUsers = 18,
         }
         private static Dictionary<UserType, Dictionary<UserSetting, Boolean>> UserSettingDictionary = new Dictionary<UserType, Dictionary<UserSetting, Boolean>>()
         {
@@ -100,6 +108,8 @@ namespace GruzoMaster
                 { UserSetting.CheckCargoMenu, true },
                 { UserSetting.EditingCargoMenu, true },
                 { UserSetting.CanOpenForwarderMenu, true },
+                { UserSetting.CanCheckOrderMenu, true },
+                { UserSetting.CanCheckLogisticUsers, true },
             }},
             { UserType.User, new Dictionary<UserSetting, Boolean>()
             {
@@ -119,6 +129,8 @@ namespace GruzoMaster
                 { UserSetting.CheckCargoMenu, true },
                 { UserSetting.EditingCargoMenu, true },
                 { UserSetting.CanOpenForwarderMenu, true },
+                { UserSetting.CanCheckOrderMenu, true },
+                { UserSetting.CanCheckLogisticUsers, true },
             }},
             { UserType.Owner, new Dictionary<UserSetting, Boolean>()
             {
@@ -138,6 +150,8 @@ namespace GruzoMaster
                 { UserSetting.CheckCargoMenu, true },
                 { UserSetting.EditingCargoMenu, true },
                 { UserSetting.CanOpenForwarderMenu, true },
+                { UserSetting.CanCheckOrderMenu, true },
+                { UserSetting.CanCheckLogisticUsers, true },
             }},
             { UserType.Forwarder, new Dictionary<UserSetting, Boolean>()
             {
@@ -146,17 +160,39 @@ namespace GruzoMaster
                 { UserSetting.CanEditDrivers, true },
                 { UserSetting.CanAppendDrivers, true },
                 { UserSetting.CanCheckTransport, true },
-                { UserSetting.CanDeleteTransport, true },
-                { UserSetting.CanAppendTransport, true },
+                { UserSetting.CanDeleteTransport, false },
+                { UserSetting.CanAppendTransport, false },
                 { UserSetting.CanEditDataTransport, true },
                 { UserSetting.CanCheckCompanyMenu, true },
                 { UserSetting.CanMakeExportDataCompany, true },
-                { UserSetting.CanAppendCompany, true },
-                { UserSetting.CanEditCompany, true },
-                { UserSetting.CanDeleteCompany, true },
+                { UserSetting.CanAppendCompany, false },
+                { UserSetting.CanEditCompany, false },
+                { UserSetting.CanDeleteCompany, false },
                 { UserSetting.CheckCargoMenu, true },
                 { UserSetting.EditingCargoMenu, true },
                 { UserSetting.CanOpenForwarderMenu, true },
+                { UserSetting.CanCheckLogisticUsers, false },
+            }},
+            { UserType.Loksmith, new Dictionary<UserSetting, Boolean>()
+            {
+                { UserSetting.CanCheckLogs, false },
+                { UserSetting.CanCheckDrivers, false },
+                { UserSetting.CanEditDrivers, false },
+                { UserSetting.CanAppendDrivers, false },
+                { UserSetting.CanCheckTransport, true },
+                { UserSetting.CanDeleteTransport, false },
+                { UserSetting.CanAppendTransport, false },
+                { UserSetting.CanEditDataTransport, true },
+                { UserSetting.CanCheckCompanyMenu, false },
+                { UserSetting.CanMakeExportDataCompany, false },
+                { UserSetting.CanAppendCompany, false },
+                { UserSetting.CanEditCompany, false },
+                { UserSetting.CanDeleteCompany, false },
+                { UserSetting.CheckCargoMenu, false },
+                { UserSetting.EditingCargoMenu, false },
+                { UserSetting.CanOpenForwarderMenu, false },
+                { UserSetting.CanCheckOrderMenu, false },
+                { UserSetting.CanCheckLogisticUsers, false },
             }},
         };
         public static Boolean GetAccessUser(UserSetting userSetting)

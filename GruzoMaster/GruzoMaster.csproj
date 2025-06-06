@@ -140,6 +140,12 @@
     <Compile Include="CargoMenu\MainCargoMenu.Designer.cs">
       <DependentUpon>MainCargoMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Companies\CompanyFilterDate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Companies\CompanyFilterDate.Designer.cs">
+      <DependentUpon>CompanyFilterDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Companies\MainMenuCompany.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -231,6 +237,7 @@
       <DependentUpon>MenuDrivers.cs</DependentUpon>
     </Compile>
     <Compile Include="MySQL\MySQL.cs" />
+    <Compile Include="Objects\EnumHelper.cs" />
     <Compile Include="Objects\Transport.cs" />
     <Compile Include="OtherFunctions.cs" />
     <Compile Include="Program.cs" />

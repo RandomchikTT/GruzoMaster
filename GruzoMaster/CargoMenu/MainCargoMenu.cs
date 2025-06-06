@@ -278,7 +278,6 @@ namespace GruzoMaster.CargoMenu
             }
             this.LoadCargoMenu(page - 1);
         }
-
         private async void выставитьСчетФактуруToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -301,79 +300,91 @@ namespace GruzoMaster.CargoMenu
 
                 var companyName = cargo.CustomerCompany.Name;
                 var email = cargo.CustomerCompany.Email;
-                var city = cargo.CustomerCompany.Country.ToString()  + " " + cargo.CustomerCompany.City;
+                var city = cargo.CustomerCompany.Country + " " + cargo.CustomerCompany.City;
+                Dictionary<CompanyBankData, string> bankData = cargo.CustomerCompany.BankData;
 
-                Dictionary<CompanyBankData, String> bankData = cargo.CustomerCompany.BankData;
-
-                using (var doc = DocX.Create("СчетФактура.docx"))
+                // Выбор пути сохранения
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
                 {
-                    doc.InsertParagraph("Счет-фактура")
-                        .FontSize(20)
-                        .Bold()
-                        .Alignment = Alignment.center;
+                    saveFileDialog.Title = "Сохранить счет-фактуру как...";
+                    saveFileDialog.Filter = "Word Document (*.docx)|*.docx";
+                    saveFileDialog.FileName = $"СчетФактура_{cargo.ID}.docx";
 
-                    doc.InsertParagraph($"Компания: {companyName}")
-                        .FontSize(12)
-                        .SpacingAfter(10);
+                    if (saveFileDialog.ShowDialog() != DialogResult.OK)
+                        return;
 
-                    doc.InsertParagraph($"Страна, Город компании: {city}")
-                        .FontSize(12)
-                        .SpacingAfter(10);
+                    string filePath = saveFileDialog.FileName;
 
-                    doc.InsertParagraph($"ИНН компании: {bankData[CompanyBankData.INN]}")
-                        .FontSize(12)
-                        .SpacingAfter(10);
+                    using (var doc = DocX.Create(filePath))
+                    {
+                        doc.InsertParagraph("Счет-фактура")
+                            .FontSize(20)
+                            .Bold()
+                            .Alignment = Alignment.center;
 
-                    doc.InsertParagraph($"LTD компании: {bankData[CompanyBankData.LTD]}")
-                        .FontSize(12)
-                        .SpacingAfter(10);
+                        doc.InsertParagraph($"Компания: {companyName}")
+                            .FontSize(12)
+                            .SpacingAfter(10);
 
-                    doc.InsertParagraph($"Адрес банка компании: {bankData[CompanyBankData.AddressBank]}")
-                        .FontSize(12)
-                        .SpacingAfter(10);
+                        doc.InsertParagraph($"Страна, Город компании: {city}")
+                            .FontSize(12)
+                            .SpacingAfter(10);
 
-                    doc.InsertParagraph($"Название банка компании: {bankData[CompanyBankData.NameOfBank]}")
-                        .FontSize(12)
-                        .SpacingAfter(10);
+                        doc.InsertParagraph($"ИНН компании: {bankData[CompanyBankData.INN]}")
+                            .FontSize(12)
+                            .SpacingAfter(10);
 
-                    doc.InsertParagraph($"Номер банковского счета компании: {bankData[CompanyBankData.NumberBank]}")
-                        .FontSize(12)
-                        .SpacingAfter(10);
+                        doc.InsertParagraph($"LTD компании: {bankData[CompanyBankData.LTD]}")
+                            .FontSize(12)
+                            .SpacingAfter(10);
 
-                    doc.InsertParagraph($"Адрес почты: {email}")
-                        .FontSize(12)
-                        .SpacingAfter(10);
+                        doc.InsertParagraph($"Адрес банка компании: {bankData[CompanyBankData.AddressBank]}")
+                            .FontSize(12)
+                            .SpacingAfter(10);
 
-                    doc.InsertParagraph("Информация о заказе")
-                        .FontSize(14)
-                        .Bold()
-                        .SpacingAfter(10);
+                        doc.InsertParagraph($"Название банка компании: {bankData[CompanyBankData.NameOfBank]}")
+                            .FontSize(12)
+                            .SpacingAfter(10);
 
-                    var table = doc.AddTable(2, 6);
-                    table.Design = TableDesign.LightShadingAccent2;
-                    table.Rows[0].Cells[0].Paragraphs.First().Append("Наименование").Bold();
-                    table.Rows[0].Cells[1].Paragraphs.First().Append("Сумма").Bold();
-                    table.Rows[0].Cells[2].Paragraphs.First().Append("Адрес отправления").Bold();
-                    table.Rows[0].Cells[3].Paragraphs.First().Append("Адрес прибытия").Bold();
+                        doc.InsertParagraph($"Номер банковского счета компании: {bankData[CompanyBankData.NumberBank]}")
+                            .FontSize(12)
+                            .SpacingAfter(10);
 
-                    table.Rows[1].Cells[0].Paragraphs.First().Append($"Перевозка груза: {cargo.Name}");
-                    table.Rows[1].Cells[1].Paragraphs.First().Append(cargo.Price.ConvertToFormatMoney() + " rub");
-                    table.Rows[1].Cells[2].Paragraphs.First().Append(cargo.AddressFromCargo);
-                    table.Rows[1].Cells[3].Paragraphs.First().Append(cargo.AddressToCargo);
+                        doc.InsertParagraph($"Адрес почты: {email}")
+                            .FontSize(12)
+                            .SpacingAfter(10);
 
+                        doc.InsertParagraph("Информация о заказе")
+                            .FontSize(14)
+                            .Bold()
+                            .SpacingAfter(10);
 
-                    doc.InsertTable(table);
+                        // Таблица
+                        var table = doc.AddTable(2, 4);
+                        table.Design = TableDesign.LightShadingAccent2;
+                        table.Rows[0].Cells[0].Paragraphs.First().Append("Наименование").Bold();
+                        table.Rows[0].Cells[1].Paragraphs.First().Append("Сумма").Bold();
+                        table.Rows[0].Cells[2].Paragraphs.First().Append("Адрес отправления").Bold();
+                        table.Rows[0].Cells[3].Paragraphs.First().Append("Адрес прибытия").Bold();
 
-                    doc.InsertParagraph($"Итого: {cargo.Price.ConvertToFormatMoney()} рублей")
-                        .FontSize(12)
-                        .SpacingBefore(20);
+                        table.Rows[1].Cells[0].Paragraphs.First().Append($"Перевозка груза: {cargo.Name}");
+                        table.Rows[1].Cells[1].Paragraphs.First().Append(cargo.Price.ConvertToFormatMoney() + " rub");
+                        table.Rows[1].Cells[2].Paragraphs.First().Append(cargo.AddressFromCargo);
+                        table.Rows[1].Cells[3].Paragraphs.First().Append(cargo.AddressToCargo);
 
-                    doc.InsertParagraph("Подпись: _____________________")
-                        .FontSize(12)
-                        .SpacingBefore(50);
+                        doc.InsertTable(table);
 
-                    doc.Save();
-                    MessageBox.Show("Счет-фактура создана успешно.");
+                        doc.InsertParagraph($"Итого: {cargo.Price.ConvertToFormatMoney()} рублей")
+                            .FontSize(12)
+                            .SpacingBefore(20);
+
+                        doc.InsertParagraph("Подпись: _____________________")
+                            .FontSize(12)
+                            .SpacingBefore(50);
+
+                        doc.Save();
+                        MessageBox.Show("Счет-фактура создана успешно.");
+                    }
                 }
             }
             catch (Exception ex)
@@ -381,6 +392,7 @@ namespace GruzoMaster.CargoMenu
                 MessageBox.Show($"выставитьСчетФактуруToolStripMenuItem_Click: {ex}");
             }
         }
+
         private void создатьАктВыполненныхРаботToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             try
@@ -401,71 +413,85 @@ namespace GruzoMaster.CargoMenu
                     return;
                 }
 
-                var companyName = cargo.CustomerCompany.Name;
-                var email = cargo.CustomerCompany.Email;
-                var city = cargo.CustomerCompany.Country.ToString() + " " + cargo.CustomerCompany.City;
-
-                using (var doc = DocX.Create("АктВыполненныхРабот.docx"))
+                // Открытие диалога выбора пути сохранения
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
                 {
-                    doc.InsertParagraph("Акт выполненных работ")
-                        .FontSize(20)
-                        .Bold()
-                        .Alignment = Alignment.center;
+                    saveFileDialog.Title = "Сохранить акт выполненных работ как...";
+                    saveFileDialog.Filter = "Word Document (*.docx)|*.docx";
+                    saveFileDialog.FileName = $"АктВыполненныхРабот_{cargo.ID}.docx";
 
-                    doc.InsertParagraph($"Компания: {companyName}")
-                        .FontSize(12)
-                        .SpacingAfter(10);
+                    if (saveFileDialog.ShowDialog() != DialogResult.OK)
+                        return;
 
-                    doc.InsertParagraph($"Страна, Город компании: {city}")
-                        .FontSize(12)
-                        .SpacingAfter(10);
+                    string filePath = saveFileDialog.FileName;
 
-                    doc.InsertParagraph($"Адрес почты: {email}")
-                        .FontSize(12)
-                        .SpacingAfter(10);
+                    using (var doc = DocX.Create(filePath))
+                    {
+                        doc.InsertParagraph("Акт выполненных работ")
+                            .FontSize(20)
+                            .Bold()
+                            .Alignment = Alignment.center;
 
-                    doc.InsertParagraph("Информация о заказе")
-                        .FontSize(14)
-                        .Bold()
-                        .SpacingAfter(10);
+                        var companyName = cargo.CustomerCompany.Name;
+                        var email = cargo.CustomerCompany.Email;
+                        var city = cargo.CustomerCompany.Country + " " + cargo.CustomerCompany.City;
 
-                    var table = doc.AddTable(2, 5);
-                    table.Design = TableDesign.LightShadingAccent2;
-                    table.Rows[0].Cells[0].Paragraphs.First().Append("Наименование").Bold();
-                    table.Rows[0].Cells[1].Paragraphs.First().Append("Описание").Bold();
-                    table.Rows[0].Cells[2].Paragraphs.First().Append("Адрес отправления").Bold();
-                    table.Rows[0].Cells[3].Paragraphs.First().Append("Адрес прибытия").Bold();
-                    table.Rows[0].Cells[4].Paragraphs.First().Append("Сумма").Bold();
+                        doc.InsertParagraph($"Компания: {companyName}")
+                            .FontSize(12)
+                            .SpacingAfter(10);
 
-                    table.Rows[1].Cells[0].Paragraphs.First().Append($"Перевозка груза: {cargo.Name}");
-                    table.Rows[1].Cells[1].Paragraphs.First().Append(cargo.Description);
-                    table.Rows[1].Cells[2].Paragraphs.First().Append(cargo.AddressFromCargo);
-                    table.Rows[1].Cells[3].Paragraphs.First().Append(cargo.AddressToCargo);
-                    table.Rows[1].Cells[4].Paragraphs.First().Append(cargo.Price.ConvertToFormatMoney() + " rub");
+                        doc.InsertParagraph($"Страна, Город компании: {city}")
+                            .FontSize(12)
+                            .SpacingAfter(10);
 
-                    doc.InsertTable(table);
+                        doc.InsertParagraph($"Адрес почты: {email}")
+                            .FontSize(12)
+                            .SpacingAfter(10);
 
-                    doc.InsertParagraph($"Итого: {cargo.Price.ConvertToFormatMoney()} рублей")
-                        .FontSize(12)
-                        .SpacingBefore(20);
+                        doc.InsertParagraph("Информация о заказе")
+                            .FontSize(14)
+                            .Bold()
+                            .SpacingAfter(10);
 
-                    doc.InsertParagraph("Все работы выполнены в полном объеме и в срок. Претензий по выполнению работ нет.")
-                        .FontSize(12)
-                        .SpacingBefore(10);
+                        var table = doc.AddTable(2, 5);
+                        table.Design = TableDesign.LightShadingAccent2;
+                        table.Rows[0].Cells[0].Paragraphs.First().Append("Наименование").Bold();
+                        table.Rows[0].Cells[1].Paragraphs.First().Append("Описание").Bold();
+                        table.Rows[0].Cells[2].Paragraphs.First().Append("Адрес отправления").Bold();
+                        table.Rows[0].Cells[3].Paragraphs.First().Append("Адрес прибытия").Bold();
+                        table.Rows[0].Cells[4].Paragraphs.First().Append("Сумма").Bold();
 
-                    doc.InsertParagraph("Подпись: _____________________")
-                        .FontSize(12)
-                        .SpacingBefore(50);
+                        table.Rows[1].Cells[0].Paragraphs.First().Append($"Перевозка груза: {cargo.Name}");
+                        table.Rows[1].Cells[1].Paragraphs.First().Append(cargo.Description);
+                        table.Rows[1].Cells[2].Paragraphs.First().Append(cargo.AddressFromCargo);
+                        table.Rows[1].Cells[3].Paragraphs.First().Append(cargo.AddressToCargo);
+                        table.Rows[1].Cells[4].Paragraphs.First().Append(cargo.Price.ConvertToFormatMoney() + " rub");
 
-                    doc.Save();
-                    MessageBox.Show("Акт выполненных работ создан успешно.");
+                        doc.InsertTable(table);
+
+                        doc.InsertParagraph($"Итого: {cargo.Price.ConvertToFormatMoney()} рублей")
+                            .FontSize(12)
+                            .SpacingBefore(20);
+
+                        doc.InsertParagraph("Все работы выполнены в полном объеме и в срок. Претензий по выполнению работ нет.")
+                            .FontSize(12)
+                            .SpacingBefore(10);
+
+                        doc.InsertParagraph("Подпись: _____________________\t\tПодпись: _____________________")
+                            .FontSize(12)
+                            .SpacingBefore(50);
+
+                        doc.Save();
+                        MessageBox.Show("Акт выполненных работ создан успешно.");
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"создатьАктВыполненныхРаботToolStripMenuItem_Click: {ex}");
+                MessageBox.Show($"Ошибка при создании акта: {ex}");
             }
         }
+
 
         private void поЭкспедиторамToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -548,7 +574,7 @@ namespace GruzoMaster.CargoMenu
                     doc.ReplaceText("{{Carrier}}", "ООО Малекс");
                     doc.ReplaceText("{{cargo_id}}", cargo.ID.ToString());
                     doc.ReplaceText("{{Route}}", $"{cargo.AddressFromCargo} - {cargo.AddressToCargo}");
-                    doc.ReplaceText("{{CarParams}}", "Тентованный, до 20 тонн, объем 90 м³");
+                    doc.ReplaceText("{{CarParams}}", "Тентованный, до 20 тонн, объем 90 см³");
                     doc.ReplaceText("{{LoadDate}}", DateTime.Now.ToString("G"));
                     doc.ReplaceText("{{LoadAddress}}", cargo.AddressFromCargo);
                     doc.ReplaceText("{{UnloadAddress}}", cargo.AddressToCargo);
@@ -574,6 +600,7 @@ namespace GruzoMaster.CargoMenu
                     MessageBox.Show("Пожалуйста, выберите груз.");
                     return;
                 }
+
                 var selectedRow = dataGridView1.SelectedRows[0];
                 Int64 cargoId = Convert.ToInt64(selectedRow.Cells["ID"].Value);
                 Cargo cargo = CargoList.Find(_ => _.ID == cargoId);
@@ -583,9 +610,36 @@ namespace GruzoMaster.CargoMenu
                     return;
                 }
 
+                string templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Образцы", "putevoi-list.xls");
+
+                if (!File.Exists(templatePath))
+                {
+                    MessageBox.Show("Файл шаблона не найден: " + templatePath);
+                    return;
+                }
+
+                using (SaveFileDialog saveDialog = new SaveFileDialog())
+                {
+                    saveDialog.Title = "Сохранить путевой лист как...";
+                    saveDialog.Filter = "Excel Files (*.xls)|*.xls";
+                    saveDialog.FileName = $"ПутевойЛист_{cargo.ID}.xls";
+
+                    if (saveDialog.ShowDialog() != DialogResult.OK)
+                        return;
+
+                    string savePath = saveDialog.FileName;
+
+                    File.Copy(templatePath, savePath, true);
+
+                    MessageBox.Show("Путевой лист успешно сохранён.");
+                }
             }
-            catch (Exception ex) { MessageBox.Show("путевойЛистToolStripMenuItem_Click: " + ex.ToString()); }
+            catch (Exception ex)
+            {
+                MessageBox.Show("путевойЛистToolStripMenuItem_Click: " + ex.ToString());
+            }
         }
+
 
         private async void договорНаОказаниеУслугToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -629,6 +683,15 @@ namespace GruzoMaster.CargoMenu
                     doc.ReplaceText("{{LoadDate}}", DateTime.Now.ToString("G"));
                     doc.ReplaceText("{{LoadAddress}}", cargo.AddressFromCargo);
                     doc.ReplaceText("{{UnloadAddress}}", cargo.AddressToCargo);
+                    doc.ReplaceText("{{forwarder_adress}}", cargo.CustomerCompany.BankData[CompanyBankData.AddressBank]);
+                    doc.ReplaceText("{{forwarder_banksNumber}}", cargo.CustomerCompany.BankData[CompanyBankData.NumberBank]);
+                    doc.ReplaceText("{{forwarder_inn}}", cargo.CustomerCompany.BankData[CompanyBankData.INN]);
+                    doc.ReplaceText("{{forwarder_phone}}", cargo.CustomerCompany.PhoneNumbers.Count > 0 ? cargo.CustomerCompany.PhoneNumbers.ToList()[0].Value : "");
+                    doc.ReplaceText("{{forwarder_email}}", cargo.CustomerCompany.Email);
+                    doc.ReplaceText("{{forwarder_name}}", cargo.CustomerCompany.Name);
+                    doc.ReplaceText("{{date_year}}", DateTime.Now.Year.ToString());
+                    doc.ReplaceText("{{date_day}}", DateTime.Now.Day.ToString("D2"));
+                    doc.ReplaceText("{{date_month}}", DateTime.Now.ToString("MMMM", new System.Globalization.CultureInfo("ru-RU")));
                     doc.SaveAs(savePath);
                     MessageBox.Show($"Договор успешно сформирован");
                 }

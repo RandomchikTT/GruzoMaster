@@ -1,5 +1,9 @@
-﻿using GruzoMaster.Objects;
+﻿using GruzoMaster.CargoMenu;
+using GruzoMaster.Objects;
+using GruzoMaster.Objects.Cargo;
 using Newtonsoft.Json;
+using OfficeOpenXml;
+using OfficeOpenXml.Drawing.Chart;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -251,6 +255,174 @@ namespace GruzoMaster.Companies
         private void MenuAddCompany_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.MenuAddCompany = null;
+        }
+        public async void FilterCargosToExcelWithCharts(DateTime time)
+        {
+            try
+            {
+                List<Cargo> cargos = await MainCargoMenu.GetCargoList();
+                var filteredCargos = cargos
+                    .Where(c => c.CargoParts.Any(x => x.DeliveryDate.Date == time.Date))
+                    .ToList();
+
+                if (filteredCargos.Count == 0)
+                {
+                    MessageBox.Show("Нет заказов на выбранную дату.");
+                    return;
+                }
+
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "Excel Workbook (*.xlsx)|*.xlsx",
+                    FileName = $"Отчет_по_заказам_{time:dd_MM_yyyy}.xlsx"
+                };
+
+                if (saveFileDialog.ShowDialog() != DialogResult.OK)
+                    return;
+
+                ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+                using (var package = new ExcelPackage())
+                {
+                    // --- Общий отчет ---
+                    var ws = package.Workbook.Worksheets.Add("Общий отчет");
+
+                    ws.Cells["A1"].Value = $"Отчет по заказам на {time:dd.MM.yyyy}";
+                    ws.Cells["A1"].Style.Font.Size = 16;
+                    ws.Cells["A1"].Style.Font.Bold = true;
+
+                    var headers = new string[]
+                    {
+                "Груз", "Описание", "Компания", "Создатель", "Экспедитор",
+                "Адрес отправления", "Адрес прибытия", "Сумма, руб", "Статус", "Дедлайн"
+                    };
+
+                    for (int i = 0; i < headers.Length; i++)
+                    {
+                        ws.Cells[3, i + 1].Value = headers[i];
+                        ws.Cells[3, i + 1].Style.Font.Bold = true;
+                        ws.Cells[3, i + 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                        ws.Cells[3, i + 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                    }
+
+                    int row = 4;
+                    foreach (var cargo in filteredCargos)
+                    {
+                        ws.Cells[row, 1].Value = cargo.Name;
+                        ws.Cells[row, 2].Value = cargo.Description;
+                        ws.Cells[row, 3].Value = cargo.CustomerCompany?.Name ?? "Не указано";
+                        ws.Cells[row, 4].Value = cargo.CreateUserCargo?.Name ?? "Не указан";
+                        ws.Cells[row, 5].Value = cargo.Forwarder?.Name ?? "Не назначен";
+                        ws.Cells[row, 6].Value = cargo.AddressFromCargo;
+                        ws.Cells[row, 7].Value = cargo.AddressToCargo;
+                        ws.Cells[row, 8].Value = cargo.Price;
+                        ws.Cells[row, 9].Value = Cargo.GetDeliveryTypeDescription(cargo.DeliveryType);
+                        ws.Cells[row, 10].Value = cargo.DeadlineTime.ToString("dd.MM.yyyy");
+
+                        var fillColor = cargo.GetColorByCargoStatus();
+
+                        ws.Cells[row, 1, row, 10].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                        ws.Cells[row, 1, row, 10].Style.Fill.BackgroundColor.SetColor(fillColor);
+
+                        row++;
+                    }
+
+                    ws.Column(8).Style.Numberformat.Format = "#,##0 руб.";
+                    ws.Cells[ws.Dimension.Address].AutoFitColumns();
+
+                    var chart = ws.Drawings.AddChart("chart1", eChartType.ColumnClustered) as ExcelBarChart;
+                    chart.Title.Text = "Сумма по грузам";
+                    chart.SetPosition(1, 0, 11, 0);
+                    chart.SetSize(600, 300);
+
+                    var sumRange = ws.Cells[4, 8, row - 1, 8];
+                    var nameRange = ws.Cells[4, 1, row - 1, 1];
+
+                    var series = chart.Series.Add(sumRange, nameRange);
+                    series.Header = "Сумма";
+
+                    // --- Отчеты по компаниям ---
+                    // Группируем заказы по компаниям
+                    var groupedByCompany = filteredCargos
+                        .GroupBy(c => c.CustomerCompany?.Name ?? "Без компании");
+
+                    foreach (var group in groupedByCompany)
+                    {
+                        string companyName = group.Key;
+
+                        // Ограничим длину имени листа (Excel не поддерживает >31 символ)
+                        string sheetName = companyName.Length > 31 ? companyName.Substring(0, 31) : companyName;
+
+                        var wsCompany = package.Workbook.Worksheets.Add(sheetName);
+
+                        wsCompany.Cells["A1"].Value = $"Отчет по заказам компании \"{companyName}\" на {time:dd.MM.yyyy}";
+                        wsCompany.Cells["A1"].Style.Font.Size = 16;
+                        wsCompany.Cells["A1"].Style.Font.Bold = true;
+
+                        // Заголовки
+                        for (int i = 0; i < headers.Length; i++)
+                        {
+                            wsCompany.Cells[3, i + 1].Value = headers[i];
+                            wsCompany.Cells[3, i + 1].Style.Font.Bold = true;
+                            wsCompany.Cells[3, i + 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                            wsCompany.Cells[3, i + 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                        }
+
+                        int r = 4;
+                        foreach (var cargo in group)
+                        {
+                            wsCompany.Cells[r, 1].Value = cargo.Name;
+                            wsCompany.Cells[r, 2].Value = cargo.Description;
+                            wsCompany.Cells[r, 3].Value = cargo.CustomerCompany?.Name ?? "Не указано";
+                            wsCompany.Cells[r, 4].Value = cargo.CreateUserCargo?.Name ?? "Не указан";
+                            wsCompany.Cells[r, 5].Value = cargo.Forwarder?.Name ?? "Не назначен";
+                            wsCompany.Cells[r, 6].Value = cargo.AddressFromCargo;
+                            wsCompany.Cells[r, 7].Value = cargo.AddressToCargo;
+                            wsCompany.Cells[r, 8].Value = cargo.Price;
+                            wsCompany.Cells[r, 9].Value = Cargo.GetDeliveryTypeDescription(cargo.DeliveryType);
+                            wsCompany.Cells[r, 10].Value = cargo.DeadlineTime.ToString("dd.MM.yyyy");
+
+                            var fillColor = cargo.GetColorByCargoStatus();
+
+                            // Покраска всей строки в цвет fillColor
+                            wsCompany.Cells[r, 1, r, 10].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                            wsCompany.Cells[r, 1, r, 10].Style.Fill.BackgroundColor.SetColor(fillColor);
+
+                            r++;
+                        }
+
+                        wsCompany.Column(8).Style.Numberformat.Format = "#,##0 руб.";
+                        wsCompany.Cells[wsCompany.Dimension.Address].AutoFitColumns();
+
+                        // График суммы по грузам компании
+                        var chartCompany = wsCompany.Drawings.AddChart($"chart_{sheetName}", eChartType.ColumnClustered) as ExcelBarChart;
+                        chartCompany.Title.Text = $"Сумма по грузам компании \"{companyName}\"";
+                        chartCompany.SetPosition(1, 0, 11, 0);
+                        chartCompany.SetSize(600, 300);
+
+                        var sumRangeCompany = wsCompany.Cells[4, 8, r - 1, 8];
+                        var nameRangeCompany = wsCompany.Cells[4, 1, r - 1, 1];
+
+                        var seriesCompany = chartCompany.Series.Add(sumRangeCompany, nameRangeCompany);
+                        seriesCompany.Header = "Сумма";
+                    }
+
+                    var file = new FileInfo(saveFileDialog.FileName);
+                    package.SaveAs(file);
+
+                    MessageBox.Show("Отчет успешно сохранён с графиками.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при создании отчета: " + ex.Message);
+            }
+        }
+
+
+        private async void наДатуToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CompanyFilterDate companyFilterDate = new CompanyFilterDate(this);
+            companyFilterDate.Show();
         }
     }
 }

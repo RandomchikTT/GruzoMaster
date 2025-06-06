@@ -46,7 +46,9 @@ namespace GruzoMaster.TransortOrders
                 HeaderText = "Статус груза",
                 DataPropertyName = "DeliveryType",
                 Name = "DeliveryType",
-                DataSource = Enum.GetValues(typeof(CargoDeliveryType))
+                DisplayMember = "Value",
+                ValueMember = "Key",
+                DataSource = EnumHelper.GetEnumDescriptionList<CargoDeliveryType>()
             };
 
             this.dataGridView1.Columns.Add(statusColumn);
@@ -88,14 +90,14 @@ namespace GruzoMaster.TransortOrders
 
             this.dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Вес части",
+                HeaderText = "Вес части (т.)",
                 DataPropertyName = "PartWeight",
                 Name = "PartWeight"
             });
 
             this.dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Объем части",
+                HeaderText = "Объем части (см³)",
                 DataPropertyName = "PartVolume",
                 Name = "PartVolume"
             });

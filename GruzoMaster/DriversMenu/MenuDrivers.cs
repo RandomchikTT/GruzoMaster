@@ -270,5 +270,10 @@ namespace GruzoMaster
         {
             this.MenuChangeDataDriver = null;
         }
+
+        private void поВодителямНаДатуToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

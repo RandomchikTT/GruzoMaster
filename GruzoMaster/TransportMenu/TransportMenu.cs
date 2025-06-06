@@ -81,6 +81,7 @@ namespace GruzoMaster.TransportMenu
                         $"\nТехнический осмотр годен до: {Convert.ToDateTime(selectedVehicle["TechInspection"]).ToString("d")}." +
                         $"\nДопустимый вес: {Convert.ToInt32(selectedVehicle["Capacity"])}." +
                         $"\nДопустимый обьем: {Convert.ToInt32(selectedVehicle["Volume"])}." +
+                        $"\nДопущен ли к выезду на заказ: {(Convert.ToBoolean(selectedVehicle["CanGoToOrder"]) ? "Да" : "Нет")}." +
                         $"\nВодитель: {driver?.FullName}.";
                 }
                 else
@@ -213,18 +214,10 @@ namespace GruzoMaster.TransportMenu
                     return;
                 }
                 Int32 idKey = this.TransportList[this.Транспорт.SelectedIndex].IdKey;
-                DataTable dataTable = await MySQL.QueryRead($"SELECT * FROM `transport` WHERE `id`={idKey}");
-                if (dataTable != null && dataTable.Rows.Count > 0)
+                Transport transport = await Transport.GetTransportById(idKey);
+                if (transport != null)
                 {
-                    this.MenuChangeDataTransport = new MenuChangeDataTransport(this, new Transport()
-                    {
-                        IdKey = Convert.ToInt32(dataTable.Rows[0]["id"]),
-                        TransportModelName = (Transport.TransportModel)Convert.ToInt32(dataTable.Rows[0]["Brand"]),
-                        ModelDescriptionName = Convert.ToString(dataTable.Rows[0]["Model"]),
-                        TransportTypeName = (Transport.TransportType)Convert.ToInt32(dataTable.Rows[0]["Type"]),
-                        GovNumber = Convert.ToString(dataTable.Rows[0]["GovNumber"]),
-                        TimeTechInspection = Convert.ToDateTime(dataTable.Rows[0]["TechInspection"])
-                    });
+                    this.MenuChangeDataTransport = new MenuChangeDataTransport(this, transport);
                     this.MenuChangeDataTransport.FormClosed += MenuChangeDataTransport_FormClosed;
                     this.MenuChangeDataTransport.Show();
                 }
@@ -241,5 +234,5 @@ namespace GruzoMaster.TransportMenu
         {
             this.MenuChangeDataTransport = null;
         }
-    }
+    } 
 }
