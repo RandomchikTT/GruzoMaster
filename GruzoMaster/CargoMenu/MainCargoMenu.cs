@@ -322,7 +322,11 @@ namespace GruzoMaster.CargoMenu
                             .Bold()
                             .Alignment = Alignment.center;
 
-                        doc.InsertParagraph($"Компания: {companyName}")
+                        doc.InsertParagraph($"Заказчик: {companyName}")
+                            .FontSize(12)
+                            .SpacingAfter(10);
+
+                        doc.InsertParagraph($"Исполнитель: ООО Малекс")
                             .FontSize(12)
                             .SpacingAfter(10);
 

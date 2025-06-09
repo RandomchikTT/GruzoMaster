@@ -194,6 +194,12 @@
     <Compile Include="Authorization\AuthorizationMenu.Designer.cs">
       <DependentUpon>AuthorizationMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="DriversMenu\DriverFilterDate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DriversMenu\DriverFilterDate.Designer.cs">
+      <DependentUpon>DriverFilterDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forwarder\MainForwarderMenu.cs">
       <SubType>Form</SubType>
     </Compile>

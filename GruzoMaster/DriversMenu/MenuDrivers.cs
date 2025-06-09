@@ -1,5 +1,9 @@
-﻿using GruzoMaster.Objects;
+﻿using GruzoMaster.CargoMenu;
+using GruzoMaster.Objects;
+using GruzoMaster.Objects.Cargo;
 using Newtonsoft.Json;
+using OfficeOpenXml.Drawing.Chart;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,6 +11,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GruzoMaster.DriversMenu;
+using OfficeOpenXml.Style;
+using System.Drawing;
 
 namespace GruzoMaster
 {
@@ -270,10 +277,173 @@ namespace GruzoMaster
         {
             this.MenuChangeDataDriver = null;
         }
+        public async void FilterCargosByDriversToExcelWithCharts(DateTime time)
+        {
+            try
+            {
+                List<Cargo> cargos = await MainCargoMenu.GetCargoList();
+                var allCargoParts = cargos
+                    .SelectMany(c => c.CargoParts.Select(cp => new { Cargo = c, Part = cp }))
+                    .Where(x => x.Part.DeliveryDate.Date == time.Date && x.Part.DriverID != -1)
+                    .ToList();
+
+                if (allCargoParts.Count == 0)
+                {
+                    MessageBox.Show("Нет грузов на выбранную дату.");
+                    return;
+                }
+
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "Excel Workbook (*.xlsx)|*.xlsx",
+                    FileName = $"Отчет_по_водителям_{time:dd_MM_yyyy}.xlsx"
+                };
+
+                if (saveFileDialog.ShowDialog() != DialogResult.OK)
+                    return;
+
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                using (var package = new ExcelPackage())
+                {
+                    var ws = package.Workbook.Worksheets.Add("Общий отчет");
+
+                    ws.Cells["A1"].Value = $"Отчет по водителям на {time:dd.MM.yyyy}";
+                    ws.Cells["A1"].Style.Font.Size = 16;
+                    ws.Cells["A1"].Style.Font.Bold = true;
+
+                    string[] headers =
+                    {
+                "Груз", "Описание", "Компания", "Водитель",
+                "Адрес отправления", "Адрес прибытия", "Сумма, руб", "Статус", "Дата доставки"
+            };
+
+                    for (int i = 0; i < headers.Length; i++)
+                    {
+                        ws.Cells[3, i + 1].Value = headers[i];
+                        ws.Cells[3, i + 1].Style.Font.Bold = true;
+                        ws.Cells[3, i + 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        ws.Cells[3, i + 1].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                    }
+
+                    int row = 4;
+                    foreach (var item in allCargoParts)
+                    {
+                        var driver = await Driver.GetDriverById(item.Part.DriverID);
+                        string driverName = driver?.FullName ?? "Неизвестно";
+
+                        ws.Cells[row, 1].Value = item.Cargo.Name;
+                        ws.Cells[row, 2].Value = item.Cargo.Description;
+                        ws.Cells[row, 3].Value = item.Cargo.CustomerCompany?.Name ?? "Не указано";
+                        ws.Cells[row, 4].Value = driverName;
+                        ws.Cells[row, 5].Value = item.Cargo.AddressFromCargo;
+                        ws.Cells[row, 6].Value = item.Cargo.AddressToCargo;
+                        ws.Cells[row, 7].Value = item.Cargo.Price;
+                        ws.Cells[row, 8].Value = Cargo.GetDeliveryTypeDescription(item.Cargo.DeliveryType);
+                        ws.Cells[row, 9].Value = item.Part.DeliveryDate.ToString("dd.MM.yyyy");
+
+                        var fillColor = item.Cargo.GetColorByCargoStatus();
+                        ws.Cells[row, 1, row, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        ws.Cells[row, 1, row, 9].Style.Fill.BackgroundColor.SetColor(fillColor);
+
+                        row++;
+                    }
+
+                    ws.Column(7).Style.Numberformat.Format = "#,##0 руб.";
+                    ws.Cells[ws.Dimension.Address].AutoFitColumns();
+
+                    // Группировка по водителям
+                    var groupedByDriver = allCargoParts
+                        .GroupBy(x => x.Part.DriverID)
+                        .ToDictionary(g => g.Key, g => g.ToList());
+
+                    // Данные для круговой диаграммы
+                    int chartDataStartRow = row + 2;
+                    int chartCol = 13;
+                    int currentRow = chartDataStartRow;
+
+                    foreach (var kvp in groupedByDriver)
+                    {
+                        var driver = await Driver.GetDriverById(kvp.Key);
+                        string driverName = driver?.FullName ?? "Неизвестно";
+
+                        decimal total = kvp.Value.Sum(x => x.Cargo.Price);
+                        ws.Cells[currentRow, chartCol].Value = driverName;
+                        ws.Cells[currentRow, chartCol + 1].Value = total;
+                        currentRow++;
+                    }
+
+                    var pieChart = ws.Drawings.AddChart("driverPie", eChartType.Pie) as ExcelPieChart;
+                    pieChart.Title.Text = "Распределение сумм по водителям";
+                    pieChart.SetPosition(1, 0, chartCol + 3, 0);
+                    pieChart.SetSize(500, 400);
+
+                    var nameRange = ws.Cells[chartDataStartRow, chartCol, currentRow - 1, chartCol];
+                    var valueRange = ws.Cells[chartDataStartRow, chartCol + 1, currentRow - 1, chartCol + 1];
+                    var seriesPie = pieChart.Series.Add(valueRange, nameRange);
+                    seriesPie.Header = "Сумма";
+
+                    pieChart.DataLabel.ShowValue = true;
+                    pieChart.DataLabel.ShowCategory = true;
+
+                    // Отдельные листы по водителям
+                    foreach (var kvp in groupedByDriver)
+                    {
+                        var driver = await Driver.GetDriverById(kvp.Key);
+                        string driverName = driver?.FullName ?? "Неизвестно";
+                        string sheetName = driverName.Length > 31 ? driverName.Substring(0, 31) : driverName;
+
+                        var wsDriver = package.Workbook.Worksheets.Add(sheetName);
+                        wsDriver.Cells["A1"].Value = $"Заказы водителя {driverName} на {time:dd.MM.yyyy}";
+                        wsDriver.Cells["A1"].Style.Font.Size = 16;
+                        wsDriver.Cells["A1"].Style.Font.Bold = true;
+
+                        for (int i = 0; i < headers.Length; i++)
+                        {
+                            wsDriver.Cells[3, i + 1].Value = headers[i];
+                            wsDriver.Cells[3, i + 1].Style.Font.Bold = true;
+                            wsDriver.Cells[3, i + 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            wsDriver.Cells[3, i + 1].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                        }
+
+                        int r = 4;
+                        foreach (var item in kvp.Value)
+                        {
+                            wsDriver.Cells[r, 1].Value = item.Cargo.Name;
+                            wsDriver.Cells[r, 2].Value = item.Cargo.Description;
+                            wsDriver.Cells[r, 3].Value = item.Cargo.CustomerCompany?.Name ?? "Не указано";
+                            wsDriver.Cells[r, 4].Value = driverName;
+                            wsDriver.Cells[r, 5].Value = item.Cargo.AddressFromCargo;
+                            wsDriver.Cells[r, 6].Value = item.Cargo.AddressToCargo;
+                            wsDriver.Cells[r, 7].Value = item.Cargo.Price;
+                            wsDriver.Cells[r, 8].Value = Cargo.GetDeliveryTypeDescription(item.Cargo.DeliveryType);
+                            wsDriver.Cells[r, 9].Value = item.Part.DeliveryDate.ToString("dd.MM.yyyy");
+
+                            var fillColor = item.Cargo.GetColorByCargoStatus();
+                            wsDriver.Cells[r, 1, r, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            wsDriver.Cells[r, 1, r, 9].Style.Fill.BackgroundColor.SetColor(fillColor);
+
+                            r++;
+                        }
+
+                        wsDriver.Column(7).Style.Numberformat.Format = "#,##0 руб.";
+                        wsDriver.Cells[wsDriver.Dimension.Address].AutoFitColumns();
+                    }
+
+                    var file = new FileInfo(saveFileDialog.FileName);
+                    package.SaveAs(file);
+                    MessageBox.Show("Отчет по водителям успешно сохранён.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при создании отчета: " + ex.Message);
+            }
+        }
+
 
         private void поВодителямНаДатуToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            new DriverFilterDate(this).Show();
         }
     }
 }

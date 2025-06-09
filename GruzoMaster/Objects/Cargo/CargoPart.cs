@@ -17,12 +17,13 @@ namespace GruzoMaster.Objects.Cargo
         public int Volume { get; set; }
         public Int64 CargoID { get; set; }
         public CargoDeliveryType CargoDeliveryType { get; set; }
+        public Int32 DriverID { get; set; } = -1;
         public async Task SaveToDatabase()
         {
             try
             {
-                Int64 ID = await MySQL.QueryLastInsertAsync($"INSERT INTO `cargo_parts` (`CargoID`, `TransportID`, `DeliveryDate`, `Weight`, `Volume`, `DeliveryType`) " +
-                    $"VALUES ({CargoID}, {this.Transport}, '{this.DeliveryDate:yyyy-MM-dd}', {this.Weight}, {this.Volume}, {(Int32)this.CargoDeliveryType})");
+                Int64 ID = await MySQL.QueryLastInsertAsync($"INSERT INTO `cargo_parts` (`CargoID`, `TransportID`, `DeliveryDate`, `Weight`, `Volume`, `DeliveryType`, `DriverID`) " +
+                    $"VALUES ({CargoID}, {this.Transport}, '{this.DeliveryDate:yyyy-MM-dd}', {this.Weight}, {this.Volume}, {(Int32)this.CargoDeliveryType}, {this.DriverID})");
                 this.ID = ID;
             }
             catch (Exception ex)
@@ -47,7 +48,8 @@ namespace GruzoMaster.Objects.Cargo
                         DeliveryDate = Convert.ToDateTime(row["DeliveryDate"]),
                         Weight = Convert.ToInt32(row["Weight"]),
                         Volume = Convert.ToInt32(row["Volume"]),
-                        CargoDeliveryType = (CargoDeliveryType)Convert.ToInt32(row["DeliveryType"])
+                        CargoDeliveryType = (CargoDeliveryType)Convert.ToInt32(row["DeliveryType"]),
+                        DriverID = Convert.ToInt32(row["DriverID"]),
                     });
                 }
 
@@ -74,6 +76,7 @@ namespace GruzoMaster.Objects.Cargo
                     DeliveryDate = Convert.ToDateTime(result.Rows[0]["DeliveryDate"]),
                     Weight = Convert.ToInt32(result.Rows[0]["Weight"]),
                     Volume = Convert.ToInt32(result.Rows[0]["Volume"]),
+                    DriverID = Convert.ToInt32(result.Rows[0]["DriverID"]),
                     CargoDeliveryType = (CargoDeliveryType)Convert.ToInt32(result.Rows[0]["DeliveryType"])
                 };
                 return cargoPart;
@@ -93,7 +96,8 @@ namespace GruzoMaster.Objects.Cargo
                     $"`DeliveryDate` = '{this.DeliveryDate:yyyy-MM-dd}', " +
                     $"`Weight` = {this.Weight}, " +
                     $"`Volume` = {this.Volume}, " +
-                    $"`DeliveryType` = {(Int32)this.CargoDeliveryType} " +
+                    $"`DeliveryType` = {(Int32)this.CargoDeliveryType}, " +
+                    $"`DriverID` = {this.DriverID} " +
                     $"WHERE `CargoID` = {CargoID} AND `ID` = {this.ID}");
             }
             catch (Exception ex)

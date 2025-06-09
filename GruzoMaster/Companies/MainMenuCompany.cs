@@ -280,7 +280,7 @@ namespace GruzoMaster.Companies
                 if (saveFileDialog.ShowDialog() != DialogResult.OK)
                     return;
 
-                ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using (var package = new ExcelPackage())
                 {
                     // --- Общий отчет ---
@@ -329,16 +329,44 @@ namespace GruzoMaster.Companies
                     ws.Column(8).Style.Numberformat.Format = "#,##0 руб.";
                     ws.Cells[ws.Dimension.Address].AutoFitColumns();
 
-                    var chart = ws.Drawings.AddChart("chart1", eChartType.ColumnClustered) as ExcelBarChart;
-                    chart.Title.Text = "Сумма по грузам";
-                    chart.SetPosition(1, 0, 11, 0);
-                    chart.SetSize(600, 300);
+                    // --- Круговая диаграмма по компаниям ---
+                    var companyGroups = filteredCargos
+                        .GroupBy(c => c.CustomerCompany?.Name ?? "Без компании")
+                        .Select(g => new
+                        {
+                            Company = g.Key,
+                            TotalPrice = g.Sum(c => c.Price)
+                        })
+                        .ToList();
 
-                    var sumRange = ws.Cells[4, 8, row - 1, 8];
-                    var nameRange = ws.Cells[4, 1, row - 1, 1];
+                    // Вставляем данные в скрытую область (начиная, например, с колонки N)
+                    int companyStartRow = 4;
+                    int companyStartCol = 14; // Колонка N
+                    for (int i = 0; i < companyGroups.Count; i++)
+                    {
+                        ws.Cells[companyStartRow + i, companyStartCol].Value = companyGroups[i].Company;
+                        ws.Cells[companyStartRow + i, companyStartCol + 1].Value = companyGroups[i].TotalPrice;
+                    }
 
-                    var series = chart.Series.Add(sumRange, nameRange);
-                    series.Header = "Сумма";
+                    // Создаем круговую диаграмму
+                    var pieChart = ws.Drawings.AddChart("pieChartCompanies", eChartType.Pie) as ExcelPieChart;
+                    pieChart.Title.Text = "Доли компаний по сумме заказов";
+                    pieChart.SetPosition(row + 1, 0, 0, 0);
+                    pieChart.SetSize(600, 400);
+
+                    // Указываем диапазоны данных
+                    var pieNameRange = ws.Cells[companyStartRow, companyStartCol, companyStartRow + companyGroups.Count - 1, companyStartCol];
+                    var pieValueRange = ws.Cells[companyStartRow, companyStartCol + 1, companyStartRow + companyGroups.Count - 1, companyStartCol + 1];
+
+                    var pieSeries = pieChart.Series.Add(pieValueRange, pieNameRange);
+                    pieSeries.Header = "Сумма";
+
+                    // Настройка подписей на диаграмме
+                    pieChart.DataLabel.ShowCategory = true; // Показывает названия компаний
+                    pieChart.DataLabel.ShowValue = true;    // Показывает суммы
+                    pieChart.DataLabel.ShowPercent = false; // Не показываем проценты (если нужно — включи)
+                    pieChart.DataLabel.Position = eLabelPosition.Center; // Подписи снаружи или поменяй на Center
+
 
                     // --- Отчеты по компаниям ---
                     // Группируем заказы по компаниям

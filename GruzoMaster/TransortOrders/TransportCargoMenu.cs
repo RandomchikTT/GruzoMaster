@@ -233,6 +233,8 @@ namespace GruzoMaster.TransortOrders
                                 }
                                 CargoPart part = cargo.CargoParts.Find(_ => _.ID == cargoPartId);
                                 part.CargoDeliveryType = newStatus;
+                                Transport transport = await Transport.GetTransportById(part.Transport);
+                                part.DriverID = transport.CurrentDriverId;
                                 if (cargo.CargoParts.Count(_ => _.CargoDeliveryType == CargoDeliveryType.Сompleted) >= cargo.CargoParts.Count)
                                 {
                                     cargo.DeliveryType = CargoDeliveryType.Сompleted;

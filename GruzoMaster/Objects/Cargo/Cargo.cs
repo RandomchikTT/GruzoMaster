@@ -137,6 +137,7 @@ namespace GruzoMaster.Objects.Cargo
                     if (remainingVolume <= 0 && remainingWeight <= 0) break;
                     cargoParts.Add(new CargoPart
                     {
+                        DriverID = currentVehicle.CurrentDriverId,
                         CargoID = this.ID,
                         Transport = currentVehicle.IdKey,
                         DeliveryDate = deliveryDate,
